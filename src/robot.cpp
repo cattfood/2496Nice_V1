@@ -19,5 +19,5 @@ pros::Motor rm(12, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES);
 pros::Motor rb(13, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES); 
 
 pros::Motor bint(1, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES);
-pros::Motor mint(1, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
-pros::Motor tint(1, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
+pros::Motor mint(2, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
+pros::Motor tint(3, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
