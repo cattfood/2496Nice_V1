@@ -16,3 +16,6 @@ extern pros::Motor rb;
 extern pros::Motor bint;
 extern pros::Motor mint;
 extern pros::Motor tint;
+
+extern pros::ADIDigitalOut intp;
+extern pros::ADIDigitalOut matchp;

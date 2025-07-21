@@ -111,41 +111,59 @@ void opcontrol() {
 		rm.move(right);
 		rb.move(right);
 
-		if (controller.get_digital(E_CONTROLLER_DIGITAL_R1)){
-			mint.move(127);
-			tint.move(127);
+		bool fastm;
+		bool fastl;
 
-
-		}
-		else {
-			mint.move(0);
-			tint.move(0);
-		}
-
-		if (controller.get_digital(E_CONTROLLER_DIGITAL_R2)){
-			mint.move(127);
-			tint.move(-127);
-		}
-		else {
-			mint.move(0);
-			tint.move(0);
-		}
-
-		if (controller.get_digital(E_CONTROLLER_DIGITAL_L1)){
-			bint.move(127);
-		}
-		else {
-			bint.move(0);
+		if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_X)) {
+			fastm = !fastm;
+			fastl = !fastl;
 		}
 
 		if (controller.get_digital(E_CONTROLLER_DIGITAL_R1) && controller.get_digital(E_CONTROLLER_DIGITAL_R2)) {
 			bint.move(127);
 			mint.move(127);
-		}
-		else {
+			tint.move(0);
+		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_R1)){
+			if (fastm) {
+			mint.move(127);
+			tint.move(127);
+			bint.move(0);	
+			}
+			else {
+			mint.move_velocity(600);
+			tint.move_velocity(300);
+			bint.move(0);
+			}
+		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_R2)){
+			if (fastl) {
+			mint.move(127);
+			tint.move(-127);
+			bint.move(0);
+			}
+			else {
+			mint.move(127);
+			tint.move(-127);
+			bint.move(0);
+			}
+		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L1)){
+			bint.move(127);
+			mint.move(0);
+			tint.move(0);
+		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L2)) {
+			bint.move(-127);
+			mint.move(0);
+			tint.move(0);
+		} else {
 			bint.move(0);
 			mint.move(0);
+			tint.move(0);
+
 		}
+				
+
+	
+
+		
 
 
 
@@ -161,3 +179,5 @@ void opcontrol() {
 		pros::delay(20);
 	}
 }
+
+
