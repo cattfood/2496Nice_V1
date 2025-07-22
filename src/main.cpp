@@ -113,6 +113,8 @@ void opcontrol() {
 
 		bool fastm;
 		bool fastl;
+		bool intptoggle;
+		bool matchptoggle;
 
 		if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_X)) {
 			fastm = !fastm;
@@ -130,8 +132,8 @@ void opcontrol() {
 			bint.move(0);	
 			}
 			else {
-			mint.move_velocity(600);
-			tint.move_velocity(300);
+			mint.move_velocity(270);
+			tint.move_velocity(270);
 			bint.move(0);
 			}
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_R2)){
@@ -141,8 +143,8 @@ void opcontrol() {
 			bint.move(0);
 			}
 			else {
-			mint.move(127);
-			tint.move(-127);
+			mint.move_velocity(270);
+			tint.move_velocity(-270);
 			bint.move(0);
 			}
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L1)){
@@ -159,6 +161,19 @@ void opcontrol() {
 			tint.move(0);
 
 		}
+
+		if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)) {
+			intptoggle  = !intptoggle;
+		}
+		
+		intp.set_value(intptoggle);
+
+		if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_DOWN)) {
+			matchptoggle = !matchptoggle;
+		}
+
+		intp.set_value(matchptoggle);
+
 				
 
 	

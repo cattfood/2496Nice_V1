@@ -10,17 +10,17 @@
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
-pros::Motor lf(18, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES);
-pros::Motor lm(19, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES); 
-pros::Motor lb(20, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
+pros::Motor lf(1, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES);
+pros::Motor lm(2, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES); 
+pros::Motor lb(3, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
 
-pros::Motor rf(11, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES); 
-pros::Motor rm(12, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES); 
-pros::Motor rb(13, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES); 
+pros::Motor rf(10, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES); 
+pros::Motor rm(9, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES); 
+pros::Motor rb(8, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES); 
 
-pros::Motor bint(1, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES);
+pros::Motor bint(7, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES);
 pros::Motor mint(4, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
-pros::Motor tint(3, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
+pros::Motor tint(6, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
 
-pros::ADIDigitalOut intp(1, false);
-pros::ADIDigitalOut matchp(2, false);
+pros::ADIDigitalOut intp('A', false);
+pros::ADIDigitalOut matchp('B', false);
