@@ -126,6 +126,7 @@ void opcontrol() {
 			mint.move(127);
 			tint.move(0);
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_R1)){
+			matchptoggle = false;
 			if (fastm) {
 			mint.move(127);
 			tint.move(127);
@@ -137,6 +138,7 @@ void opcontrol() {
 			bint.move(0);
 			}
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_R2)){
+			matchptoggle = true;
 			if (fastl) {
 			mint.move(127);
 			tint.move(-127);
