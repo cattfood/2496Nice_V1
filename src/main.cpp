@@ -122,8 +122,8 @@ void opcontrol() {
 		}
 
 		if (controller.get_digital(E_CONTROLLER_DIGITAL_R1) && controller.get_digital(E_CONTROLLER_DIGITAL_R2)) {
-			bint.move(127);
-			mint.move(127);
+			bint.move(-127);
+			mint.move(-127);
 			tint.move(0);
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_R1)){
 			matchptoggle = false;
@@ -150,9 +150,11 @@ void opcontrol() {
 			bint.move(0);
 			}
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L1)){
-			bint.move(127);
-			mint.move(0);
-			tint.move(0);
+			matchptoggle = false;
+			mint.move(127);
+			tint.move(-127);
+			bint.move(0);
+			
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L2)) {
 			bint.move(-127);
 			mint.move(0);
