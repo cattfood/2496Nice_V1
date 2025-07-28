@@ -104,6 +104,7 @@ void opcontrol() {
 		int turn = controller.get_analog(ANALOG_RIGHT_X);
 		int left = power + turn;
 		int right = power - turn;
+
 		lf.move(left);
 		lm.move(left);
 		lb.move(left);
@@ -122,6 +123,7 @@ void opcontrol() {
 		}
 
 		if (controller.get_digital(E_CONTROLLER_DIGITAL_R1) && controller.get_digital(E_CONTROLLER_DIGITAL_R2)) {
+			intptoggle = true;
 			bint.move(-127);
 			mint.move(-127);
 			tint.move(0);
@@ -214,8 +216,9 @@ void opcontrol() {
 
 			
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L2)) {
+			intptoggle = true;
 			bint.move(-127);
-			stall_pro(bint, true);
+			//stall_pro(bint, true);
 		} else {
 			bint.move(0);
 			mint.move(0);

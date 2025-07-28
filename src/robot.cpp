@@ -29,15 +29,18 @@ pros::Imu imu(2);
 
 void stall_pro(pros::Motor m , bool rev) {
     if (m.get_actual_velocity() == 0) {
-        if (rev) {
-            m.move(127);
-            pros::delay(60);
-            m.move(-127);
-        }
-        else {
-            m.move(-127);
-            pros::delay(60);
-            m.move(127);
+        pros::delay(60);
+        if (m.get_actual_velocity() == 0) {
+            if (rev) {
+                m.move(127);
+                pros::delay(60);
+                m.move(-127);
+            }
+            else {
+                m.move(-127);
+                pros::delay(60);
+                m.move(127);
+            }
         }
     }
 }
