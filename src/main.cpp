@@ -111,8 +111,8 @@ void opcontrol() {
 		rm.move(right);
 		rb.move(right);
 
-		bool fastm;
-		bool fastl;
+		bool fastm = true;
+		bool fastl = true;
 		bool intptoggle;
 		bool matchptoggle;
 
@@ -125,12 +125,69 @@ void opcontrol() {
 			bint.move(-127);
 			mint.move(-127);
 			tint.move(0);
-		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_R1)){
-			matchptoggle = false;
+			stall_pro(bint, true);
+		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L2) && controller.get_digital(E_CONTROLLER_DIGITAL_R1)) {
+			intptoggle = false;
 			if (fastm) {
 			mint.move(127);
-			tint.move(127);
-			bint.move(0);	
+			tint.move(127);	
+			bint.move(-127);
+			stall_pro(bint, true);
+			}
+			else {
+			mint.move_velocity(270);
+			tint.move_velocity(270);
+			bint.move(-127);
+			stall_pro(bint, true);
+			}
+		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L2) && controller.get_digital(E_CONTROLLER_DIGITAL_R2)) {
+			intptoggle = true;
+			if (fastl) {
+			mint.move(127);
+			tint.move(-127);	
+			bint.move(-127);
+			stall_pro(bint, true);
+			}
+			else {
+			mint.move_velocity(270);
+			tint.move_velocity(-270);
+			bint.move(-127);
+			stall_pro(bint, true);
+			}
+		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L1) && controller.get_digital(E_CONTROLLER_DIGITAL_R1)) {
+			intptoggle = false;
+			if (fastm) {
+			mint.move(127);
+			tint.move(127);	
+			bint.move(127);
+			stall_pro(bint, false);
+			}
+			else {
+			mint.move_velocity(270);
+			tint.move_velocity(270);
+			bint.move(127);
+			stall_pro(bint, false);
+			}
+		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L1) && controller.get_digital(E_CONTROLLER_DIGITAL_R2)) {
+			intptoggle = true;
+			if (fastl) {
+			mint.move(127);
+			tint.move(-127);	
+			bint.move(127);
+			stall_pro(bint, true);
+			}
+			else {
+			mint.move_velocity(270);
+			tint.move_velocity(-270);
+			bint.move(127);
+			stall_pro(bint, false);
+			}
+		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_R1)){
+			intptoggle = false;
+			if (fastm) {
+			mint.move(127);
+			tint.move(127);	
+			bint.move(0);
 			}
 			else {
 			mint.move_velocity(270);
@@ -138,7 +195,7 @@ void opcontrol() {
 			bint.move(0);
 			}
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_R2)){
-			matchptoggle = true;
+			intptoggle = true;
 			if (fastl) {
 			mint.move(127);
 			tint.move(-127);
@@ -150,15 +207,15 @@ void opcontrol() {
 			bint.move(0);
 			}
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L1)){
-			matchptoggle = false;
+			intptoggle = false;
 			mint.move(127);
 			tint.move(-127);
 			bint.move(0);
+
 			
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L2)) {
 			bint.move(-127);
-			mint.move(0);
-			tint.move(0);
+			stall_pro(bint, true);
 		} else {
 			bint.move(0);
 			mint.move(0);
@@ -176,7 +233,7 @@ void opcontrol() {
 			matchptoggle = !matchptoggle;
 		}
 
-		intp.set_value(matchptoggle);
+		matchp.set_value(matchptoggle);
 
 				
 

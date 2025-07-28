@@ -19,3 +19,7 @@ extern pros::Motor tint;
 
 extern pros::ADIDigitalOut intp;
 extern pros::ADIDigitalOut matchp;
+
+extern pros::Imu imu;
+
+extern void stall_pro(pros::Motor m, bool rev);

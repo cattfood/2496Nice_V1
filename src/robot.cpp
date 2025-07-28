@@ -11,16 +11,33 @@
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 pros::Motor lf(1, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES);
-pros::Motor lm(2, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES); 
-pros::Motor lb(5, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
+pros::Motor lm(13, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES); 
+pros::Motor lb(12, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
 
 pros::Motor rf(10, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES); 
-pros::Motor rm(19, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES); 
-pros::Motor rb(9, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES); 
+pros::Motor rm(9, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES); 
+pros::Motor rb(16, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES); 
 
 pros::Motor bint(7, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES);
-pros::Motor mint(4, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
+pros::Motor mint(5, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
 pros::Motor tint(6, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
 
 pros::ADIDigitalOut intp('A', false);
-pros::ADIDigitalOut matchp('B', false);
+pros::ADIDigitalOut matchp('C', false);
+
+pros::Imu imu(2);
+
+void stall_pro(pros::Motor m , bool rev) {
+    if (m.get_actual_velocity() == 0) {
+        if (rev) {
+            m.move(127);
+            pros::delay(60);
+            m.move(-127);
+        }
+        else {
+            m.move(-127);
+            pros::delay(60);
+            m.move(127);
+        }
+    }
+}
