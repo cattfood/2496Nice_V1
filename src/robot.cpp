@@ -5,7 +5,8 @@
 #include "pros/misc.hpp"
 #include "pros/motors.h"
 #include "pros/motors.hpp"
-
+#include <string>
+using namespace std;
 // -------- All electronic definitions -------- //
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
@@ -25,7 +26,10 @@ pros::Motor tint(6, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
 pros::ADIDigitalOut intp('A', false);
 pros::ADIDigitalOut matchp('C', false);
 
-pros::Imu imu(2);
+pros::Optical opsens(17);
+pros::Optical hfill(3);
+
+pros::Imu imu(18);
 
 void stall_pro(pros::Motor m , bool rev) {
     if (m.get_actual_velocity() == 0) {
@@ -44,3 +48,11 @@ void stall_pro(pros::Motor m , bool rev) {
         }
     }
 }
+
+void color_sort(int hue) {
+        if ( hue - 7 < opsens.get_hue() &&  opsens.get_hue() < hue + 7) {
+            intp.set_value(true);
+            pros::delay(250);
+        } 
+}
+
