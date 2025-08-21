@@ -11,5 +11,6 @@ using namespace pros;
 extern void auto_selector();
 extern void auto_display();
 extern int atn;
+extern char color;
 
 #endif

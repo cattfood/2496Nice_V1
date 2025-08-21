@@ -114,7 +114,7 @@ void opcontrol() {
 		rb.move(right);
 
 		bool fastm = true;
-		bool fastl = true;
+		bool fastl = false;
 		bool intptoggle;
 		bool matchptoggle;
 
@@ -125,92 +125,99 @@ void opcontrol() {
 
 		if (controller.get_digital(E_CONTROLLER_DIGITAL_R1) && controller.get_digital(E_CONTROLLER_DIGITAL_R2)) { //full outtake
 			intptoggle = true;
-			bint.move_velocity(-300);
+			bint.move(-127);
 			mint.move(-127);
 			tint.move(0);
-			//stall_pro(bint, true);
+			stall_pro(mint, true);
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L2) && controller.get_digital(E_CONTROLLER_DIGITAL_R1)) {
 			intptoggle = false;
-			if (fastm) {
-			mint.move(127);
-			tint.move(127);	
+			//if (fastm) {
+			mint.move_velocity(300);
+			tint.move_velocity(300);	
 			bint.move_velocity(-300);
 			//stall_pro(bint, true);
-			}
+			/*}
 			else {
 			mint.move_velocity(270);
 			tint.move_velocity(270);
 			bint.move_velocity(-300);
 			//stall_pro(bint, true);
 			}
+			*/
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L2) && controller.get_digital(E_CONTROLLER_DIGITAL_R2)) {
 			intptoggle = true;
-			if (fastl) {
+			//if (fastl) {
 			mint.move(127);
 			tint.move(-127);	
-			bint.move_velocity(-300);
+			bint.move(-127);
 			//stall_pro(bint, true);
-			}
+			/*}
 			else {
 			mint.move_velocity(270);
 			tint.move_velocity(-270);
 			bint.move_velocity(-300);
 			//stall_pro(bint, true);
 			}
+			*/
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L1) && controller.get_digital(E_CONTROLLER_DIGITAL_R1)) {
 			intptoggle = false;
-			if (fastm) {
+			// if (fastm) {
 			mint.move(127);
 			tint.move(127);	
-			bint.move_velocity(300);
-			//stall_pro(bint, false);
-			}
+			bint.move(127);
+			stall_pro(mint, false);
+			/*}
 			else {
 			mint.move_velocity(270);
 			tint.move_velocity(270);
 			bint.move_velocity(300);
 			//stall_pro(bint, false);
 			}
+			*/
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L1) && controller.get_digital(E_CONTROLLER_DIGITAL_R2)) {
-			intptoggle = true;
-			if (fastl) {
+			
+			//if (fastl) {
 			mint.move(127);
-			tint.move(-127);	
-			bint.move_velocity(300);
-			//stall_pro(bint, true);
-			}
+			tint.move(-127);
+			bint.move(127);
+			stall_pro(mint, false);
+			/*}
 			else {
 			mint.move_velocity(270);
 			tint.move_velocity(-270);
 			bint.move_velocity(300);
 			stall_pro(bint, false);
 			}
+			*/
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_R1)){
 			intptoggle = false;
-			if (fastm) {
+			//if (fastm) {
 			mint.move(127);
 			tint.move(127);	
 			bint.move(0);
-			}
+			/*}
 			else {
 			mint.move_velocity(270);
 			tint.move_velocity(270);
 			bint.move(0);
 			}
+			*/
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_R2)){
 			intptoggle = true;
-			if (fastl) {
+			//if (fastl) {
 			mint.move(127);
 			tint.move(-127);
 			bint.move(0);
-			}
+			/*}
 			else {
 			mint.move_velocity(270);
 			tint.move_velocity(-270);
 			bint.move(0);
 			}
+			*/
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L1)){
 			if (hfill.get_proximity() < 50) {
+				pros::delay(100);
 				controller.print(1,1, "%f", hfill.get_proximity());
 				intptoggle = false;
 				mint.move(127);
@@ -222,7 +229,12 @@ void opcontrol() {
 				mint.move(127);
 				tint.move(-127);
 				bint.move(0);
-				color_sort(20);
+				if (color == 'r') {
+					color_sort(20);
+				}
+				else {
+					color_sort(214);
+				}
 				}
 
 		//red is 20 blue is 211, 0, 214
@@ -230,7 +242,7 @@ void opcontrol() {
 			
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L2)) {
 			intptoggle = true;
-			bint.move_velocity(-300);
+			bint.move(-127);
 			//stall_pro(bint, true);
 		} else {
 			bint.move(0);
@@ -245,7 +257,7 @@ void opcontrol() {
 		
 		intp.set_value(intptoggle);
 
-		if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)) {
+		if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_DOWN)) {
 			matchptoggle = !matchptoggle;
 		}
 
@@ -262,7 +274,8 @@ void opcontrol() {
 
 		 if (controller.get_digital(DIGITAL_A)) {
 		 	//forwardMove(1000);
-			//imu.tare_rotation();
+			imu.tare_rotation();
+			driveArcL(90, 500, 100, 100);
 			//turnp(160);
 			
 		 }

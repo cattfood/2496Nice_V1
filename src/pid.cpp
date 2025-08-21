@@ -5,11 +5,21 @@
 
 pidConstants t_consts;
 int error = 0;
+int error2 = 0;
+int error3 = 0;
 int prevError = 0;
 int integral = 0;
 int derivative = 0;
 float power = 0;
 double trueTarget = 0;
+int time2;
+double STRAIGHT_INTEGRAL_KI = 200;
+double STRAIGHT_MAX_INTEGRAL = 20;
+float ARC_HEADING_KP = 0;
+float ARC_HEADING_KI = 0;
+float ARC_HEADING_KD = 0;
+double ARC_HEADING_INTEGRAL_KI = 0;
+double ARC_HEADING_MAX_INTEGRAL = 0;
 
 void setConstants(pidConstants constants) {
     t_consts = constants;
@@ -45,8 +55,8 @@ float calc (float target, float input, float integralKI, int maxI) {
 }
 
 float calc2 (float target, float input, float integralKI, int maxI) {
-    prevError = error;
-    error = target - input;
+    prevError = error2;
+    error2 = target - input;
 
 
     if(std::abs(error) < integralKI) {
@@ -64,22 +74,22 @@ float calc2 (float target, float input, float integralKI, int maxI) {
     }
 
 
-    derivative = error - prevError;
+    derivative = error2 - prevError;
 
 
-    power = t_consts.p*error + t_consts.i*integral + t_consts.d*derivative;
+    power = t_consts.p*error2 + t_consts.i*integral + t_consts.d*derivative;
 
 
     return power;
 }
 
 float calc3 (float target, float input, float integralKI, int maxI) {
-    prevError = error;
-    error = target - input;
+    prevError = error3;
+    error3 = target - input;
 
 
-    if(std::abs(error) < integralKI) {
-        integral += error;            
+    if(std::abs(error3) < integralKI) {
+        integral += error3;            
     }
     else {
         integral = 0;
@@ -93,10 +103,10 @@ float calc3 (float target, float input, float integralKI, int maxI) {
     }
 
 
-    derivative = error - prevError;
+    derivative = error3 - prevError;
 
 
-    power = t_consts.p*error + t_consts.i*integral + t_consts.d*derivative;
+    power = t_consts.p*error3 + t_consts.i*integral + t_consts.d*derivative;
 
 
     return power;
@@ -178,10 +188,10 @@ void turnp(float target, pidConstants constants, pidConstants constants2) {
     chassisMove(0,0);
 }
 
-/*
+
 
 void driveArcL(double theta, double radius, int timeout, int speed){
-    setConstants({0.1, 0, 0});
+    setConstants({0.1, 0, 0}); // straights
     
 
     //int timeout = 30000;
@@ -197,7 +207,7 @@ void driveArcL(double theta, double radius, int timeout, int speed){
     controller.clear();
     //int timeout = 5000;
     ltarget = double((theta / 360) * 2 * pi * radius); 
-    rtarget = double((theta / 360) * 2 * pi * (radius + 455));
+    rtarget = double((theta / 360) * 2 * pi * (radius + 500));
 
     while (true){
         double encoderAvgL = (lf.get_position() + lb.get_position()) / 2;
@@ -246,7 +256,7 @@ void driveArcL(double theta, double radius, int timeout, int speed){
         
   
 
-        setConstants(ARC_HEADING_KP, ARC_HEADING_KI, ARC_HEADING_KD);
+        setConstants({ARC_HEADING_KP,ARC_HEADING_KI,ARC_HEADING_KD}); // arc consts
         int fix = calc3((trueTarget + leftcorrect), position, ARC_HEADING_INTEGRAL_KI, ARC_HEADING_MAX_INTEGRAL);
         totalError += error3;
     
@@ -254,7 +264,7 @@ void driveArcL(double theta, double radius, int timeout, int speed){
         if ((abs(ltarget - encoderAvgL) <= 4) && (abs(rtarget - encoderAvgR) <= 4)) count++;
         if (count >= 20 || time2 > timeout){
             trueTarget -= theta;
-            break;
+           // break;
         } 
 
         if (time2 % 50 == 0 && time2 % 100 != 0 && time2 % 150 != 0){
@@ -272,4 +282,3 @@ void driveArcL(double theta, double radius, int timeout, int speed){
     
 }
 
-*/

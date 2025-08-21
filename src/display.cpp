@@ -9,6 +9,7 @@ using namespace std;
 using namespace pros;
 
 int atn = 1;
+char color = 'b';
 
 void auto_selector() {
       if(controller.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)){
