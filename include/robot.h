@@ -3,6 +3,8 @@
 #include "pros/imu.hpp"
 #include "pros/misc.hpp"
 #include "pros/motors.hpp"
+#ifndef ROBOTH
+#define ROBOTH
 
 extern pros::Controller controller;
 
@@ -28,3 +30,5 @@ extern pros::Imu imu;
 extern void stall_pro(pros::Motor m, bool rev);
 extern void color_sort(int hue);
 bool basket_full(int hue);
+
+#endif

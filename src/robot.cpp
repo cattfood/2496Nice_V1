@@ -7,7 +7,6 @@
 #include "pros/motors.hpp"
 #include <string>
 using namespace std;
-// -------- All electronic definitions -------- //
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
@@ -29,7 +28,7 @@ pros::ADIDigitalOut matchp('C', false);
 pros::Optical opsens(17);
 pros::Optical hfill(3);
 
-pros::Imu imu(18);
+pros::Imu imu(20);
 
 void stall_pro(pros::Motor m , bool rev) {
     if (m.get_actual_velocity() == 0) {

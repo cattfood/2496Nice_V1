@@ -3,6 +3,11 @@
 #include "pid.h"
 #include "timer.hpp"
 
+// clean up this fuckass code 
+
+//
+
+
 pidConstants t_consts;
 int error = 0;
 int error2 = 0;
@@ -134,7 +139,11 @@ void chassisMove(int left, int right) {
 }
 
 
-void forwardMove(float target, pidConstants constants, pidConstants constants2) {
+void forwardMove(float target, float timeout, float endsp, pidConstants constants, pidConstants constants2) {
+    error = 0;
+    prevError = 0;
+    integral = 0;
+    derivative = 0;
     setConstants(constants);
 
     Timer t1;
@@ -144,26 +153,85 @@ void forwardMove(float target, pidConstants constants, pidConstants constants2) 
 
 
     resetEncoders();
-       while (true){
+       while (t1.time() <= timeout){
         encoder_avg = (lf.get_position() + rf.get_position()) / 2;
-        voltage = calc(target, encoder_avg, 200, 20);
+        float base_voltage = calc(target, encoder_avg, 200, 20);
+
+    // Scale output based on distance left (slows near target)
+    float slowdown = std::min(0.6f, static_cast<float>(fabs(error) / 500.0f));  
+       slowdown = std::max(slowdown, 0.8f);
+    // 500 = distance over which to slow down, tune this
+    voltage = base_voltage * slowdown;
 
 
 
 
         chassisMove(voltage, voltage);
-        if (abs(error) <= 3) count++;
+        if (abs(target - encoder_avg) <= 5) {
+            controller.print(1, 0, "%f", 6.76767);
+            break;
+        }
         if (abs(error) <= 30) setConstants(constants2);
-        //if (count >=20) break;
+       // if (count >=2) {
+      //      controller.print(1, 0, "f", "hello!");
+     //       break;
+     //   }
                                                        
         pros::delay(10);
-        controller.print(1, 0, "I: %d, L: %d         ", error);
+        controller.print(1, 0, "%f", target - encoder_avg);
     }
     chassisMove(0,0);
 }
 
+void forwardMoveInt(float target, float endsp, pidConstants constants, pidConstants constants2) {
+    setConstants(constants);
+
+    Timer t1;
+    float voltage;
+    float encoder_avg;
+    int count = 0;
+
+
+    resetEncoders();
+       while (count <= 2){
+        //mint.move(127);
+		//bint.move(127);
+        encoder_avg = (lf.get_position() + rf.get_position()) / 2;
+        if (abs(error) >= 1000) {
+            voltage = calc(target, encoder_avg, 200, 20);
+        }
+        else {
+            voltage = endsp * calc(target, encoder_avg, 200, 20);
+        }
+
+
+
+       // if (abs(error) >= 800) {
+            chassisMove(voltage, voltage);
+      //  }
+       // else {
+        //    chassisMove(endsp*voltage, endsp*voltage);
+       // }
+        if (abs(error) <= 50) count++;
+        if (abs(error) <= 30) setConstants(constants2);
+        if (count >=2) break;
+                                                       
+        pros::delay(10);
+        //controller.print(1, 0, "%f", error);
+    }
+    chassisMove(0,0);
+    //mint.move(0);
+   // bint.move(0);
+}
+
 
 void turnp(float target, pidConstants constants, pidConstants constants2) {
+
+    // error = 0;
+    prevError = 0;
+    //integral = 0;
+   // derivative = 0;
+
     Timer t1;
     setConstants(constants);
 
@@ -178,9 +246,9 @@ void turnp(float target, pidConstants constants, pidConstants constants2) {
 
 
         chassisMove(voltage, -voltage);
-        if (abs(error) <= 1) count++;
-        if (abs(error) <= 8) setConstants(constants2);
-        //if (count >= 16) break;
+        if (abs(error) <= 2) count++;
+        if (abs(error) <= 3) setConstants(constants2);
+       // if (count >=16) break;
 
         pros::delay(10);
         controller.print(1,1, "%f", (target - position));
@@ -192,6 +260,8 @@ void turnp(float target, pidConstants constants, pidConstants constants2) {
 
 void driveArcL(double theta, double radius, int timeout, int speed){
     setConstants({0.1, 0, 0}); // straights
+
+    Timer t1;
     
 
     //int timeout = 30000;

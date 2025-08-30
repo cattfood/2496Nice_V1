@@ -8,6 +8,14 @@
 #include <iostream>
 
 using namespace std;
+
+void autonomous() {
+	mint.move(127);
+	bint.move(127);
+	imu.tare_rotation();
+	//forwardMove(1325, 1500, 1);
+	turnp(45);
+}
 /**
  * A callback function for LLEMU's center button.
  *
@@ -35,6 +43,7 @@ void initialize() {
 	pros::lcd::set_text(1, "Hello PROS User!");
 
 	pros::lcd::register_btn1_cb(on_center_button);
+	controller.clear();
 }
 
 /**
@@ -85,6 +94,7 @@ void competition_initialize() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
+
 void opcontrol() {
 
 	while (true) {
@@ -118,6 +128,11 @@ void opcontrol() {
 		bool intptoggle;
 		bool matchptoggle;
 
+		double chassis_temp  = (lf.get_temperature() + lm.get_temperature() + lb.get_temperature() + rf.get_temperature() + rm.get_temperature() + rb.get_temperature()) / 6;
+		double int_temp = (bint.get_temperature() + mint.get_temperature() + tint.get_temperature()) / 3;
+		controller.print(0,1, "%f", chassis_temp);
+		controller.print(0,10, "%f", int_temp);
+
 		if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_Y)) {
 			fastm = !fastm;
 			fastl = !fastl;
@@ -132,9 +147,9 @@ void opcontrol() {
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L2) && controller.get_digital(E_CONTROLLER_DIGITAL_R1)) {
 			intptoggle = false;
 			//if (fastm) {
-			mint.move_velocity(300);
-			tint.move_velocity(300);	
-			bint.move_velocity(-300);
+			mint.move_velocity(400);
+			tint.move_velocity(400);	
+			bint.move(-127);
 			//stall_pro(bint, true);
 			/*}
 			else {
@@ -273,10 +288,8 @@ void opcontrol() {
 
 
 		 if (controller.get_digital(DIGITAL_A)) {
-		 	//forwardMove(1000);
-			imu.tare_rotation();
-			driveArcL(90, 500, 100, 100);
-			//turnp(160);
+			autonomous();
+			//driveArcL(90, 500, 100, 100);
 			
 		 }
 		pros::delay(20);

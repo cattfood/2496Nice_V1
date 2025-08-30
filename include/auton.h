@@ -2,5 +2,9 @@
 #include <string>
 #include "pros/api_legacy.h"
 using namespace std;
+#ifndef AUTONH
+#define AUTONH
 
-extern void autonomous();
+//extern void autonomous();
+
+#endif
