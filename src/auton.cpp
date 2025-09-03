@@ -7,4 +7,4 @@
 using namespace std;
 using namespace pros;
 
-void autonomous() {}
+//void autonomous() {}

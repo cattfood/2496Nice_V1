@@ -158,9 +158,9 @@ void forwardMove(float target, float timeout, float endsp, pidConstants constant
         float base_voltage = calc(target, encoder_avg, 200, 20);
 
     // Scale output based on distance left (slows near target)
-    float slowdown = std::min(0.6f, static_cast<float>(fabs(error) / 500.0f));  
-       slowdown = std::max(slowdown, 0.8f);
-    // 500 = distance over which to slow down, tune this
+    float slowdown = std::min(endsp, static_cast<float>(fabs(error) / 10.0f));  
+       slowdown = std::max(slowdown, 0.4f);
+    // 100 = distance over which teo slow down, tune this
     voltage = base_voltage * slowdown;
 
 
@@ -183,7 +183,12 @@ void forwardMove(float target, float timeout, float endsp, pidConstants constant
     chassisMove(0,0);
 }
 
-void forwardMoveInt(float target, float endsp, pidConstants constants, pidConstants constants2) {
+void forwardMoveInt(float target, float timeout, float endsp, pidConstants constants, pidConstants constants2) {
+   
+    error = 0;
+    prevError = 0;
+    integral = 0;
+    derivative = 0;
     setConstants(constants);
 
     Timer t1;
@@ -193,39 +198,41 @@ void forwardMoveInt(float target, float endsp, pidConstants constants, pidConsta
 
 
     resetEncoders();
-       while (count <= 2){
-        //mint.move(127);
-		//bint.move(127);
+  while (t1.time() <= timeout){
         encoder_avg = (lf.get_position() + rf.get_position()) / 2;
-        if (abs(error) >= 1000) {
-            voltage = calc(target, encoder_avg, 200, 20);
+        float base_voltage = calc(target, encoder_avg, 200, 20);
+
+    // Scale output based on distance left (slows near target)
+    float slowdown = endsp;
+    // 500 = distance over which teo slow down, tune this
+    voltage = base_voltage * slowdown;
+
+
+        chassisMove(voltage, voltage);
+        if (abs(target - encoder_avg) <= 5) {
+            controller.print(1, 0, "%f", 6.76767);
+            break;
         }
-        else {
-            voltage = endsp * calc(target, encoder_avg, 200, 20);
-        }
 
-
-
-       // if (abs(error) >= 800) {
-            chassisMove(voltage, voltage);
-      //  }
-       // else {
-        //    chassisMove(endsp*voltage, endsp*voltage);
-       // }
-        if (abs(error) <= 50) count++;
+        while (t1.time() > 50) {
+    mint.move(127);
+	tint.move(127);	
+	bint.move(-127);
+}
         if (abs(error) <= 30) setConstants(constants2);
-        if (count >=2) break;
+       // if (count >=2) {
+      //      controller.print(1, 0, "f", "hello!");
+     //       break;
+     //   }
                                                        
         pros::delay(10);
-        //controller.print(1, 0, "%f", error);
+        controller.print(1, 0, "%f", target - encoder_avg);
     }
     chassisMove(0,0);
-    //mint.move(0);
-   // bint.move(0);
 }
 
 
-void turnp(float target, pidConstants constants, pidConstants constants2) {
+void turnp(float target, float timeout, pidConstants constants, pidConstants constants2) {
 
     // error = 0;
     prevError = 0;
@@ -240,15 +247,15 @@ void turnp(float target, pidConstants constants, pidConstants constants2) {
     int count = 0;
 
 
-    while(true) {
+    while(t1.time() < timeout) {
         position = imu.get_rotation();
         voltage = calc(target, position, 5, 100);
 
 
         chassisMove(voltage, -voltage);
-        if (abs(error) <= 2) count++;
+        if (abs(error) <= 1.6) count++;
         if (abs(error) <= 3) setConstants(constants2);
-       // if (count >=16) break;
+        if (count >=16) break;
 
         pros::delay(10);
         controller.print(1,1, "%f", (target - position));

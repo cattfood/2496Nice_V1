@@ -9,28 +9,40 @@
 
 using namespace std;
 
+bool matchptoggle;
+bool intptoggle;
+
 void autonomous() {
+	intp.set_value(true);
 	mint.move(127);
 	bint.move(127);
-	imu.tare_rotation();
-	//forwardMove(1325, 1500, 1);
-	turnp(45);
+	forwardMove(1450, 1800, 0.35);
+	turnp(45, 600);
+	matchp.set_value(true);
+	forwardMove(600, 300, 1);
+    mint.move_velocity(250);
+	tint.move_velocity(250);	
+	bint.move(-127);
+	pros::delay(500);
+	bint.move(0);
+	pros::delay(1200);
+	mint.move(127);
+	tint.move(-127);
+	matchp.set_value(false);
+	forwardMove(-800, 250, 1);
+	intp.set_value(false);
+	turnp(90, 800);
+	forwardMove(2200, 2200, 0.35);
+	forwardMove(-100, 100, 1);
+	turnp(-45, 1600);
+	forwardMove(600, 300, 1);
+	controller.print(0, 1, "%s", "i work!");
+	bint.move(-127);
+	mint.move(-127);
+	tint.move(0);
+	//driveArcL(90, 500, 100, 100);
 }
-/**
- * A callback function for LLEMU's center button.
- *
- * When this callback is fired, it will toggle line 2 of the LCD text between
- * "I was pressed!" and nothing.
- */
-void on_center_button() {
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
-		pros::lcd::set_text(2, "I was pressed!");
-	} else {
-		pros::lcd::clear_line(2);
-	}
-}
+
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -39,10 +51,9 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
+	imu.tare_rotation();
 	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Hello PROS User!");
-
-	pros::lcd::register_btn1_cb(on_center_button);
+	
 	controller.clear();
 }
 
@@ -125,111 +136,66 @@ void opcontrol() {
 
 		bool fastm = true;
 		bool fastl = false;
-		bool intptoggle;
-		bool matchptoggle;
+	
+		
 
 		double chassis_temp  = (lf.get_temperature() + lm.get_temperature() + lb.get_temperature() + rf.get_temperature() + rm.get_temperature() + rb.get_temperature()) / 6;
 		double int_temp = (bint.get_temperature() + mint.get_temperature() + tint.get_temperature()) / 3;
 		controller.print(0,1, "%f", chassis_temp);
 		controller.print(0,10, "%f", int_temp);
 
-		if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_Y)) {
-			fastm = !fastm;
-			fastl = !fastl;
-		}
-
 		if (controller.get_digital(E_CONTROLLER_DIGITAL_R1) && controller.get_digital(E_CONTROLLER_DIGITAL_R2)) { //full outtake
 			intptoggle = true;
+			
 			bint.move(-127);
 			mint.move(-127);
 			tint.move(0);
 			stall_pro(mint, true);
+
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L2) && controller.get_digital(E_CONTROLLER_DIGITAL_R1)) {
 			intptoggle = false;
-			//if (fastm) {
+
 			mint.move_velocity(400);
 			tint.move_velocity(400);	
 			bint.move(-127);
 			//stall_pro(bint, true);
-			/*}
-			else {
-			mint.move_velocity(270);
-			tint.move_velocity(270);
-			bint.move_velocity(-300);
-			//stall_pro(bint, true);
-			}
-			*/
+			
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L2) && controller.get_digital(E_CONTROLLER_DIGITAL_R2)) {
 			intptoggle = true;
-			//if (fastl) {
+			
 			mint.move(127);
 			tint.move(-127);	
 			bint.move(-127);
 			//stall_pro(bint, true);
-			/*}
-			else {
-			mint.move_velocity(270);
-			tint.move_velocity(-270);
-			bint.move_velocity(-300);
-			//stall_pro(bint, true);
-			}
-			*/
+			
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L1) && controller.get_digital(E_CONTROLLER_DIGITAL_R1)) {
 			intptoggle = false;
-			// if (fastm) {
+			
 			mint.move(127);
 			tint.move(127);	
 			bint.move(127);
 			stall_pro(mint, false);
-			/*}
-			else {
-			mint.move_velocity(270);
-			tint.move_velocity(270);
-			bint.move_velocity(300);
-			//stall_pro(bint, false);
-			}
-			*/
-		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L1) && controller.get_digital(E_CONTROLLER_DIGITAL_R2)) {
 			
-			//if (fastl) {
+		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L1) && controller.get_digital(E_CONTROLLER_DIGITAL_R2)) {
 			mint.move(127);
 			tint.move(-127);
 			bint.move(127);
 			stall_pro(mint, false);
-			/*}
-			else {
-			mint.move_velocity(270);
-			tint.move_velocity(-270);
-			bint.move_velocity(300);
-			stall_pro(bint, false);
-			}
-			*/
+			
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_R1)){
 			intptoggle = false;
-			//if (fastm) {
+			
 			mint.move(127);
 			tint.move(127);	
 			bint.move(0);
-			/*}
-			else {
-			mint.move_velocity(270);
-			tint.move_velocity(270);
-			bint.move(0);
-			}
-			*/
+			
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_R2)){
 			intptoggle = true;
-			//if (fastl) {
+			
 			mint.move(127);
 			tint.move(-127);
 			bint.move(0);
-			/*}
-			else {
-			mint.move_velocity(270);
-			tint.move_velocity(-270);
-			bint.move(0);
-			}
-			*/
+			
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L1)){
 			if (hfill.get_proximity() < 50) {
 				pros::delay(100);
@@ -278,19 +244,8 @@ void opcontrol() {
 
 		matchp.set_value(matchptoggle);
 
-				
-
-	
-
-		
-
-
-
-
 		 if (controller.get_digital(DIGITAL_A)) {
-			autonomous();
-			//driveArcL(90, 500, 100, 100);
-			
+			autonomous();	
 		 }
 		pros::delay(20);
 	}

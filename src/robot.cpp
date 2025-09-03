@@ -15,7 +15,7 @@ pros::Motor lm(13, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES);
 pros::Motor lb(12, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
 
 pros::Motor rf(10, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES); 
-pros::Motor rm(9, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES); 
+pros::Motor rm(8, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES); 
 pros::Motor rb(16, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES); 
 
 pros::Motor bint(7, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES);
@@ -28,7 +28,7 @@ pros::ADIDigitalOut matchp('C', false);
 pros::Optical opsens(17);
 pros::Optical hfill(3);
 
-pros::Imu imu(20);
+pros::Imu imu(11);
 
 void stall_pro(pros::Motor m , bool rev) {
     if (m.get_actual_velocity() == 0) {
