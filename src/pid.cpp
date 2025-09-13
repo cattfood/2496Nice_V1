@@ -139,7 +139,7 @@ void chassisMove(int left, int right) {
 }
 
 
-void forwardMove(float target, float timeout, float endsp, pidConstants constants, pidConstants constants2) {
+void forwardMove(float target, float timeout, float endsp, float dist, pidConstants constants, pidConstants constants2) {
     error = 0;
     prevError = 0;
     integral = 0;
@@ -158,9 +158,9 @@ void forwardMove(float target, float timeout, float endsp, pidConstants constant
         float base_voltage = calc(target, encoder_avg, 200, 20);
 
     // Scale output based on distance left (slows near target)
-    float slowdown = std::min(endsp, static_cast<float>(fabs(error) / 10.0f));  
-       slowdown = std::max(slowdown, 0.4f);
-    // 100 = distance over which teo slow down, tune this
+    float slowdown = std::min(endsp, static_cast<float>(fabs(error) / dist));  
+      // slowdown = std::max(slowdown, 0.4f);
+    // 10 = distance over which teo slow down, tune this
     voltage = base_voltage * slowdown;
 
 
@@ -232,7 +232,7 @@ void forwardMoveInt(float target, float timeout, float endsp, pidConstants const
 }
 
 
-void turnp(float target, float timeout, pidConstants constants, pidConstants constants2) {
+void turnp(float target, float timeout, pidConstants constants, pidConstants constants2, pidConstants constants3) {
 
     // error = 0;
     prevError = 0;
@@ -240,7 +240,7 @@ void turnp(float target, float timeout, pidConstants constants, pidConstants con
    // derivative = 0;
 
     Timer t1;
-    setConstants(constants);
+    setConstants(constants3);
 
     float voltage;
     float position;
@@ -249,12 +249,14 @@ void turnp(float target, float timeout, pidConstants constants, pidConstants con
 
     while(t1.time() < timeout) {
         position = imu.get_rotation();
+
         voltage = calc(target, position, 5, 100);
 
 
         chassisMove(voltage, -voltage);
-        if (abs(error) <= 1.6) count++;
+        if (abs(error) <= 1) count++;
         if (abs(error) <= 3) setConstants(constants2);
+        if (abs(error) <= 45 && abs(error) >= 3) setConstants(constants);
         if (count >=16) break;
 
         pros::delay(10);
@@ -284,7 +286,7 @@ void driveArcL(double theta, double radius, int timeout, int speed){
     controller.clear();
     //int timeout = 5000;
     ltarget = double((theta / 360) * 2 * pi * radius); 
-    rtarget = double((theta / 360) * 2 * pi * (radius + 500));
+    rtarget = double((theta / 360) * 2 * pi * (radius + 430));
 
     while (true){
         double encoderAvgL = (lf.get_position() + lb.get_position()) / 2;
@@ -341,7 +343,7 @@ void driveArcL(double theta, double radius, int timeout, int speed){
         if ((abs(ltarget - encoderAvgL) <= 4) && (abs(rtarget - encoderAvgR) <= 4)) count++;
         if (count >= 20 || time2 > timeout){
             trueTarget -= theta;
-           // break;
+            break;
         } 
 
         if (time2 % 50 == 0 && time2 % 100 != 0 && time2 % 150 != 0){

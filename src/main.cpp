@@ -12,35 +12,133 @@ using namespace std;
 bool matchptoggle;
 bool intptoggle;
 
+pidConstants f_180 {
+	p: 10.0,
+	i: 0.0,
+	d: 80
+};
+
+pidConstants s_180 {
+	p: 12,
+	i: 0.0,
+	d: 4
+};
+
+pidConstants e_180 {
+	p: 10.0,
+	i: 0.0,
+	d: 80
+};
+
+
+
 void autonomous() {
-	intp.set_value(true);
+	
 	mint.move(127);
 	bint.move(127);
-	forwardMove(1450, 1800, 0.35);
-	turnp(45, 600);
+	intp.set_value(true);
+	forwardMove(1450, 1650, 0.45, 200); // 0.75
+	turnp(45, 700);
 	matchp.set_value(true);
-	forwardMove(600, 300, 1);
-    mint.move_velocity(250);
-	tint.move_velocity(250);	
+	pros::delay(500); //600
 	bint.move(-127);
-	pros::delay(500);
+	forwardMove(550, 550, 1, 1);
+	mint.move_velocity(150);
+	tint.move_velocity(150);
 	bint.move(0);
-	pros::delay(1200);
+	pros::delay(800);
+	mint.move(127);
+	bint.move(127);
+	forwardMove(-670, 670, 1, 1);
+	matchp.set_value(false);
+	turnp(90, 1000);
+	forwardMove(2500, 2000, 1, 1);
+	forwardMove(400, 700, 0.3, 100);
+	//forwardMove(1450, 1800, 0.35, 10);
+	// turnp(45, 650); // 650
+	// matchp.set_value(true);
+	// forwardMove(670, 370, 1, 1);
+    // mint.move_velocity(320);
+	// tint.move_velocity(320);	
+	// bint.move(-127);
+	// pros::delay(500);
+	// bint.move(0);
+	// pros::delay(1200);
+	// mint.move(127);
+	// tint.move(-127);
+	// matchp.set_value(false);
+	// forwardMove(-800, 250, 1, 1);
+	// intp.set_value(false);
+	// turnp(90, 800); // 800
+	// forwardMove(2300, 2600, 0.35, 10);
+	// forwardMove(-200, 200, 1, 1);
+	// turnp(-45, 1600); // 1600
+	// forwardMove(620, 400, 1, 1);
+	// bint.move(-127);
+	// mint.move(-127);
+	// tint.move(0);
+	// pros::delay(1000);
+    // bint.move(0);
+	// mint.move(0);
+	// tint.move(0);
+	// forwardMove(-2000, 1900, 1, 1);
+	// intp.set_value(false);
+	// turnp(180, 1700);
+	// matchp.set_value(true);
+	// forwardMove(900, 1200, 0.80, 20);
+	
+/*
+    mint.move(127);
+	bint.move(127);
+	intp.set_value(true);
+	forwardMove(1100, 1200, 0.65, 600); // 0.75
+    driveArcL(90, 400, 600, 600); // 510
+	turnp(-90, 400);
+	forwardMove(900, 900, 0.75, 200);
+	pros::delay(300); // 600
+	driveArcL(-150, 160, 900, 100);
+	turnp(45, 650);
+	matchp.set_value(true);
+	pros::delay(500); //600
+	bint.move(-127);
+	forwardMove(325, 600, 1, 1);
+	mint.move_velocity(600);
+	tint.move_velocity(600);
+	bint.move(0);
+	pros::delay(650);
+	mint.move(0);
+	bint.move(0);
+	forwardMove(-1875, 1900, 1, 1);
+	matchp.set_value(false);
+	turnp(180, 1950, f_180, s_180, e_180);
+	matchp.set_value(true);
+	pros::delay(400); // 500
+	forwardMove(1000, 1000, 0.5, 500);
+	chassisMove(80, 80);
+	bint.move(127);
+	mint.move(127);
+	pros::delay(400);
+	chassisMove(-45, -45);
+	pros::delay(200);
+	chassisMove(45, 45);
+	pros::delay(300);
+	chassisMove(-45, -45);
+	pros::delay(200);
+	chassisMove(45, 45);
+	pros::delay(300);
+	forwardMove(-300, 300, 1, 1);
+	matchp.set_value(false);
+	pros::delay(100); // 200
+	turnp(0, 1900, f_180, s_180, e_180);
+	bint.move(-127);
 	mint.move(127);
 	tint.move(-127);
-	matchp.set_value(false);
-	forwardMove(-800, 250, 1);
-	intp.set_value(false);
-	turnp(90, 800);
-	forwardMove(2200, 2200, 0.35);
-	forwardMove(-100, 100, 1);
-	turnp(-45, 1600);
-	forwardMove(600, 300, 1);
-	controller.print(0, 1, "%s", "i work!");
-	bint.move(-127);
-	mint.move(-127);
-	tint.move(0);
-	//driveArcL(90, 500, 100, 100);
+	forwardMove(1070, 2100, 0.5, 800); /// 2300
+	//chassisMove(30, 30);
+	pros::delay(4000);
+	*/
+ // not awp
+
 }
 
 
@@ -155,8 +253,8 @@ void opcontrol() {
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L2) && controller.get_digital(E_CONTROLLER_DIGITAL_R1)) {
 			intptoggle = false;
 
-			mint.move_velocity(400);
-			tint.move_velocity(400);	
+			mint.move_velocity(350);
+			tint.move_velocity(350);	
 			bint.move(-127);
 			//stall_pro(bint, true);
 			
@@ -232,15 +330,15 @@ void opcontrol() {
 
 		}
 
-		if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)) {
+		if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_B)) {
 			intptoggle  = !intptoggle;
 		}
 		
 		intp.set_value(intptoggle);
 
 		if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_DOWN)) {
-			matchptoggle = !matchptoggle;
 		}
+		matchptoggle = !matchptoggle;    
 
 		matchp.set_value(matchptoggle);
 
