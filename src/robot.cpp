@@ -23,12 +23,12 @@ pros::Motor mint(5, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
 pros::Motor tint(6, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
 
 pros::ADIDigitalOut intp('A', false);
-pros::ADIDigitalOut matchp('E', false);
+pros::ADIDigitalOut matchp('D', false);
 
 pros::Optical opsens(17);
 pros::Optical hfill(3);
 
-pros::Imu imu(11);
+pros::Imu imu(14);
 
 void stall_pro(pros::Motor m , bool rev) {
     if (m.get_actual_velocity() == 0) {
