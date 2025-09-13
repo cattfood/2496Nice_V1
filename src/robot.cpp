@@ -23,7 +23,7 @@ pros::Motor mint(5, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
 pros::Motor tint(6, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
 
 pros::ADIDigitalOut intp('A', false);
-pros::ADIDigitalOut matchp('D', false);
+pros::ADIDigitalOut matchp('E', false);
 
 pros::Optical opsens(17);
 pros::Optical hfill(3);
