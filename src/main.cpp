@@ -34,60 +34,69 @@ pidConstants e_180 {
 
 void autonomous() {
 	
-	mint.move(127);
-	bint.move(127);
-	intp.set_value(true);
-	forwardMove(1450, 1650, 0.45, 200); // 0.75
-	turnp(45, 700);
-	matchp.set_value(true);
-	pros::delay(500); //600
-	bint.move(-127);
-	forwardMove(550, 550, 1, 1);
-	mint.move_velocity(150);
-	tint.move_velocity(150);
-	bint.move(0);
-	pros::delay(800);
-	mint.move(127);
-	bint.move(127);
-	forwardMove(-670, 670, 1, 1);
-	matchp.set_value(false);
-	turnp(90, 1000);
-	forwardMove(2500, 2000, 1, 1);
-	forwardMove(400, 700, 0.3, 100);
-	//forwardMove(1450, 1800, 0.35, 10);
-	// turnp(45, 650); // 650
-	// matchp.set_value(true);
-	// forwardMove(670, 370, 1, 1);
-    // mint.move_velocity(320);
-	// tint.move_velocity(320);	
-	// bint.move(-127);
-	// pros::delay(500);
-	// bint.move(0);
-	// pros::delay(1200);
-	// mint.move(127);
-	// tint.move(-127);
-	// matchp.set_value(false);
-	// forwardMove(-800, 250, 1, 1);
-	// intp.set_value(false);
-	// turnp(90, 800); // 800
-	// forwardMove(2300, 2600, 0.35, 10);
-	// forwardMove(-200, 200, 1, 1);
-	// turnp(-45, 1600); // 1600
-	// forwardMove(620, 400, 1, 1);
-	// bint.move(-127);
-	// mint.move(-127);
-	// tint.move(0);
-	// pros::delay(1000);
-    // bint.move(0);
-	// mint.move(0);
-	// tint.move(0);
-	// forwardMove(-2000, 1900, 1, 1);
-	// intp.set_value(false);
-	// turnp(180, 1700);
-	// matchp.set_value(true);
-	// forwardMove(900, 1200, 0.80, 20);
+	//awp
 	
-/*
+	mint.move(127);
+	bint.move(127);
+	forwardMove(1250, 1200, 0.7, 200); // 0.75
+	turnp(40, 750);
+	matchp.set_value(true);
+	bint.move(-127);
+	forwardMove(650, 650, 1, 1);
+	//bint.move(-127);s
+	mint.move_velocity(600);
+	tint.move_velocity(450);
+	pros::delay(600);
+	bint.move(0);
+	mint.move(0);
+	intp.set_value(true);
+	forwardMove(-670, 670, 1, 1);
+	pros::delay(300);
+	mint.move(127);
+	bint.move(127);
+	matchp.set_value(false);
+	turnp(90, 1700, f_180, s_180, e_180);
+	forwardMove(1700, 1700, 1, 1);
+	forwardMove(600, 600, 0.5, 100);
+	bint.move(0);
+	mint.move(0);
+	turnp(-45,1000);
+	forwardMove(900, 900, 1,1);
+	bint.move_velocity(-300);
+	mint.move_velocity(-300);
+	pros::delay(800);
+	bint.move(0);
+	mint.move(0);
+	forwardMove(-1850, 1850, 1,1);
+	matchp.set_value(false);
+	turnp(-180, 1950, f_180, s_180, e_180);
+	matchp.set_value(true);
+	pros::delay(400); // 500
+	forwardMove(1000, 1000, 0.5, 500);
+	chassisMove(80, 80);
+	bint.move(127);
+	mint.move(127);
+	chassisMove(-45, -45);
+	pros::delay(200);
+	chassisMove(45, 45);
+	pros::delay(300);
+	chassisMove(-45, -45);
+	pros::delay(200);
+	chassisMove(45, 45);
+	pros::delay(300);
+	forwardMove(-300, 300, 1, 1);
+	matchp.set_value(false);
+	pros::delay(100); // 200
+	turnp(-0, 1900, f_180, s_180, e_180);
+	bint.move(-127);
+	mint.move(127);
+	tint.move(-127);
+	forwardMove(1400, 2100, 0.5, 800); /// 2300
+	//chassisMove(30, 30);
+	pros::delay(4000);
+
+	
+/* //elim scoring
     mint.move(127);
 	bint.move(127);
 	intp.set_value(true);
@@ -137,7 +146,57 @@ void autonomous() {
 	//chassisMove(30, 30);
 	pros::delay(4000);
 	*/
- // not awp
+ //low
+ /*
+  mint.move(127);
+	bint.move(127);
+	intp.set_value(true);
+	forwardMove(1100, 1200, 0.65, 600); // 0.75
+    driveArcR(90, 400, 600, 600); // 510
+	turnp(90, 400);
+	forwardMove(900, 900, 0.75, 200);
+	pros::delay(300); // 600
+	driveArcR(-150, 160, 900, 100);
+	turnp(-45, 650);
+	matchp.set_value(true);
+	pros::delay(500); //600
+	forwardMove(325, 600, 1, 1);
+	bint.move(-127);
+	mint.move(-127);
+	pros::delay(800);
+	bint.move(0);
+	mint.move(0);
+	forwardMove(-1875, 1900, 1, 1);
+	matchp.set_value(false);
+	turnp(-180, 1950, f_180, s_180, e_180);
+	matchp.set_value(true);
+	pros::delay(400); // 500
+	forwardMove(1000, 1000, 0.5, 500);
+	chassisMove(80, 80);
+	bint.move(127);
+	mint.move(-127);
+	pros::delay(400);
+	chassisMove(-45, -45);
+	pros::delay(200);
+	chassisMove(45, 45);
+	pros::delay(300);
+	chassisMove(-45, -45);
+	pros::delay(200);
+	chassisMove(45, 45);
+	pros::delay(300);
+	forwardMove(-300, 300, 1, 1);
+	matchp.set_value(false);
+	pros::delay(100); // 200
+	turnp(-0, 1900, f_180, s_180, e_180);
+	bint.move(-127);
+	mint.move(127);
+	tint.move(-127);
+	forwardMove(1070, 2100, 0.5, 800); /// 2300
+	//chassisMove(30, 30);
+	pros::delay(4000);
+
+ */
+
 
 }
 
@@ -217,8 +276,11 @@ void opcontrol() {
 			pros::delay(100);
 		}
 */
+
 	//auto_selector();
 	//auto_display();
+	//color_select();
+	
 		// arcade 
 		int power = controller.get_analog(ANALOG_LEFT_Y);
 		int turn = controller.get_analog(ANALOG_RIGHT_X);
@@ -239,8 +301,8 @@ void opcontrol() {
 
 		double chassis_temp  = (lf.get_temperature() + lm.get_temperature() + lb.get_temperature() + rf.get_temperature() + rm.get_temperature() + rb.get_temperature()) / 6;
 		double int_temp = (bint.get_temperature() + mint.get_temperature() + tint.get_temperature()) / 3;
-		controller.print(0,1, "%f", chassis_temp);
-		controller.print(0,10, "%f", int_temp);
+		controller.print(0,0, "%f", chassis_temp);
+		controller.print(1,0, "%f", int_temp);
 
 		if (controller.get_digital(E_CONTROLLER_DIGITAL_R1) && controller.get_digital(E_CONTROLLER_DIGITAL_R2)) { //full outtake
 			intptoggle = true;
@@ -308,10 +370,10 @@ void opcontrol() {
 				mint.move(127);
 				tint.move(-127);
 				bint.move(0);
-				if (color == 'r') {
+				if (color == 2) {
 					color_sort(20);
 				}
-				else {
+				if (color == 3){
 					color_sort(214);
 				}
 				}
@@ -337,14 +399,14 @@ void opcontrol() {
 		intp.set_value(intptoggle);
 
 		if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_DOWN)) {
+			matchptoggle = !matchptoggle;   
 		}
-		matchptoggle = !matchptoggle;    
-
 		matchp.set_value(matchptoggle);
 
-		 if (controller.get_digital(DIGITAL_A)) {
+		 if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)) {
 			autonomous();	
 		 }
+
 		pros::delay(20);
 	}
 }

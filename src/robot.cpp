@@ -18,12 +18,12 @@ pros::Motor rf(10, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
 pros::Motor rm(8, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES); 
 pros::Motor rb(16, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES); 
 
-pros::Motor bint(7, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES);
+pros::Motor bint(9, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES);
 pros::Motor mint(5, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
 pros::Motor tint(6, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
 
 pros::ADIDigitalOut intp('A', false);
-pros::ADIDigitalOut matchp('E', false);
+pros::ADIDigitalOut matchp('C', false);
 
 pros::Optical opsens(17);
 pros::Optical hfill(3);

@@ -17,6 +17,7 @@ extern void forwardMoveInt(float target, float timeout, float endsp, pidConstant
 extern void turnp(float target, float timeout, pidConstants constants = {10, 0, 80}, pidConstants constants2 = {7, 0, 0}, pidConstants constants3 = {10, 0, 80});
 extern void chassisMove(int left, int right);
 void driveArcL(double theta, double radius, int timeout, int speed);
+void driveArcR(double theta, double radius, int timeout, int speed);
 extern void chassisStop();
 
 

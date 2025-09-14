@@ -361,3 +361,96 @@ void driveArcL(double theta, double radius, int timeout, int speed){
     
 }
 
+void driveArcR(double theta, double radius, int timeout, int speed){
+    setConstants({0.1, 0, 0}); // straights
+
+    Timer t1;
+    
+
+    //int timeout = 30000;
+
+    double totalError = 0;
+
+    double ltarget = 0;
+    double rtarget = 0;
+    double pi = 3.14159265359;
+    int count = 0;
+    time2 = 0;
+    resetEncoders();
+    controller.clear();
+    //int timeout = 5000;
+    ltarget = double((theta / 360) * 2 * pi* (radius + 430)); 
+    rtarget = double((theta / 360) * 2 * pi * radius);
+
+    while (true){
+        double encoderAvgL = (lf.get_position() + lb.get_position()) / 2;
+        double encoderAvgR = (rf.get_position() +  rb.get_position()) / 2;
+        double rightcorrect = (encoderAvgR * 360) / (2 * pi * radius);
+
+        if(trueTarget > 180){
+            trueTarget = trueTarget - 360;
+        }
+
+        double position = imu.get_heading(); //this is where the units are set to be degrees W
+
+        if (position > 180){
+            position = position - 360;
+        }
+
+        if(((trueTarget + rightcorrect)< 0) && (position > 0)){
+            if((position - (trueTarget + rightcorrect)) >= 180){
+                rightcorrect = rightcorrect + 360;
+                position = imu.get_heading();
+            } 
+        } else if (((trueTarget + rightcorrect) > 0) && (position < 0)){
+            if(((trueTarget + rightcorrect) - position) >= 180){
+            position = imu.get_heading();
+            }
+        } 
+    
+        setConstants({0.1, 0, 0});
+        int voltageL = calc(ltarget, encoderAvgL, STRAIGHT_INTEGRAL_KI, STRAIGHT_MAX_INTEGRAL);
+
+        if(voltageL > 127 * double(speed)/100.0){
+            voltageL = 127 * double(speed)/100.0;
+        } else if (voltageL < -127 * double(speed)/100.0){
+            voltageL = -127 * double(speed)/100.0;
+        }
+
+
+        int voltageR = calc2(rtarget, encoderAvgR, STRAIGHT_INTEGRAL_KI, STRAIGHT_MAX_INTEGRAL);
+
+        if(voltageR > 127 * double(speed)/100.0){
+            voltageR = 127 * double(speed)/100.0;
+        } else if (voltageR < -127 * double(speed)/100.0){
+            voltageR = -127 * double(speed)/100.0;
+        }
+
+        
+  
+
+        setConstants({ARC_HEADING_KP,ARC_HEADING_KI,ARC_HEADING_KD}); // arc consts
+        int fix = calc3((trueTarget + rightcorrect), position, ARC_HEADING_INTEGRAL_KI, ARC_HEADING_MAX_INTEGRAL);
+        totalError += error3;
+    
+        chassisMove((voltageL + fix), (voltageR - fix));
+        if ((abs(ltarget - encoderAvgL) <= 4) && (abs(rtarget - encoderAvgR) <= 4)) count++;
+        if (count >= 20 || time2 > timeout){
+            trueTarget -= theta;
+            break;
+        } 
+
+        if (time2 % 50 == 0 && time2 % 100 != 0 && time2 % 150 != 0){
+            controller.print(0, 0, "ERROR: %f           ", float(error));
+        } else if (time2 % 100 == 0 && time2 % 150 != 0){
+            controller.print(1, 0, "fix: %f           ", float(fix));
+        } else if (time2 % 150 == 0){
+            controller.print(2, 0, "truetar: %f        ", float(trueTarget));
+        } 
+
+        time2 += 10;
+        pros::delay(10);
+
+    }
+    
+}

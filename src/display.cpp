@@ -9,7 +9,7 @@ using namespace std;
 using namespace pros;
 
 int atn = 1;
-char color = 'b';
+int color = 1;
 
 void auto_selector() {
       if(controller.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)){
@@ -25,6 +25,32 @@ void auto_selector() {
         atn = 4;
       }
     
+}
+
+void color_select() {
+  if(controller.get_digital_new_press(E_CONTROLLER_DIGITAL_X)) {
+			color = 1;
+		}
+  if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_Y)) {
+      color = 2;
+  }
+  if (controller.get_digital_new_press (E_CONTROLLER_DIGITAL_A)) {
+    color = 3;
+  }
+}
+
+void color_display() {
+  switch (color) {
+      case 1: 
+      controller.print(2, 0, "%s", "none");
+      break;
+      case 2:
+      controller.print(2, 0, "%s", "red");
+      break;
+      case 3:
+      controller.print(2, 0, "%s", "blue");
+      break;
+    }
 }
 
 void auto_display() {
