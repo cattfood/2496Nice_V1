@@ -183,8 +183,16 @@ bool intptoggle;
 
 
 //}
-
-
+/* void on_center_button() {
+  static bool pressed = false;
+  pressed = !pressed;
+  if (pressed) {
+	atn++;
+  } else {
+    pros::lcd::clear_line(2);
+  }
+}
+*/
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -194,7 +202,7 @@ bool intptoggle;
 void initialize() {
 	imu.tare_rotation();
 	pros::lcd::initialize();
-	
+	// pros::lcd::register_btn0_cb(on_center_button);
 	controller.clear();
 }
 
@@ -203,7 +211,12 @@ void initialize() {
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
  */
-void disabled() {}
+void disabled() {
+	while(true){
+	auto_selector();
+	auto_display();
+	}
+}
 
 /**
  * Runs after initialize(), and before autonomous when connected to the Field
@@ -214,11 +227,50 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
+
+
 void competition_initialize() {
     while(true) {
+		if(controller.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)){
+        atn++;
+      }
+      if(controller.get_digital_new_press(E_CONTROLLER_DIGITAL_LEFT)){
+        atn--;
+      }
+      if(atn > 4){
+        atn = 1;
+      }
+      if(atn < 1){
+        atn = 4;
+      }
+	  string text;
+    switch (atn) {
+        case 1:
+            text = "NONE";
+            controller.print(0, 0, "Aut 0: %s", text);
+            break;
+        case 2:
+            text = "AWP";
+            controller.print(0, 0, "Aut 1: %s", text);
+            break;
+        case 3:
+            text = "elims";
+            controller.print(0, 0, "Aut 2: %s", text);
+            break;
+        case 4:
+            text = "low";
+            controller.print(0, 0, "Aut 3: %s", text);
+            break;
+
+
+    }
+	controller.clear();
 	//auto_selector();
 	//auto_display();
+
+
 	}
+
 }
 
 
@@ -342,14 +394,15 @@ void opcontrol() {
 			bint.move(0);
 			
 		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L1)){
-			if (hfill.get_proximity() < 50) {
-				pros::delay(100);
+			//if (hfill.get_proximity() < 50) {
+				/*pros::delay(100);
 				controller.print(1,1, "%f", hfill.get_proximity());
 				intptoggle = false;
 				mint.move(127);
 				tint.move(0);
 				bint.move(127);
-			} else {
+				*/
+			// else {
 				controller.print(1,1, "%f", hfill.get_hue());
 				intptoggle = false;
 				mint.move(127);
@@ -361,7 +414,7 @@ void opcontrol() {
 				if (color == 3){
 					color_sort(214);
 				}
-				}
+				//}
 
 		//red is 20 blue is 211, 0, 214
 //intake into hoard
@@ -389,7 +442,7 @@ void opcontrol() {
 		matchp.set_value(matchptoggle);
 
 		 if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)) {
-			autonomous();	
+		//	autonomous();	
 		 }
 
 		pros::delay(20);
