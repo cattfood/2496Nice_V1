@@ -277,8 +277,8 @@ void opcontrol() {
 		}
 */
 
-	//auto_selector();
-	//auto_display();
+	auto_selector();
+	auto_display();
 	//color_select();
 	
 		// arcade 
