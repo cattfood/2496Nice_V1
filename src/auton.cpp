@@ -31,6 +31,7 @@ void autonomous() {
 
     }
     if(atn == 2) {
+        //awp 
         mint.move(127);
 	bint.move(127);
 	forwardMove(1250, 1200, 0.7, 200); // 0.75
@@ -92,6 +93,7 @@ void autonomous() {
 
     }
     if(atn == 3) {
+    //elims type 
     mint.move(127);
 	bint.move(127);
 	intp.set_value(true);
