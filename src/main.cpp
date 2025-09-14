@@ -12,28 +12,12 @@ using namespace std;
 bool matchptoggle;
 bool intptoggle;
 
-pidConstants f_180 {
-	p: 10.0,
-	i: 0.0,
-	d: 80
-};
-
-pidConstants s_180 {
-	p: 12,
-	i: 0.0,
-	d: 4
-};
-
-pidConstants e_180 {
-	p: 10.0,
-	i: 0.0,
-	d: 80
-};
 
 
 
-void autonomous() {
-	
+
+//void autonomous() {
+	/*
 	//awp
 	
 	mint.move(127);
@@ -94,7 +78,7 @@ void autonomous() {
 	forwardMove(1400, 2100, 0.5, 800); /// 2300
 	//chassisMove(30, 30);
 	pros::delay(4000);
-
+*/
 	
 /* //elim scoring
     mint.move(127);
@@ -187,7 +171,7 @@ void autonomous() {
 	forwardMove(-300, 300, 1, 1);
 	matchp.set_value(false);
 	pros::delay(100); // 200
-	turnp(-0, 1900, f_180, s_180, e_180);
+	turnp(-0, 1900, f_180,s s_180, e_180);
 	bint.move(-127);
 	mint.move(127);
 	tint.move(-127);
@@ -198,7 +182,7 @@ void autonomous() {
  */
 
 
-}
+//}
 
 
 /**
@@ -232,7 +216,8 @@ void disabled() {}
  */
 void competition_initialize() {
     while(true) {
-		
+	//auto_selector();
+	//auto_display();
 	}
 }
 
@@ -276,9 +261,9 @@ void opcontrol() {
 			pros::delay(100);
 		}
 */
-
 	auto_selector();
 	auto_display();
+
 	//color_select();
 	
 		// arcade 

@@ -61,15 +61,15 @@ void auto_display() {
             controller.print(0, 0, "Aut 0: %s", text);
             break;
         case 2:
-            text = "test 1";
+            text = "AWP";
             controller.print(0, 0, "Aut 1: %s", text);
             break;
         case 3:
-            text = "test 2";
+            text = "elims";
             controller.print(0, 0, "Aut 2: %s", text);
             break;
         case 4:
-            text = "test 3";
+            text = "low";
             controller.print(0, 0, "Aut 3: %s", text);
             break;
 

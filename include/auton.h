@@ -5,6 +5,6 @@ using namespace std;
 #ifndef AUTONH
 #define AUTONH
 
-//extern void autonomous();
+extern void autonomous();
 
 #endif
