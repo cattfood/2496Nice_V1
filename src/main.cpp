@@ -172,7 +172,7 @@ forwardMove(-900, 900, 1, 1);
 turnp(-135, 1000, {0.9, 0, 5}, {10, 0, 0});
 forwardMove(600, 600, 1, 1);
 turnp(-90, 1000);
-forwardMove(2900, 1900, 1, 1);
+forwardMove(2500, 1200, 1, 1);
 
 
 
