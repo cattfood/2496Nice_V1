@@ -30,6 +30,7 @@ void setConstants(pidConstants constants) {
     t_consts = constants;
 }
 
+
 float calc (float target, float input, float integralKI, int maxI) {
     prevError = error;
     error = target - input;
@@ -138,6 +139,31 @@ void chassisMove(int left, int right) {
     rb.move(right);
 }
 
+void forwardMove(float target, pidConstants constants) {
+    error = 0;
+    prevError = 0;
+    integral = 0;
+    derivative = 0;
+    setConstants(constants);
+
+    float voltage;
+    float encoder_avg;
+    
+    resetEncoders();
+
+    while (true) {
+        encoder_avg = (lf.get_position() + rf.get_position()) / 2;
+        voltage = calc(target, encoder_avg, 200, 20);
+
+        chassisMove(voltage, voltage);
+        if (error < 2) {
+            break;
+        }
+
+        pros::delay(10);
+    }
+    chassisMove(0,0);
+}
 
 void forwardMove(float target, float timeout, float endsp, float dist, pidConstants constants, pidConstants constants2) {
     error = 0;
@@ -154,6 +180,7 @@ void forwardMove(float target, float timeout, float endsp, float dist, pidConsta
 
     resetEncoders();
        while (t1.time() <= timeout){
+      //while (true){
         encoder_avg = (lf.get_position() + rf.get_position()) / 2;
         float base_voltage = calc(target, encoder_avg, 200, 20);
 
@@ -167,11 +194,11 @@ void forwardMove(float target, float timeout, float endsp, float dist, pidConsta
 
 
         chassisMove(voltage, voltage);
-        if (abs(target - encoder_avg) <= 5) {
-            controller.print(1, 0, "%f", 6.76767);
-            break;
+        if (abs(target - encoder_avg) <= 10) {
+           // controller.print(1, 0, "%f", s6.76767);
+            //break;
         }
-        if (abs(error) <= 30) setConstants(constants2);
+        if (abs(error) <= 25) setConstants(constants2);
        // if (count >=2) {
       //      controller.print(1, 0, "f", "hello!");
      //       break;
@@ -232,7 +259,7 @@ void forwardMoveInt(float target, float timeout, float endsp, pidConstants const
 }
 
 
-void turnp(float target, float timeout, pidConstants constants, pidConstants constants2, pidConstants constants3) {
+void turnp(float target, float timeout, pidConstants constants, pidConstants constants2) {
 
     // error = 0;
     prevError = 0;
@@ -240,7 +267,7 @@ void turnp(float target, float timeout, pidConstants constants, pidConstants con
    // derivative = 0;
 
     Timer t1;
-    setConstants(constants3);
+    setConstants(constants);
 
     float voltage;
     float position;
@@ -248,15 +275,16 @@ void turnp(float target, float timeout, pidConstants constants, pidConstants con
 
 
     while(t1.time() < timeout) {
+   //while (true) {
         position = imu.get_rotation();
 
         voltage = calc(target, position, 5, 100);
 
 
         chassisMove(voltage, -voltage);
-        if (abs(error) <= 1) count++;
-        if (abs(error) <= 3) setConstants(constants2);
-        if (abs(error) <= 45 && abs(error) >= 3) setConstants(constants);
+        if (abs(error) <= 0.5) count++;
+        if (abs(error) <= 4) setConstants(constants2);
+       // if (abs(error) <= 45 && abs(error) >= 3) setConstants(constants);
         if (count >=16) break;
 
         pros::delay(10);

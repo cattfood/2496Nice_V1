@@ -11,178 +11,183 @@ using namespace std;
 
 bool matchptoggle;
 bool intptoggle;
+bool desct;
+bool indext;
+bool rampt;
+
+int auton = 1;
+
+int add(int num1, int num2) {
+	return num1+num2;
+}
 
 
 
 
-
-//void autonomous() {
+void autonomous() {
 	/*
-	//awp
-	
-	mint.move(127);
-	bint.move(127);
-	forwardMove(1250, 1200, 0.7, 200); // 0.75
-	turnp(40, 750);
-	matchp.set_value(true);
+	//forwardMove(2000, 1000000000, 1, 200); // 0.75
+	ramp.set_value(true); // awp
 	bint.move(-127);
-	forwardMove(650, 650, 1, 1);
-	//bint.move(-127);s
-	mint.move_velocity(600);
-	tint.move_velocity(450);
-	pros::delay(600);
-	bint.move(0);
-	mint.move(0);
-	intp.set_value(true);
-	forwardMove(-670, 670, 1, 1);
-	pros::delay(300);
 	mint.move(127);
-	bint.move(127);
-	matchp.set_value(false);
-	turnp(90, 1700, f_180, s_180, e_180);
-	forwardMove(1700, 1700, 1, 1);
-	forwardMove(600, 600, 0.5, 100);
-	bint.move(0);
-	mint.move(0);
-	turnp(-45,1000);
-	forwardMove(900, 900, 1,1);
-	bint.move_velocity(-300);
-	mint.move_velocity(-300);
+	tint.move(-127);
+	indexer.set_value(true);
+	forwardMove(1500, 1200, 0.65,200);
+	turnp(-45, 900);
+	bint.move_velocity(250);
+	mint.move(-127);
+	tint.move(127);
+	forwardMove(870, 670, 1 ,200);
+	pros::delay(500);
+	bint.move(-127);
+	mint.move(127);
+	tint.move(-127);
+	indexer.set_value(true);
+	forwardMove(-870, 670, 1, 1);
+	turnp(-100, 800);
+	forwardMove(2400, 2400, 0.5,400);
+	turnp(43, 900);
+	forwardMove(600, 600, 1 ,200);
+	bint.move(-127);
+	mint.move(127);
+	tint.move(-127); //mid
+	ramp.set_value(true); // awp
+	indexer.set_value(false);
 	pros::delay(800);
-	bint.move(0);
-	mint.move(0);
-	forwardMove(-1850, 1850, 1,1);
-	matchp.set_value(false);
-	turnp(-180, 1950, f_180, s_180, e_180);
-	matchp.set_value(true);
-	pros::delay(400); // 500
-	forwardMove(1000, 1000, 0.5, 500);
-	chassisMove(80, 80);
-	bint.move(127);
-	mint.move(127);
-	chassisMove(-45, -45);
-	pros::delay(200);
-	chassisMove(45, 45);
-	pros::delay(300);
-	chassisMove(-45, -45);
-	pros::delay(200);
-	chassisMove(45, 45);
-	pros::delay(300);
-	forwardMove(-300, 300, 1, 1);
-	matchp.set_value(false);
-	pros::delay(100); // 200
-	turnp(-0, 1900, f_180, s_180, e_180);
 	bint.move(-127);
 	mint.move(127);
 	tint.move(-127);
-	forwardMove(1400, 2100, 0.5, 800); /// 2300
-	//chassisMove(30, 30);
-	pros::delay(4000);
-*/
-	
-/* //elim scoring
-    mint.move(127);
-	bint.move(127);
-	intp.set_value(true);
-	forwardMove(1100, 1200, 0.65, 600); // 0.75
-    driveArcL(90, 400, 600, 600); // 510
-	turnp(-90, 400);
-	forwardMove(900, 900, 0.75, 200);
-	pros::delay(300); // 600
-	driveArcL(-150, 160, 900, 100);
-	turnp(45, 650);
+	indexer.set_value(true);
+	forwardMove(-1800, 1300, 1, 1);
+	turnp(180, 700);
 	matchp.set_value(true);
-	pros::delay(500); //600
-	bint.move(-127);
-	forwardMove(325, 600, 1, 1);
-	mint.move_velocity(600);
-	tint.move_velocity(600);
+	ramp.set_value(false);
+	pros::delay(300);
+	forwardMove(1000, 1000, 1, 1);
+	pros::delay(100);
 	bint.move(0);
-	pros::delay(650);
 	mint.move(0);
-	bint.move(0);
-	forwardMove(-1875, 1900, 1, 1);
+	tint.move(0); 
+	forwardMove(-400, 400, 1, 1);
 	matchp.set_value(false);
-	turnp(180, 1950, f_180, s_180, e_180);
-	matchp.set_value(true);
-	pros::delay(400); // 500
-	forwardMove(1000, 1000, 0.5, 500);
-	chassisMove(80, 80);
-	bint.move(127);
-	mint.move(127);
-	pros::delay(400);
-	chassisMove(-45, -45);
-	pros::delay(200);
-	chassisMove(45, 45);
-	pros::delay(300);
-	chassisMove(-45, -45);
-	pros::delay(200);
-	chassisMove(45, 45);
-	pros::delay(300);
-	forwardMove(-300, 300, 1, 1);
-	matchp.set_value(false);
-	pros::delay(100); // 200
-	turnp(0, 1900, f_180, s_180, e_180);
+	turnp(0, 400);
+	turnp(0, 600);
+	forwardMove(800, 800, 1, 1);
+	ramp.set_value(true);
 	bint.move(-127);
 	mint.move(127);
-	tint.move(-127);
-	forwardMove(1070, 2100, 0.5, 800); /// 2300
-	//chassisMove(30, 30);
-	pros::delay(4000);
+	tint.move(-127); // high
+	indexer.set_value(false);
 	*/
- //low
- /*
-  mint.move(127);
-	bint.move(127);
-	intp.set_value(true);
-	forwardMove(1100, 1200, 0.65, 600); // 0.75
-    driveArcR(90, 400, 600, 600); // 510
-	turnp(90, 400);
-	forwardMove(900, 900, 0.75, 200);
-	pros::delay(300); // 600
-	driveArcR(-150, 160, 900, 100);
-	turnp(-45, 650);
-	matchp.set_value(true);
-	pros::delay(500); //600
-	forwardMove(325, 600, 1, 1);
+
+	/*bint.move(-127); // elims
+	mint.move(127);
+	tint.move(-127);
+	indexer.set_value(true);
+	forwardMove(1550, 1550, 0.4,200);
+	turnp(135, 1000);
+	forwardMove(800, 800, 1, 1);
+	forwardMove(800, 800, 1, 1);
+	turnp(-30, 200);
+	turnp(0, 1200, {0.9, 0, 5}, {10, 0, 0});
+	forwardMove(700, 700, 1,1);
 	bint.move(-127);
-	mint.move(-127);
-	pros::delay(800);
-	bint.move(0);
-	mint.move(0);
-	forwardMove(-1875, 1900, 1, 1);
-	matchp.set_value(false);
-	turnp(-180, 1950, f_180, s_180, e_180);
-	matchp.set_value(true);
-	pros::delay(400); // 500
-	forwardMove(1000, 1000, 0.5, 500);
-	chassisMove(80, 80);
-	bint.move(127);
-	mint.move(-127);
-	pros::delay(400);
-	chassisMove(-45, -45);
-	pros::delay(200);
-	chassisMove(45, 45);
-	pros::delay(300);
-	chassisMove(-45, -45);
-	pros::delay(200);
-	chassisMove(45, 45);
-	pros::delay(300);
-	forwardMove(-300, 300, 1, 1);
-	matchp.set_value(false);
-	pros::delay(100); // 200
-	turnp(-0, 1900, f_180,s s_180, e_180);
+	mint.move(127);
+	tint.move(-127); // high
+	indexer.set_value(false);
+	pros::delay(2000);
+	forwardMove(-420, 420, 1,1);
+	turnp(200, 200);
+	turnp(180, 1200, {0.9, 0, 5}, {10, 0, 0});
+	forwardMove(450, 450, 1,1);
 	bint.move(-127);
 	mint.move(127);
 	tint.move(-127);
-	forwardMove(1070, 2100, 0.5, 800); /// 2300
-	//chassisMove(30, 30);
-	pros::delay(4000);
+	indexer.set_value(true);
+	matchp.set_value(true);
+	pros::delay(600);
+	forwardMove(700, 700, 1,1);
+	pros::delay(800);
+	forwardMove(-450, 450, 1,1);
+	matchp.set_value(false);
+	pros::delay(100);
+	turnp(-30, 200);
+	turnp(0, 1200, {0.9, 0, 5}, {10, 0, 0});
+	forwardMove(950, 950, 1,1);
+	bint.move(-127);
+	mint.move(127);
+	tint.move(-127); // high
+	indexer.set_value(false);
+	pros::delay(2000);
+*/
+forwardMove(1320, 1320, 1,1);
+turnp(-200, 200);
+turnp(-185, 1200, {0.9, 0, 5}, {10, 0, 0});
+bint.move(-127);
+mint.move(127);
+tint.move(-127);
+indexer.set_value(true);
+matchp.set_value(true);
+pros::delay(600);
+forwardMove(720, 720, 1,1);
+pros::delay(2000);
+forwardMove(-450, 450, 1,1);
+matchp.set_value(false);
+pros::delay(100);
+turnp(-30, 200);
+turnp(0, 1300, {0.9, 0, 5}, {10, 0, 0});
+forwardMove(870, 870, 1,1);
+bint.move(-127);
+mint.move(127);
+tint.move(-127); // high
+indexer.set_value(false);
+pros::delay(6000);
+forwardMove(-450, 450, 1,1);
+turnp(90, 1300);
+forwardMove(5200, 5100, 0.6,200);
+forwardMove(-710, 710, 1,1);
+//
+turnp(200, 200);
+turnp(187, 1200, {0.9, 0, 5}, {10, 0, 0});
+bint.move(-127);
+mint.move(127);
+tint.move(-127);
+indexer.set_value(true);
+matchp.set_value(true);
+pros::delay(600);
+forwardMove(710, 710, 1,1);
+pros::delay(2000);
+forwardMove(-450, 450, 1,1);
+matchp.set_value(false);
+pros::delay(100);
+turnp(30, 200);
+turnp(0, 1300, {0.9, 0, 5}, {10, 0, 0});
+forwardMove(870, 870, 1,1);
+bint.move(-127);
+mint.move(127);
+tint.move(-127); // high
+indexer.set_value(false);
+pros::delay(6000);
+forwardMove(-900, 900, 1, 1);
+turnp(-135, 1000, {0.9, 0, 5}, {10, 0, 0});
+forwardMove(600, 600, 1, 1);
+turnp(-90, 1000);
+forwardMove(2900, 1900, 1, 1);
 
- */
 
 
-//}
+
+
+
+
+
+
+
+
+	//pros::delay(1000);
+	//turnp(90, 1000000000);
+}
+
 /* void on_center_button() {
   static bool pressed = false;
   pressed = !pressed;
@@ -231,6 +236,7 @@ void disabled() {
 
 void competition_initialize() {
     while(true) {
+		/*
 		if(controller.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)){
         atn++;
       }
@@ -264,6 +270,7 @@ void competition_initialize() {
 
 
     }
+			*/
 	controller.clear();
 	//auto_selector();
 	//auto_display();
@@ -313,23 +320,44 @@ void opcontrol() {
 			pros::delay(100);
 		}
 */
-	auto_selector();
-	auto_display();
+	//auto_selector();
+	//auto_display();
+	
 
 	//color_select();
 	
 		// arcade 
 		int power = controller.get_analog(ANALOG_LEFT_Y);
-		int turn = controller.get_analog(ANALOG_RIGHT_X);
+		int turnf = controller.get_analog(ANALOG_RIGHT_X);
+		int turn = (turnf*turnf*turnf) / 16100;
 		int left = power + turn;
 		int right = power - turn;
 		opsens.set_led_pwm(100);
+		
+
+		//tank
+
+		int lpower = controller.get_analog(ANALOG_LEFT_Y);
+		int rpower = controller.get_analog(ANALOG_RIGHT_Y);
+
+		bool tanktoggle = false;
+
+		if (tanktoggle) {
+		lf.move(lpower);
+		lm.move(lpower);
+		lb.move(lpower);
+		rf.move(rpower);
+		rm.move(rpower);
+		rb.move(rpower);
+		} 
+		else {
 		lf.move(left);
 		lm.move(left);
 		lb.move(left);
 		rf.move(right);
 		rm.move(right);
 		rb.move(right);
+		}
 
 		bool fastm = true;
 		bool fastl = false;
@@ -338,115 +366,62 @@ void opcontrol() {
 
 		double chassis_temp  = (lf.get_temperature() + lm.get_temperature() + lb.get_temperature() + rf.get_temperature() + rm.get_temperature() + rb.get_temperature()) / 6;
 		double int_temp = (bint.get_temperature() + mint.get_temperature() + tint.get_temperature()) / 3;
-		controller.print(0,0, "%f", chassis_temp);
-		controller.print(1,0, "%f", int_temp);
+		//controller.print(0,0, "%f", turn);
+		//controller.print(1,0, "%f", int_temp);
 
-		if (controller.get_digital(E_CONTROLLER_DIGITAL_R1) && controller.get_digital(E_CONTROLLER_DIGITAL_R2)) { //full outtake
-			intptoggle = true;
-			
-			bint.move(-127);
-			mint.move(-127);
-			tint.move(0);
-			stall_pro(mint, true);
+	
+	if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)) {
+		tanktoggle = !tanktoggle;
+	}
+	if (controller.get_digital(E_CONTROLLER_DIGITAL_L1)) {
+		bint.move(-127);
+		mint.move(127);
+		tint.move(-127);
+		indexer.set_value(true);
+	}
+	else if (controller.get_digital(E_CONTROLLER_DIGITAL_R1) && controller.get_digital(E_CONTROLLER_DIGITAL_R2)) {
+		bint.move(127);
+		mint.move(-127);
+		tint.move(127); // low
+	}
+	else if(controller.get_digital(E_CONTROLLER_DIGITAL_R1)) {
+		ramp.set_value(false);
+		bint.move(-127);
+		mint.move(127);
+		tint.move(-127); //mid
+		indexer.set_value(false);
+	}
+	else if (controller.get_digital(E_CONTROLLER_DIGITAL_R2)) {
+		ramp.set_value(true);
+		bint.move(-127);
+		mint.move(127);
+		tint.move(-127); // high
+		indexer.set_value(false);
+	}
+	else {
+		bint.move(0);
+		mint.move(0);
+		tint.move(0);
+	}
 
-		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L2) && controller.get_digital(E_CONTROLLER_DIGITAL_R1)) {
-			intptoggle = false;
+	if(controller.get_digital_new_press(E_CONTROLLER_DIGITAL_B)) {
+		desct = !desct;
+	
+	}
+	desc.set_value(desct);
+	if(controller.get_digital_new_press(E_CONTROLLER_DIGITAL_DOWN)) {
+		matchptoggle = !matchptoggle;
+	
+	}
+	matchp.set_value(matchptoggle);
 
-			mint.move_velocity(350);
-			tint.move_velocity(350);	
-			bint.move(-127);
-			//stall_pro(bint, true);
-			
-		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L2) && controller.get_digital(E_CONTROLLER_DIGITAL_R2)) {
-			intptoggle = true;
-			
-			mint.move(127);
-			tint.move(-127);	
-			bint.move(-127);
-			//stall_pro(bint, true);
-			
-		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L1) && controller.get_digital(E_CONTROLLER_DIGITAL_R1)) {
-			intptoggle = false;
-			
-			mint.move(127);
-			tint.move(127);	
-			bint.move(127);
-			stall_pro(mint, false);
-			
-		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L1) && controller.get_digital(E_CONTROLLER_DIGITAL_R2)) {
-			mint.move(127);
-			tint.move(-127);
-			bint.move(127);
-			stall_pro(mint, false);
-			
-		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_R1)){
-			intptoggle = false;
-			
-			mint.move(127);
-			tint.move(127);	
-			bint.move(0);
-			
-		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_R2)){
-			intptoggle = true;
-			
-			mint.move(127);
-			tint.move(-127);
-			bint.move(0);
-			
-		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L1)){
-			//if (hfill.get_proximity() < 50) {
-				/*pros::delay(100);
-				controller.print(1,1, "%f", hfill.get_proximity());
-				intptoggle = false;
-				mint.move(127);
-				tint.move(0);
-				bint.move(127);
-				*/
-			// else {
-				controller.print(1,1, "%f", hfill.get_hue());
-				intptoggle = false;
-				mint.move(127);
-				tint.move(-127);
-				bint.move(0);
-				if (color == 2) {
-					color_sort(20);
-				}
-				if (color == 3){
-					color_sort(214);
-				}
-				//}
-
-		//red is 20 blue is 211, 0, 214
-//intake into hoard
-			
-		} else if (controller.get_digital(E_CONTROLLER_DIGITAL_L2)) {
-			intptoggle = true;
-			bint.move(-127);
-			//stall_pro(bint, true);
-		} else {
-			bint.move(0);
-			mint.move(0);
-			tint.move(0);
-
-		}
-
-		if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_B)) {
-			intptoggle  = !intptoggle;
-		}
-		
-		intp.set_value(intptoggle);
-
-		if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_DOWN)) {
-			matchptoggle = !matchptoggle;   
-		}
-		matchp.set_value(matchptoggle);
-
-		 if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)) {
-		//	autonomous();	
-		 }
-
-		pros::delay(20);
+	if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_A)){
+		autonomous();
 	}
 }
+}
+			
+
+
 
 

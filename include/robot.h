@@ -21,6 +21,10 @@ extern pros::Motor tint;
 
 extern pros::ADIDigitalOut intp;
 extern pros::ADIDigitalOut matchp;
+extern pros::ADIDigitalOut ramp;
+extern pros::ADIDigitalOut indexer;
+extern pros::ADIDigitalOut desc;
+
 
 extern pros::Optical opsens;
 extern pros::Optical hfill;
