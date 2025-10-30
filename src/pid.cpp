@@ -30,6 +30,15 @@ void setConstants(pidConstants constants) {
     t_consts = constants;
 }
 
+double getHeadingError(double target, double current, double kp) {
+    double error = target - current;
+
+    // Wrap error to [-180, 180] so PID always takes shortest path
+    while (error > 180) error -= 360;
+    while (error < -180) error += 360;
+
+    return error *kp;
+}
 
 float calc (float target, float input, float integralKI, int maxI) {
     prevError = error;
@@ -139,31 +148,6 @@ void chassisMove(int left, int right) {
     rb.move(right);
 }
 
-void forwardMove(float target, pidConstants constants) {
-    error = 0;
-    prevError = 0;
-    integral = 0;
-    derivative = 0;
-    setConstants(constants);
-
-    float voltage;
-    float encoder_avg;
-    
-    resetEncoders();
-
-    while (true) {
-        encoder_avg = (lf.get_position() + rf.get_position()) / 2;
-        voltage = calc(target, encoder_avg, 200, 20);
-
-        chassisMove(voltage, voltage);
-        if (error < 2) {
-            break;
-        }
-
-        pros::delay(10);
-    }
-    chassisMove(0,0);
-}
 
 void forwardMove(float target, float timeout, float endsp, float dist, pidConstants constants, pidConstants constants2) {
     error = 0;
@@ -171,6 +155,7 @@ void forwardMove(float target, float timeout, float endsp, float dist, pidConsta
     integral = 0;
     derivative = 0;
     setConstants(constants);
+    double position = imu.get_heading(); // degrees
 
     Timer t1;
     float voltage;
@@ -187,13 +172,23 @@ void forwardMove(float target, float timeout, float endsp, float dist, pidConsta
     // Scale output based on distance left (slows near target)
     float slowdown = std::min(endsp, static_cast<float>(fabs(error) / dist));  
       // slowdown = std::max(slowdown, 0.4f);
-    // 10 = distance over which teo slow down, tune this
+    // 10 = distance over which teo slowS down, tune this
     voltage = base_voltage * slowdown;
 
+    double position2 = imu.get_heading(); // degrees
+double poserror = getHeadingError(position, position2, 1); // wrapped to [-180,180]
 
 
+// If using simple proportional heading correction:
+double kH = 1.0; // tune this
+double correction = kH * poserror;
 
-        chassisMove(voltage, voltage);
+// Apply voltage limits
+if (voltage > 127) voltage = 127;
+if (voltage < -127) voltage = -127;
+
+// Drive with heading correction
+chassisMove(voltage + correction, voltage - correction);
         if (abs(target - encoder_avg) <= 10) {
            // controller.print(1, 0, "%f", s6.76767);
             //break;
