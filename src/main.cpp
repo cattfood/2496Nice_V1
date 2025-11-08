@@ -23,20 +23,154 @@ int auton = 1;
 
 void autonomous() {
 	
-/*
+
 		//ramp.set_value(true);
 	bint.move(-127); // new elims
 	mint.move(127);
 	tint.move(-127);
 	indexer.set_value(true);
-    forwardMove(500, 500, 1,1);
-	driveArcR(90, 840, 1300, 80, true);
-	forwardMove(600, 700, 0.7,200);
+    forwardMove(525, 1000, 1,1);
+	turnp(47.5, 800, {1.7, 0, 5.5});
+	forwardMove(650, 800, 0.8, 1);
+	delay(400);
+	forwardMove(300, 700, 0.8, 1);
+	matchp.set_value(true);
+	ramp.set_value(true);
+	bint.move(-127); // new elims
+	mint.move(127);
+	tint.move(-127);
+	delay(100);
+
+	turnp(58, 1000, {2.5, 0, 4.5}, {2.5, 0, 4.5}, 3);
+	matchp.set_value(false);
+
+	forwardMove(1360, 1000, 0.8, 1);
+
+	delay(150);
+	forwardMove(-1100, 900, 1, 1);
+	ramp.set_value(false);
+
+	delay(100);
+	turnp(-47, 800);
+	forwardMove(825, 800, 1, 1);
+	matchp.set_value(true);
+	
+	bint.move(100); // new elims
+	mint.move(-100);
+	tint.move(100);
+	delay(900);
+	matchp.set_value(false);
+
+	bint.move(-127); // new elims
+	mint.move(127);
+	tint.move(-127);
+
+	forwardMove(-300, 800, 1, 1);
+
+
+	turnp(-55, 800, {1.7, 0, 5.5}, {2, 0, 5}, 2);
+
+
+	forwardMove(-1950, 1800, 0.8, 1);
+	delay(10);
+	turnp(-171, 1500, {1.7, 0, 5.5}, {2, 0, 5});
+
+	matchp.set_value(true);
+
+	delay(100);
+
+	forwardMove(950, 800, 1, 1);
+	turnp(-174, 100);
+
+	delay(200);
+
+	
+
+	forwardMove(-800, 700, 1, 1);
+
+	matchp.set_value(false);
+
+
+	turnp(-2, 1000);
+
+	forwardMove(600, 1000, 1, 1);
+
+	indexer.set_value(false);
+
+	delay(4000);
+
+
+
+
+
+	
+
+
+
+
+
+
+	// driveArcR(90, 830, 1800, 80, true);
+	// forwardMove(600, 1200, 0.7,200);
+	// pros::delay(400);
+	// driveArcR(-135, 500, 1400, 100, false); // 1600
+	// turnp(-62, 400);
+	// ramp.set_value(false);
+	// forwardMove(830, 1000,1 ,200);
+	// matchp.set_value(true);
+	// bint.move_velocity(150);
+	// mint.move(-127);
+	// tint.move(127);
+	// pros::delay(900);
+	// matchp.set_value(false);
+	// bint.move(-127);
+	// mint.move(127);
+	// tint.move(-127);
+	// delay(100);
+	// turnp(-50, 700);
+	// forwardMove(-2430, 2100, 1,200); //1900
+	// delay(100);
+	// turnp(-180, 800);
+	// matchp.set_value(true);
+	// pros::delay(400);
+	// forwardMove(800, 1300, 1,1, false);
+	// pros::delay(500);
+	// forwardMove(-600, 1100, 1,1);
+	// bint.move(0);
+	// mint.move(0);
+	// tint.move(0);
+	// matchp.set_value(false);
+	// delay(100);
+	// turnp(-1, 900);//0
+	// delay(100);
+	// forwardMove(750, 1200, 1,1);
+	// delay(100);
+	// forwardMove(-20, 800, 1,1);
+	// turnp(0, 1000);//-1
+	// bint.move(-127);
+	// mint.move(127);
+	// tint.move(-127); // high
+	// stall_pro(bint, true);
+	// stall_pro(mint, false);
+	// stall_pro(tint, true);
+	// indexer.set_value(false);
+	// pros::delay(4000);
+
+//arc left
+/*
+	//ramp.set_value(true);
+	bint.move(-127); // new elims
+	mint.move(127);
+	tint.move(-127);
+	indexer.set_value(true);
+    forwardMove(500, 1000, 1,1);
+	driveArcR(90, 830, 1800, 80, true);
+	forwardMove(600, 1200, 0.7,200);
 	pros::delay(400);
-	driveArcR(-135, 260, 1400, 100, false); // 1600
+	driveArcR(-135, 500, 1400, 100, false); // 1600
 	turnp(-62, 400);
 	ramp.set_value(false);
-	forwardMove(830, 830,1 ,200);
+	forwardMove(830, 1000,1 ,200);
 	matchp.set_value(true);
 	bint.move_velocity(150);
 	mint.move(-127);
@@ -46,22 +180,27 @@ void autonomous() {
 	bint.move(-127);
 	mint.move(127);
 	tint.move(-127);
-	turnp(-50, 400);
-	forwardMove(-2430, 1850, 1,200); //1900
+	delay(100);
+	turnp(-50, 700);
+	forwardMove(-2430, 2100, 1,200); //1900
+	delay(100);
 	turnp(-180, 800);
 	matchp.set_value(true);
 	pros::delay(400);
-	forwardMove(800, 800, 1,1, false);
+	forwardMove(800, 1300, 1,1, false);
 	pros::delay(500);
-	forwardMove(-600, 600, 1,1);
+	forwardMove(-600, 1100, 1,1);
 	bint.move(0);
 	mint.move(0);
 	tint.move(0);
 	matchp.set_value(false);
+	delay(100);
 	turnp(-1, 900);//0
-	forwardMove(750, 750, 1,1);
-	forwardMove(-20, 100, 1,1);
-	turnp(0, 400);//-1
+	delay(100);
+	forwardMove(750, 1200, 1,1);
+	delay(100);
+	forwardMove(-20, 800, 1,1);
+	turnp(0, 1000);//-1
 	bint.move(-127);
 	mint.move(127);
 	tint.move(-127); // high
@@ -75,7 +214,7 @@ void autonomous() {
 
 	
 
-
+/*
 forwardMove(1350, 1400, 1, 1); // new awp
 turnp(180, 1200);
 bint.move(-127);
@@ -117,7 +256,7 @@ tint.move(127);
 pros::delay(1000);
 
 
-
+*/
 
 
 //forwardMove(1000, 3000000, 1, 1);

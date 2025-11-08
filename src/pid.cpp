@@ -166,6 +166,7 @@ void forwardMove(float target, float timeout, float endsp, float dist, bool head
     derivative = 0;
     setConstants(constants);
     double position = imu.get_heading(); // degrees
+    controller.clear();
 
     Timer t1;
     float voltage;
@@ -190,7 +191,7 @@ double poserror = getHeadingError(position, position2, 1); // wrapped to [-180,1
 
 
 // If using simple proportional heading correction:
-double kH = 1.0; // tune this
+double kH = 2.5; // tune this
 double correction = kH * poserror;
 
 // Apply voltage limits
@@ -216,8 +217,10 @@ chassisMove(voltage + correction, voltage - correction);
             break;
         }
         pros::delay(10);
-        controller.print(1, 0, "%f", target - encoder_avg);
-    }
+
+        
+        controller.print(0, 0, "%.2f", target - encoder_avg);}
+        
     chassisMove(0,0);
 }
 
@@ -270,13 +273,14 @@ void forwardMoveInt(float target, float timeout, float endsp, pidConstants const
 }
 
 
-void turnp(float target, float timeout, pidConstants constants, pidConstants constants2) {
+void turnp(float target, float timeout, pidConstants constants, pidConstants constants2, double feedforward ) {
 
     // error = 0;
     prevError = 0;
     //integral = 0;
    // derivative = 0;
    int count = 0;
+   controller.clear();
 
     Timer t1;
     setConstants(constants);
@@ -291,15 +295,14 @@ void turnp(float target, float timeout, pidConstants constants, pidConstants con
 
         voltage = calc(target, position, 5, 100);
 
-
-        chassisMove(voltage, -voltage);
-        if (abs(error) <= 0.5) count++;
-        if (abs(error) <= 4) setConstants(constants2);
+        chassisMove(voltage * feedforward, -voltage * feedforward);
+        if (abs(error) <= 0.1) count++;
+        // if (abs(error) <= 4) setConstants(constants2);
        // if (abs(error) <= 45 && abs(error) >= 3) setConstants(constants);
         if (count >=16) break;
 
         pros::delay(10);
-        controller.print(1,1, "%f", (target - position));
+        controller.print(0,0, "%f", (target - position));
     }
     chassisMove(0,0);
 }
