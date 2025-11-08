@@ -3,9 +3,7 @@
 #include "pid.h"
 #include "timer.hpp"
 
-// clean up this fuckass code 
 
-//
 
 
 pidConstants t_consts;
@@ -29,7 +27,19 @@ double ARC_HEADING_MAX_INTEGRAL = 0;
 void setConstants(pidConstants constants) {
     t_consts = constants;
 }
+double getTrueError(double target, double input) {
+    double error = target - input;
 
+    while(error > 180) {
+        error -= 360;
+    }
+
+    while (error < 180) {
+        error+=360;
+    }
+
+    return error;
+}
 double getHeadingError(double target, double current, double kp) {
     double error = target - current;
 
@@ -149,7 +159,7 @@ void chassisMove(int left, int right) {
 }
 
 
-void forwardMove(float target, float timeout, float endsp, float dist, pidConstants constants, pidConstants constants2) {
+void forwardMove(float target, float timeout, float endsp, float dist, bool headc, pidConstants constants, pidConstants constants2) {
     error = 0;
     prevError = 0;
     integral = 0;
@@ -162,7 +172,7 @@ void forwardMove(float target, float timeout, float endsp, float dist, pidConsta
     float encoder_avg;
     int count = 0;
 
-
+  
     resetEncoders();
        while (t1.time() <= timeout){
       //while (true){
@@ -198,7 +208,13 @@ chassisMove(voltage + correction, voltage - correction);
       //      controller.print(1, 0, "f", "hello!");
      //       break;
      //   }
-                                                       
+        if (abs(error) < 5) {
+            count++;
+        }
+        
+        if(count > 5) {
+            break;
+        }
         pros::delay(10);
         controller.print(1, 0, "%f", target - encoder_avg);
     }
@@ -260,13 +276,13 @@ void turnp(float target, float timeout, pidConstants constants, pidConstants con
     prevError = 0;
     //integral = 0;
    // derivative = 0;
+   int count = 0;
 
     Timer t1;
     setConstants(constants);
 
     float voltage;
     float position;
-    int count = 0;
 
 
     while(t1.time() < timeout) {
@@ -289,7 +305,6 @@ void turnp(float target, float timeout, pidConstants constants, pidConstants con
 }
 
 
-
 void driveArcL(double theta, double radius, int timeout, int speed){
     setConstants({0.1, 0, 0}); // straights
 
@@ -307,9 +322,10 @@ void driveArcL(double theta, double radius, int timeout, int speed){
     time2 = 0;
     resetEncoders();
     controller.clear();
+    
     //int timeout = 5000;
     ltarget = double((theta / 360) * 2 * pi * radius); 
-    rtarget = double((theta / 360) * 2 * pi * (radius + 430));
+    rtarget = double((theta / 360) * 2 * pi * (radius + 561));
 
     while (true){
         double encoderAvgL = (lf.get_position() + lb.get_position()) / 2;
@@ -384,7 +400,7 @@ void driveArcL(double theta, double radius, int timeout, int speed){
     
 }
 
-void driveArcR(double theta, double radius, int timeout, int speed){
+void driveArcR(double theta, double radius, int timeout, int speed, bool test){
     setConstants({0.1, 0, 0}); // straights
 
     Timer t1;
@@ -402,7 +418,7 @@ void driveArcR(double theta, double radius, int timeout, int speed){
     resetEncoders();
     controller.clear();
     //int timeout = 5000;
-    ltarget = double((theta / 360) * 2 * pi* (radius + 430)); 
+    ltarget = double((theta / 360) * 2 * pi* (radius + 500)); 
     rtarget = double((theta / 360) * 2 * pi * radius);
 
     while (true){
@@ -451,15 +467,19 @@ void driveArcR(double theta, double radius, int timeout, int speed){
 
         
   
-
-        setConstants({ARC_HEADING_KP,ARC_HEADING_KI,ARC_HEADING_KD}); // arc consts
+        if (test) {
+                  setConstants({6, 0, 0}); // arc consts
+        }
+        else {
+            setConstants({6, 0, 0}); // arc consts
+        }
         int fix = calc3((trueTarget + rightcorrect), position, ARC_HEADING_INTEGRAL_KI, ARC_HEADING_MAX_INTEGRAL);
         totalError += error3;
     
         chassisMove((voltageL + fix), (voltageR - fix));
         if ((abs(ltarget - encoderAvgL) <= 4) && (abs(rtarget - encoderAvgR) <= 4)) count++;
         if (count >= 20 || time2 > timeout){
-            trueTarget -= theta;
+            trueTarget += theta;
             break;
         } 
 
