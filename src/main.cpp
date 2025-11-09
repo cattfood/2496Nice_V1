@@ -35,13 +35,14 @@ void autonomous() {
 	delay(400);
 	forwardMove(300, 700, 0.8, 1);
 	matchp.set_value(true);
+	pros::delay(100);
 	ramp.set_value(true);
 	bint.move(-127); // new elims
 	mint.move(127);
 	tint.move(-127);
 	delay(100);
 
-	turnp(58, 1000, {2.5, 0, 4.5}, {2.5, 0, 4.5}, 3);
+	turnp(58, 800, {2.5, 0, 4.5}, {2.5, 0, 4.5}, 3);
 	matchp.set_value(false);
 
 	forwardMove(1360, 1000, 0.8, 1);
@@ -73,7 +74,7 @@ void autonomous() {
 
 	forwardMove(-1950, 1800, 0.8, 1);
 	delay(10);
-	turnp(-171, 1500, {1.7, 0, 5.5}, {2, 0, 5});
+	turnp(-171, 1400, {1.7, 0, 5.5}, {2, 0, 5});
 
 	matchp.set_value(true);
 
@@ -94,6 +95,8 @@ void autonomous() {
 	turnp(-2, 1000);
 
 	forwardMove(600, 1000, 1, 1);
+	forwardMove(-80, 100, 1, 1);
+
 
 	indexer.set_value(false);
 
