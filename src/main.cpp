@@ -45,14 +45,19 @@ void autonomous() {
 	turnp(58, 500, {2.5, 0, 4.5}, {2.5, 0, 4.5}, 3); //800
 	matchp.set_value(false);
 
-	forwardMove(1360, 1000, 0.8, 1);
-
+	forwardMove(1360, 900, 1, 1);
 	delay(150);
-	forwardMove(-1100, 750, 1, 1); //900
+	forwardMove(-1100, 1000, 1, 1);
 	ramp.set_value(false);
 
 	delay(100);
+	bint.move(100); // new elims
+	mint.move(-100);
+	tint.move(100);
 	turnp(-47, 800);
+	bint.move(0); // new elims
+	mint.move(0);
+	tint.move(0);
 	forwardMove(825, 800, 1, 1);
 	matchp.set_value(true);
 	
@@ -72,9 +77,9 @@ void autonomous() {
 	turnp(-55, 600, {1.7, 0, 5.5}, {2, 0, 5}, 2); //800
 
 
-	forwardMove(-1950, 1500, 0.8, 1); // 1500
+	forwardMove(-1950, 1800, 0.8, 1); // 1500
 	delay(10);
-	turnp(-171, 1300, {1.7, 0, 5.5}, {2, 0, 5}); //1300
+	turnp(-171, 1300, {1.7, 0, 5.5}, {2, 0, 5}); //1400
 
 	matchp.set_value(true);
 
