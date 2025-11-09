@@ -29,8 +29,8 @@ void autonomous() {
 	mint.move(127);
 	tint.move(-127);
 	indexer.set_value(true);
-    forwardMove(525, 800, 1,1); //1000
-	turnp(47.5, 800, {1.7, 0, 5.5});
+    forwardMove(525, 600, 1,1); //1000
+	turnp(47.5, 550, {1.7, 0, 5.5}); //800, 650
 	forwardMove(650, 550, 1, 1); //800
 	delay(200);
 	forwardMove(300, 700, 0.8, 1);
@@ -51,35 +51,32 @@ void autonomous() {
 	ramp.set_value(false);
 
 	delay(100);
+	turnp(-47, 800);
 	bint.move(100); // new elims
 	mint.move(-100);
 	tint.move(100);
-	turnp(-47, 800);
-	bint.move(0); // new elims
-	mint.move(0);
-	tint.move(0);
 	forwardMove(825, 600, 1, 1); //800
 	matchp.set_value(true);
 	
-	bint.move(100); // new elims
+	bint.move(100); 
 	mint.move(-100);
 	tint.move(100);
 	delay(700); //800
 	matchp.set_value(false);
 
-	bint.move(-127); // new elims
+	bint.move(-127); 
 	mint.move(127);
 	tint.move(-127);
 
-	forwardMove(-300, 500, 1, 1); //800
+	forwardMove(-300, 300, 1, 1); //800
 
 
 	turnp(-55, 600, {1.7, 0, 5.5}, {2, 0, 5}, 2); //800
 
 
-	forwardMove(-1750, 1400, 0.8, 1); // 1500
+	forwardMove(-1850, 1300, 1, 1); // 1500,1400
 	delay(10);
-	turnp(-171, 1300, {1.7, 0, 5.5}, {2, 0, 5}); //1400
+	turnp(-171, 1150, {1.7, 0, 5.5}, {2, 0, 5}); //1400, 1300
 
 	matchp.set_value(true);
 
@@ -98,14 +95,14 @@ void autonomous() {
 
 
 	turnp(-2, 1000);
+	indexer.set_value(false);
 
-	forwardMove(600, 1000, 1, 1);
-	forwardMove(-150, 150, 1, 1);
+	forwardMove(470, 320, 1, 1);
 	turnp(-1, 1000);
 
 
 
-	indexer.set_value(false);
+	
 
 	delay(4000);
 
