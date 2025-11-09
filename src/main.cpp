@@ -47,7 +47,7 @@ void autonomous() {
 
 	forwardMove(1360, 900, 1, 1);
 	delay(150);
-	forwardMove(-1100, 1000, 1, 1);
+	forwardMove(-1100, 1100, 1, 1);
 	ramp.set_value(false);
 
 	delay(100);
@@ -58,7 +58,7 @@ void autonomous() {
 	bint.move(0); // new elims
 	mint.move(0);
 	tint.move(0);
-	forwardMove(825, 800, 1, 1);
+	forwardMove(825, 600, 1, 1); //800
 	matchp.set_value(true);
 	
 	bint.move(100); // new elims
@@ -71,13 +71,13 @@ void autonomous() {
 	mint.move(127);
 	tint.move(-127);
 
-	forwardMove(-300, 800, 1, 1);
+	forwardMove(-300, 500, 1, 1); //800
 
 
 	turnp(-55, 600, {1.7, 0, 5.5}, {2, 0, 5}, 2); //800
 
 
-	forwardMove(-1950, 1500, 0.8, 1); // 1500
+	forwardMove(-1750, 1400, 0.8, 1); // 1500
 	delay(10);
 	turnp(-171, 1300, {1.7, 0, 5.5}, {2, 0, 5}); //1400
 
@@ -85,7 +85,7 @@ void autonomous() {
 
 	delay(100);
 
-	forwardMove(950, 800, 1, 1);
+	forwardMove(960, 800, 1, 1);
 	turnp(-174, 100);
 
 	delay(200);
