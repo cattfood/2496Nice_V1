@@ -23,13 +23,13 @@ int auton = 1;
 
 void autonomous() {
 	
-
+/*
 		//ramp.set_value(true);
 	bint.move(-127); // new elims
 	mint.move(127);
 	tint.move(-127);
 	indexer.set_value(true);
-    forwardMove(525, 600, 1,1); //1000
+    forwardMove(525, 530, 1,1); //1000
 	turnp(47.5, 550, {1.7, 0, 5.5}); //800, 650
 	forwardMove(650, 550, 1, 1); //800
 	delay(200);
@@ -74,16 +74,16 @@ void autonomous() {
 	turnp(-55, 600, {1.7, 0, 5.5}, {2, 0, 5}, 2); //800
 
 
-	forwardMove(-1850, 1300, 1, 1); // 1500,1400
+	forwardMove(-1882, 1440, 1, 1); // 1500,1400
 	delay(10);
-	turnp(-171, 1150, {1.7, 0, 5.5}, {2, 0, 5}); //1400, 1300
+	turnp(-180, 1200); //1400, 1300
 
 	matchp.set_value(true);
 
 	delay(100);
 
-	forwardMove(960, 800, 1, 1);
-	turnp(-174, 100);
+	forwardMove(1020, 820, 1, 1);
+	//turnp(-180, 100);
 
 	delay(200);
 
@@ -94,11 +94,11 @@ void autonomous() {
 	matchp.set_value(false);
 
 
-	turnp(-2, 1000);
+	turnp(10, 1000);
 	indexer.set_value(false);
 
-	forwardMove(470, 320, 1, 1);
-	turnp(-1, 1000);
+	forwardMove(485, 320, 1, 1);
+	turnp(0, 1000);
 
 
 
@@ -110,7 +110,7 @@ void autonomous() {
 
 
 
-	
+	*/
 
 
 
@@ -210,62 +210,100 @@ tint.move(127);
 pros::delay(1000);
 
 */
-/*
 
-forwardMove(1320, 1320, 1,1); //skills
-turnp(-200, 200);
-turnp(-185, 1200, {0.9, 0, 5}, {10, 0, 0});
-bint.move(-127);
+//newskills real
+
+colors.set_value(true);
+forwardMove(1275, 1200,1,1); // move toward matchlaod
+
+turnp(177, 800);
+bint.move(-127); 
 mint.move(127);
 tint.move(-127);
-indexer.set_value(true);
 matchp.set_value(true);
-pros::delay(600);
-forwardMove(720, 720, 1,1);
-pros::delay(2000);
-forwardMove(-450, 450, 1,1);
-matchp.set_value(false);
-pros::delay(100);
-turnp(-30, 200);
-turnp(0, 1300, {0.9, 0, 5}, {10, 0, 0});
-forwardMove(870, 870, 1,1);
-bint.move(-127);
-mint.move(127);
-tint.move(-127); // high
-indexer.set_value(false);
-pros::delay(6000);
-forwardMove(-450, 450, 1,1);
-turnp(90, 1300);
-forwardMove(5200, 5100, 0.6,200);
-forwardMove(-710, 710, 1,1);
-//
-turnp(200, 200);
-turnp(187, 1200, {0.9, 0, 5}, {10, 0, 0});
-bint.move(-127);
+pros::delay(260);
+forwardMove(680, 800, 0.8,620);
+forwardMove(200, 200, 0.6, 600);
+pros::delay(3000);
+forwardMove(-850, 800, 1,1);
+matchp.set_value(false); // mathcloaedd =
+
+turnp(87, 1000);
+forwardMove(5200, 2500, 0.85, 400); // wall reset
+
+forwardMove(-800, 800,1,1); // move toward matchlaod
+
+turnp(185, 1500);
+bint.move(-127); 
 mint.move(127);
 tint.move(-127);
-indexer.set_value(true);
 matchp.set_value(true);
-pros::delay(600);
-forwardMove(710, 710, 1,1);
-pros::delay(2000);
-forwardMove(-450, 450, 1,1);
-matchp.set_value(false);
-pros::delay(100);
-turnp(30, 200);
-turnp(0, 1300, {0.9, 0, 5}, {10, 0, 0});
-forwardMove(870, 870, 1,1);
-bint.move(-127);
+pros::delay(200);
+forwardMove(1100, 1200, 0.5,900); //1200 ,900
+pros::delay(3000);
+forwardMove(-850, 800, 1,1);
+matchp.set_value(false); // matchload
+
+turnp(315, 1000);
+forwardMove(700, 700, 1,1);
+turnp(10, 900); //12
+forwardMove(2600, 2800, 1,1);
+turnp(60, 800);
+forwardMove(850, 900, 1,1); // move across field
+
+turnp(-15, 1000);
+bint.move(-127); 
 mint.move(127);
-tint.move(-127); // high
-indexer.set_value(false);
-pros::delay(6000);
-forwardMove(-900, 900, 1, 1);
-turnp(-135, 1000, {0.9, 0, 5}, {10, 0, 0});
-forwardMove(600, 600, 1, 1);
-turnp(-90, 1000);
-forwardMove(2500, 1200, 1, 1);
-*/
+tint.move(-127);
+matchp.set_value(true);
+pros::delay(200);
+forwardMove(1200, 1200, 0.5,1000);
+forwardMove(200, 400, 0.6, 600);
+pros::delay(3000);
+forwardMove(-850, 800, 1,1);
+matchp.set_value(false); // matchlaod
+
+turnp(-95, 900);
+forwardMove(5400, 2500,0.85,400); // rteset
+
+colors.set_value(true);
+forwardMove(-850, 800,1,1); // move toward matchlaod
+
+turnp(2, 1000);
+bint.move(-127); 
+mint.move(127);
+tint.move(-127);
+matchp.set_value(true);
+pros::delay(200);
+forwardMove(1000, 1200, 0.8,1000);
+forwardMove(200, 1000, 0.6, 600);
+pros::delay(3000);
+forwardMove(-850, 800, 1,1);
+matchp.set_value(false); // matchload
+
+
+turnp(45, 900);
+forwardMove(1200, 900, 1,1);
+turnp(90, 800);
+forwardMove(540, 540, 1,1);
+matchp.set_value(true);
+pros::delay(200);
+forwardMove(1600, 900, 1,1); // clear
+matchp.set_value(false);
+forwardMove(2100, 1500, 1,1);
+
+turnp(90, 1000);
+turnp(25, 1000);
+forwardMove(-900, 900,0.8,600); 
+forwardMove(300, 300, 1,200); //reset on park
+
+turnp(180, 1200);
+forwardMove(3000, 2000, 1, 500);
+turnp(178, 800);
+forwardMove(3000, 3000, 0.85, 800); //get to park
+forwardMove(-100, 100, 1,1);
+turnp(270, 600);
+forwardMove(2000, 2000, 1,1);
 
 //forwardMove(1000, 3000000, 1, 1);
 

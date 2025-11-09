@@ -273,38 +273,76 @@ void forwardMoveInt(float target, float timeout, float endsp, pidConstants const
 }
 
 
+// void turnp(float target, float timeout, pidConstants constants, pidConstants constants2, double feedforward ) {
+
+//     error = 0;
+//     prevError = 0;
+//     integral = 0;
+//     derivative = 0;
+//    int count = 0;
+//    controller.clear();
+
+//     Timer t1;
+//     setConstants(constants);
+
+//     float voltage;
+//     float position;
+
+
+//     while(t1.time() < timeout) {
+//    //while (true) {
+//         position = imu.get_rotation();
+
+//         voltage = calc(target, position, 5, 100);
+
+//         chassisMove(voltage * feedforward, -voltage * feedforward);
+//         if (abs(error) <= 0.1) count++;
+//         // if (abs(error) <= 4) setConstants(constants2);
+//        // if (abs(error) <= 45 && abs(error) >= 3) setConstants(constants);
+//         if (count >=16) break;
+
+//         pros::delay(10);
+//         controller.print(0,0, "%f", (target - position));
+//     }
+//     chassisMove(0,0);
+// }
+
+
 void turnp(float target, float timeout, pidConstants constants, pidConstants constants2, double feedforward ) {
-
-    // error = 0;
+    error = 0;
     prevError = 0;
-    //integral = 0;
-   // derivative = 0;
-   int count = 0;
-   controller.clear();
-
-    Timer t1;
+    integral = 0;
+    derivative = 0;
+    power = 0;
     setConstants(constants);
 
-    float voltage;
-    float position;
+    int count = 0;
+    controller.clear();
+    Timer t1;
+
+    while (t1.time() < timeout) {
+        double position = imu.get_heading(); // 0–360
+        double headingError = target - position;
+
+        if (headingError > 180) headingError -= 360;
+        if (headingError < -180) headingError += 360;
 
 
-    while(t1.time() < timeout) {
-   //while (true) {
-        position = imu.get_rotation();
+        double voltage = calc(0, -headingError, 5, 100); 
+        voltage *= feedforward;
 
-        voltage = calc(target, position, 5, 100);
+        voltage = std::clamp(voltage, -127.0, 127.0);
+        chassisMove(voltage, -voltage);
 
-        chassisMove(voltage * feedforward, -voltage * feedforward);
-        if (abs(error) <= 0.1) count++;
-        // if (abs(error) <= 4) setConstants(constants2);
-       // if (abs(error) <= 45 && abs(error) >= 3) setConstants(constants);
-        if (count >=16) break;
+        if (fabs(headingError) < 2) count++;
+        else count = 0;
+
+        if (count >= 16) break;
 
         pros::delay(10);
-        controller.print(0,0, "%f", (target - position));
+        controller.print(0, 0, "Err: %.2f", headingError);
     }
-    chassisMove(0,0);
+    chassisMove(0, 0);
 }
 
 

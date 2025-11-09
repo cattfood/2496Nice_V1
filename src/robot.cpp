@@ -27,6 +27,7 @@ pros::ADIDigitalOut desc('D', false);
 pros::ADIDigitalOut ramp('B', false);
 pros::ADIDigitalOut indexer('C', false);
 pros::ADIDigitalOut matchp('A', false);
+pros::ADIDigitalOut colors('E', false);
 
 
 

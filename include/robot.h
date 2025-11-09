@@ -24,6 +24,7 @@ extern pros::ADIDigitalOut matchp;
 extern pros::ADIDigitalOut ramp;
 extern pros::ADIDigitalOut indexer;
 extern pros::ADIDigitalOut desc;
+extern pros::ADIDigitalOut colors;
 
 
 extern pros::Optical opsens;
