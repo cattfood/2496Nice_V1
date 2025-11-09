@@ -29,26 +29,26 @@ void autonomous() {
 	mint.move(127);
 	tint.move(-127);
 	indexer.set_value(true);
-    forwardMove(525, 1000, 1,1);
+    forwardMove(525, 800, 1,1); //1000
 	turnp(47.5, 800, {1.7, 0, 5.5});
-	forwardMove(650, 800, 0.8, 1);
-	delay(400);
+	forwardMove(650, 550, 1, 1); //800
+	delay(200);
 	forwardMove(300, 700, 0.8, 1);
 	matchp.set_value(true);
 	pros::delay(100);
 	ramp.set_value(true);
-	bint.move(-127); // new elims
+	bint.move(-127); 
 	mint.move(127);
 	tint.move(-127);
 	delay(100);
 
-	turnp(58, 800, {2.5, 0, 4.5}, {2.5, 0, 4.5}, 3);
+	turnp(58, 500, {2.5, 0, 4.5}, {2.5, 0, 4.5}, 3); //800
 	matchp.set_value(false);
 
 	forwardMove(1360, 1000, 0.8, 1);
 
 	delay(150);
-	forwardMove(-1100, 900, 1, 1);
+	forwardMove(-1100, 750, 1, 1); //900
 	ramp.set_value(false);
 
 	delay(100);
@@ -59,7 +59,7 @@ void autonomous() {
 	bint.move(100); // new elims
 	mint.move(-100);
 	tint.move(100);
-	delay(900);
+	delay(700); //800
 	matchp.set_value(false);
 
 	bint.move(-127); // new elims
@@ -69,12 +69,12 @@ void autonomous() {
 	forwardMove(-300, 800, 1, 1);
 
 
-	turnp(-55, 800, {1.7, 0, 5.5}, {2, 0, 5}, 2);
+	turnp(-55, 600, {1.7, 0, 5.5}, {2, 0, 5}, 2); //800
 
 
-	forwardMove(-1950, 1800, 0.8, 1);
+	forwardMove(-1950, 1500, 0.8, 1); // 1500
 	delay(10);
-	turnp(-171, 1400, {1.7, 0, 5.5}, {2, 0, 5});
+	turnp(-171, 1300, {1.7, 0, 5.5}, {2, 0, 5}); //1300
 
 	matchp.set_value(true);
 
@@ -95,7 +95,9 @@ void autonomous() {
 	turnp(-2, 1000);
 
 	forwardMove(600, 1000, 1, 1);
-	forwardMove(-80, 100, 1, 1);
+	forwardMove(-150, 150, 1, 1);
+	turnp(-1, 1000);
+
 
 
 	indexer.set_value(false);
@@ -160,61 +162,8 @@ void autonomous() {
 	// pros::delay(4000);
 
 //arc left
-/*
-	//ramp.set_value(true);
-	bint.move(-127); // new elims
-	mint.move(127);
-	tint.move(-127);
-	indexer.set_value(true);
-    forwardMove(500, 1000, 1,1);
-	driveArcR(90, 830, 1800, 80, true);
-	forwardMove(600, 1200, 0.7,200);
-	pros::delay(400);
-	driveArcR(-135, 500, 1400, 100, false); // 1600
-	turnp(-62, 400);
-	ramp.set_value(false);
-	forwardMove(830, 1000,1 ,200);
-	matchp.set_value(true);
-	bint.move_velocity(150);
-	mint.move(-127);
-	tint.move(127);
-	pros::delay(900);
-	matchp.set_value(false);
-	bint.move(-127);
-	mint.move(127);
-	tint.move(-127);
-	delay(100);
-	turnp(-50, 700);
-	forwardMove(-2430, 2100, 1,200); //1900
-	delay(100);
-	turnp(-180, 800);
-	matchp.set_value(true);
-	pros::delay(400);
-	forwardMove(800, 1300, 1,1, false);
-	pros::delay(500);
-	forwardMove(-600, 1100, 1,1);
-	bint.move(0);
-	mint.move(0);
-	tint.move(0);
-	matchp.set_value(false);
-	delay(100);
-	turnp(-1, 900);//0
-	delay(100);
-	forwardMove(750, 1200, 1,1);
-	delay(100);
-	forwardMove(-20, 800, 1,1);
-	turnp(0, 1000);//-1
-	bint.move(-127);
-	mint.move(127);
-	tint.move(-127); // high
-	stall_pro(bint, true);
-	stall_pro(mint, false);
-	stall_pro(tint, true);
-	indexer.set_value(false);
-	pros::delay(4000);
 
-*/
-
+	
 	
 
 /*
@@ -258,9 +207,63 @@ mint.move(-127);
 tint.move(127);
 pros::delay(1000);
 
-
 */
+/*
 
+forwardMove(1320, 1320, 1,1); //skills
+turnp(-200, 200);
+turnp(-185, 1200, {0.9, 0, 5}, {10, 0, 0});
+bint.move(-127);
+mint.move(127);
+tint.move(-127);
+indexer.set_value(true);
+matchp.set_value(true);
+pros::delay(600);
+forwardMove(720, 720, 1,1);
+pros::delay(2000);
+forwardMove(-450, 450, 1,1);
+matchp.set_value(false);
+pros::delay(100);
+turnp(-30, 200);
+turnp(0, 1300, {0.9, 0, 5}, {10, 0, 0});
+forwardMove(870, 870, 1,1);
+bint.move(-127);
+mint.move(127);
+tint.move(-127); // high
+indexer.set_value(false);
+pros::delay(6000);
+forwardMove(-450, 450, 1,1);
+turnp(90, 1300);
+forwardMove(5200, 5100, 0.6,200);
+forwardMove(-710, 710, 1,1);
+//
+turnp(200, 200);
+turnp(187, 1200, {0.9, 0, 5}, {10, 0, 0});
+bint.move(-127);
+mint.move(127);
+tint.move(-127);
+indexer.set_value(true);
+matchp.set_value(true);
+pros::delay(600);
+forwardMove(710, 710, 1,1);
+pros::delay(2000);
+forwardMove(-450, 450, 1,1);
+matchp.set_value(false);
+pros::delay(100);
+turnp(30, 200);
+turnp(0, 1300, {0.9, 0, 5}, {10, 0, 0});
+forwardMove(870, 870, 1,1);
+bint.move(-127);
+mint.move(127);
+tint.move(-127); // high
+indexer.set_value(false);
+pros::delay(6000);
+forwardMove(-900, 900, 1, 1);
+turnp(-135, 1000, {0.9, 0, 5}, {10, 0, 0});
+forwardMove(600, 600, 1, 1);
+turnp(-90, 1000);
+forwardMove(2500, 1200, 1, 1);
+*/
 
 //forwardMove(1000, 3000000, 1, 1);
 
