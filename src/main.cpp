@@ -114,10 +114,10 @@ void opcontrol() {
 
 	
 		
-		int bpower = controller.get_analog(ANALOG_LEFT_Y);
-		int power = (bpower*bpower*bpower) / 16129;
-	    int bturn = controller.get_analog(ANALOG_RIGHT_X);
-        int turn = (bturn*bturn * bturn) / 16129;
+		int y = controller.get_analog(ANALOG_LEFT_Y);
+		int power = (y*sqrt(abs(y)))/(sqrt(127));
+	    int x = controller.get_analog(ANALOG_RIGHT_X);
+		int turn = (x*sqrt(abs(x)))/(sqrt(127));
 		int left = power + turn;
 		int right = power - turn;
 		/*
