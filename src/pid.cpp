@@ -8,26 +8,39 @@
 
 pidConstants t_consts;
 int error = 0;
-int error2 = 0;
-int error3 = 0;
-int prevError = 0;
+int prev_error = 0;
 int integral = 0;
 int derivative = 0;
 float power = 0;
-double trueTarget = 0;
+
+int error2 = 0;
+int prev_error2 = 0;
+int integral2 = 0;
+int derivative2 = 0;
+float power2 = 0;
+
+int error3 = 0;
+int prev_error3 = 0;
+int integral3 = 0;
+int derivative3 = 0;
+float power3 = 0;
+
+
+double true_target = 0;
 int time2;
 double STRAIGHT_INTEGRAL_KI = 200;
 double STRAIGHT_MAX_INTEGRAL = 20;
 float ARC_HEADING_KP = 0;
 float ARC_HEADING_KI = 0;
 float ARC_HEADING_KD = 0;
-double ARC_HEADING_INTEGRAL_KI = 0;
-double ARC_HEADING_MAX_INTEGRAL = 0;
+double ARC_HEADING_INTEGRAL_KI = 200;
+double ARC_HEADING_MAX_INTEGRAL = 20;
 
-void setConstants(pidConstants constants) {
+void set_constants(pidConstants constants) {
     t_consts = constants;
 }
-double getTrueError(double target, double input) {
+
+double get_true_error(double target, double input) {
     double error = target - input;
 
     while(error > 180) {
@@ -40,7 +53,8 @@ double getTrueError(double target, double input) {
 
     return error;
 }
-double getHeadingError(double target, double current, double kp) {
+
+double get_heading_error(double target, double current, double kp) {
     double error = target - current;
 
     // Wrap error to [-180, 180] so PID always takes shortest path
@@ -51,7 +65,7 @@ double getHeadingError(double target, double current, double kp) {
 }
 
 float calc (float target, float input, float integralKI, int maxI) {
-    prevError = error;
+    prev_error = error;
     error = target - input;
 
 
@@ -70,74 +84,74 @@ float calc (float target, float input, float integralKI, int maxI) {
     }
 
 
-    derivative = error - prevError;
+    derivative = error - prev_error;
 
 
     power = t_consts.p*error + t_consts.i*integral + t_consts.d*derivative;
-
+   // controller.print(2, 0, "L: %f           ", power);
 
     return power;
 }
 
 float calc2 (float target, float input, float integralKI, int maxI) {
-    prevError = error2;
+    prev_error2 = error2;
     error2 = target - input;
 
 
-    if(std::abs(error) < integralKI) {
-        integral += error;            
+    if(std::abs(error2) < integralKI) {
+        integral2 += error2;            
     }
     else {
-        integral = 0;
+        integral2 = 0;
     }
    
-    if (integral >= 0) {
-        integral = std::min(integral, maxI);
+    if (integral2 >= 0) {
+        integral2 = std::min(integral2, maxI);
     }
     else {
-        integral = std::max(integral, -maxI);
+        integral2 = std::max(integral2, -maxI);
     }
 
 
-    derivative = error2 - prevError;
+    derivative2 = error2 - prev_error2;
 
 
-    power = t_consts.p*error2 + t_consts.i*integral + t_consts.d*derivative;
+    power2 = t_consts.p*error2 + t_consts.i*integral2 + t_consts.d*derivative2;
 
 
-    return power;
+    return power2;
 }
 
 float calc3 (float target, float input, float integralKI, int maxI) {
-    prevError = error3;
+    prev_error3 = error3;
     error3 = target - input;
 
 
     if(std::abs(error3) < integralKI) {
-        integral += error3;            
+        integral3 += error3;            
     }
     else {
-        integral = 0;
+        integral3 = 0;
     }
    
-    if (integral >= 0) {
-        integral = std::min(integral, maxI);
+    if (integral3 >= 0) {
+        integral3 = std::min(integral3, maxI);
     }
     else {
-        integral = std::max(integral, -maxI);
+        integral3 = std::max(integral3, -maxI);
     }
 
 
-    derivative = error3 - prevError;
+    derivative3 = error3 - prev_error3;
 
 
-    power = t_consts.p*error3 + t_consts.i*integral + t_consts.d*derivative;
+    power3 = t_consts.p*error3 + t_consts.i*integral + t_consts.d*derivative;
 
 
-    return power;
+    return power3;
 }
 
-void resetEncoders() {
+void reset_encoders() {
    
     lf.tare_position();
     lm.tare_position();
@@ -148,8 +162,7 @@ void resetEncoders() {
    
 }
 
-
-void chassisMove(int left, int right) {
+void chassis_move(int left, int right) {
     lf.move(left);
     lm.move(left);
     lb.move(left);
@@ -158,14 +171,13 @@ void chassisMove(int left, int right) {
     rb.move(right);
 }
 
-
-void forwardMove(float target, float timeout, float endsp, float dist, bool headc, pidConstants constants, pidConstants constants2) {
+void forward_move(float target, float timeout, float endsp, float dist, bool headc, pidConstants constants, pidConstants constants2) {
     error = 0;
-    prevError = 0;
+    prev_error = 0;
     integral = 0;
     derivative = 0;
-    setConstants(constants);
-    double position = imu.get_heading(); // degrees
+    set_constants(constants);
+   // double position = imu.get_heading(); // degrees
     controller.clear();
 
     Timer t1;
@@ -174,9 +186,9 @@ void forwardMove(float target, float timeout, float endsp, float dist, bool head
     int count = 0;
 
   
-    resetEncoders();
-       while (t1.time() <= timeout){
-      //while (true){
+    reset_encoders();
+      // while (t1.time() <= timeout){
+      while (true){
         encoder_avg = (lf.get_position() + rf.get_position()) / 2;
         float base_voltage = calc(target, encoder_avg, 200, 20);
 
@@ -186,8 +198,8 @@ void forwardMove(float target, float timeout, float endsp, float dist, bool head
     // 10 = distance over which teo slowS down, tune this
     voltage = base_voltage * slowdown;
 
-    double position2 = imu.get_heading(); // degrees
-double poserror = getHeadingError(position, position2, 1); // wrapped to [-180,180]
+    double position = imu.get_heading(); // degrees
+double poserror = get_heading_error(true_target, position, 1); // wrapped to [-180,180] //replace position with true target
 
 
 // If using simple proportional heading correction:
@@ -199,155 +211,75 @@ if (voltage > 127) voltage = 127;
 if (voltage < -127) voltage = -127;
 
 // Drive with heading correction
-chassisMove(voltage + correction, voltage - correction);
-        if (abs(target - encoder_avg) <= 10) {
-           // controller.print(1, 0, "%f", s6.76767);
-            //break;
-        }
-        if (abs(error) <= 25) setConstants(constants2);
+chassis_move(voltage + correction, voltage - correction);
+
+controller.print(0, 0, "ERROR: %f           ", float(error));
+    
+        if (abs(error) <= 10) set_constants(constants2);
        // if (count >=2) {
       //      controller.print(1, 0, "f", "hello!");
      //       break;
      //   }
-        if (abs(error) < 5) {
+     /*
+        if (abs(error) < 1) {
             count++;
         }
-        
+        */
         if(count > 5) {
-            break;
+           // break;
         }
+            
         pros::delay(10);
 
         
-        controller.print(0, 0, "%.2f", target - encoder_avg);}
-        
-    chassisMove(0,0);
-}
-
-void forwardMoveInt(float target, float timeout, float endsp, pidConstants constants, pidConstants constants2) {
-   
-    error = 0;
-    prevError = 0;
-    integral = 0;
-    derivative = 0;
-    setConstants(constants);
-
-    Timer t1;
-    float voltage;
-    float encoder_avg;
-    int count = 0;
-
-
-    resetEncoders();
-  while (t1.time() <= timeout){
-        encoder_avg = (lf.get_position() + rf.get_position()) / 2;
-        float base_voltage = calc(target, encoder_avg, 200, 20);
-
-    // Scale output based on distance left (slows near target)
-    float slowdown = endsp;
-    // 500 = distance over which teo slow down, tune this
-    voltage = base_voltage * slowdown;
-
-
-        chassisMove(voltage, voltage);
-        if (abs(target - encoder_avg) <= 5) {
-            controller.print(1, 0, "%f", 6.76767);
-            break;
-        }
-
-        while (t1.time() > 50) {
-    mint.move(127);
-	tint.move(127);	
-	bint.move(-127);
-}
-        if (abs(error) <= 30) setConstants(constants2);
-       // if (count >=2) {
-      //      controller.print(1, 0, "f", "hello!");
-     //       break;
-     //   }
-                                                       
-        pros::delay(10);
-        controller.print(1, 0, "%f", target - encoder_avg);
+        controller.print(0, 0, "%.2f", target - encoder_avg);
     }
-    chassisMove(0,0);
+        
+    chassis_move(0,0);
 }
-
-
-// void turnp(float target, float timeout, pidConstants constants, pidConstants constants2, double feedforward ) {
-
-//     error = 0;
-//     prevError = 0;
-//     integral = 0;
-//     derivative = 0;
-//    int count = 0;
-//    controller.clear();
-
-//     Timer t1;
-//     setConstants(constants);
-
-//     float voltage;
-//     float position;
-
-
-//     while(t1.time() < timeout) {
-//    //while (true) {
-//         position = imu.get_rotation();
-
-//         voltage = calc(target, position, 5, 100);
-
-//         chassisMove(voltage * feedforward, -voltage * feedforward);
-//         if (abs(error) <= 0.1) count++;
-//         // if (abs(error) <= 4) setConstants(constants2);
-//        // if (abs(error) <= 45 && abs(error) >= 3) setConstants(constants);
-//         if (count >=16) break;
-
-//         pros::delay(10);
-//         controller.print(0,0, "%f", (target - position));
-//     }
-//     chassisMove(0,0);
-// }
-
 
 void turnp(float target, float timeout, pidConstants constants, pidConstants constants2, double feedforward ) {
     error = 0;
-    prevError = 0;
+    prev_error = 0;
     integral = 0;
     derivative = 0;
     power = 0;
-    setConstants(constants);
+    set_constants(constants);
+    true_target = target;
 
     int count = 0;
     controller.clear();
     Timer t1;
 
-    while (t1.time() < timeout) {
+   // while (t1.time() < timeout) {
+   while (true) {
         double position = imu.get_heading(); // 0–360
-        double headingError = target - position;
+        double heading_error = target - position;
 
-        if (headingError > 180) headingError -= 360;
-        if (headingError < -180) headingError += 360;
+        if (heading_error > 180) heading_error -= 360;
+        if (heading_error < -180) heading_error += 360;
 
 
-        double voltage = calc(0, -headingError, 5, 100); 
+        double voltage = calc(0, -heading_error, 5, 100); 
         voltage *= feedforward;
 
         voltage = std::clamp(voltage, -127.0, 127.0);
-        chassisMove(voltage, -voltage);
+        chassis_move(voltage, -voltage);
 
-        if (fabs(headingError) < 2) count++;
+        if (fabs(heading_error) < 2) set_constants(constants2);
+        if (fabs(heading_error) < 1) count++;
         else count = 0;
 
-        if (count >= 16) break;
+       // if (count >= 16) break;
 
         pros::delay(10);
-        controller.print(0, 0, "Err: %.2f", headingError);
+        controller.print(0, 0, "Err: %.2f", heading_error);
     }
-    chassisMove(0, 0);
-}
-
-
-void driveArcL(double theta, double radius, int timeout, int speed){
-    setConstants({0.1, 0, 0}); // straights
+    chassis_move(0, 0);
+} 
+ 
+void drive_arcL(double theta, double radius, int timeout, int speed){
+     //set_constants({10, 0, 0}); // straights
 
     Timer t1;
     
@@ -361,20 +293,20 @@ void driveArcL(double theta, double radius, int timeout, int speed){
     double pi = 3.14159265359;
     int count = 0;
     time2 = 0;
-    resetEncoders();
+    reset_encoders();
     controller.clear();
     
     //int timeout = 5000;
     ltarget = double((theta / 360) * 2 * pi * radius); 
-    rtarget = double((theta / 360) * 2 * pi * (radius + 561));
+    rtarget = double((theta / 360) * 2 * pi * (radius + 520));
 
     while (true){
         double encoderAvgL = (lf.get_position() + lb.get_position()) / 2;
         double encoderAvgR = (rf.get_position() +  rb.get_position()) / 2;
         double leftcorrect = -(encoderAvgL * 360) / (2 * pi * radius);
 
-        if(trueTarget > 180){
-            trueTarget = trueTarget - 360;
+        if(true_target > 180){
+            true_target = true_target - 360;
         }
 
         double position = imu.get_heading(); //this is where the units are set to be degrees W
@@ -383,28 +315,33 @@ void driveArcL(double theta, double radius, int timeout, int speed){
             position = position - 360;
         }
 
-        if(((trueTarget + leftcorrect)< 0) && (position > 0)){
-            if((position - (trueTarget + leftcorrect)) >= 180){
+        if(((true_target + leftcorrect)< 0) && (position > 0)){
+            if((position - (true_target + leftcorrect)) >= 180){
                 leftcorrect = leftcorrect + 360;
                 position = imu.get_heading();
             } 
-        } else if (((trueTarget + leftcorrect) > 0) && (position < 0)){
-            if(((trueTarget + leftcorrect) - position) >= 180){
+        } else if (((true_target + leftcorrect) > 0) && (position < 0)){
+            if(((true_target + leftcorrect) - position) >= 180){
             position = imu.get_heading();
             }
         } 
     
-        setConstants({0.1, 0, 0});
-        int voltageL = calc(ltarget, encoderAvgL, STRAIGHT_INTEGRAL_KI, STRAIGHT_MAX_INTEGRAL);
+        set_constants({0.1, 0, 0});
+        int voltageL = calc(ltarget, encoderAvgL, 200, 20);
 
-        if(voltageL > 127 * double(speed)/100.0){
+        
+         if(voltageL > 127 * double(speed)/100.0){
             voltageL = 127 * double(speed)/100.0;
         } else if (voltageL < -127 * double(speed)/100.0){
             voltageL = -127 * double(speed)/100.0;
         }
 
+       // controller.print(0, 0, "L: %i           ", voltageL);
 
-        int voltageR = calc2(rtarget, encoderAvgR, STRAIGHT_INTEGRAL_KI, STRAIGHT_MAX_INTEGRAL);
+
+
+        int voltageR = calc2(rtarget, encoderAvgR, 200, 20);
+       // controller.print(0, 0, "L: %f           ", voltageR);
 
         if(voltageR > 127 * double(speed)/100.0){
             voltageR = 127 * double(speed)/100.0;
@@ -415,25 +352,25 @@ void driveArcL(double theta, double radius, int timeout, int speed){
         
   
 
-        setConstants({ARC_HEADING_KP,ARC_HEADING_KI,ARC_HEADING_KD}); // arc consts
-        int fix = calc3((trueTarget + leftcorrect), position, ARC_HEADING_INTEGRAL_KI, ARC_HEADING_MAX_INTEGRAL);
+        set_constants({6, 0, 0}); // arc consts
+        int fix = calc3((true_target + leftcorrect), position, ARC_HEADING_INTEGRAL_KI, ARC_HEADING_MAX_INTEGRAL);
         totalError += error3;
     
-        chassisMove((voltageL + fix), (voltageR - fix));
+        chassis_move((voltageL + fix), (voltageR - fix));
         if ((abs(ltarget - encoderAvgL) <= 4) && (abs(rtarget - encoderAvgR) <= 4)) count++;
         if (count >= 20 || time2 > timeout){
-            trueTarget -= theta;
+            true_target -= theta;
             break;
         } 
-
+        
         if (time2 % 50 == 0 && time2 % 100 != 0 && time2 % 150 != 0){
             controller.print(0, 0, "ERROR: %f           ", float(error));
         } else if (time2 % 100 == 0 && time2 % 150 != 0){
             controller.print(1, 0, "fix: %f           ", float(fix));
         } else if (time2 % 150 == 0){
-            controller.print(2, 0, "truetar: %f        ", float(trueTarget));
+            controller.print(2, 0, "truetar: %f        ", float(true_target));
         } 
-
+        
         time2 += 10;
         pros::delay(10);
 
@@ -442,33 +379,33 @@ void driveArcL(double theta, double radius, int timeout, int speed){
 }
 
 void driveArcR(double theta, double radius, int timeout, int speed, bool test){
-    setConstants({0.1, 0, 0}); // straights
+    set_constants({0.1, 0, 0}); // straights
 
     Timer t1;
     
 
     //int timeout = 30000;
 
-    double totalError = 0;
+    double total_error = 0;
 
     double ltarget = 0;
     double rtarget = 0;
     double pi = 3.14159265359;
     int count = 0;
     time2 = 0;
-    resetEncoders();
+    reset_encoders();
     controller.clear();
     //int timeout = 5000;
     ltarget = double((theta / 360) * 2 * pi* (radius + 500)); 
     rtarget = double((theta / 360) * 2 * pi * radius);
 
     while (true){
-        double encoderAvgL = (lf.get_position() + lb.get_position()) / 2;
-        double encoderAvgR = (rf.get_position() +  rb.get_position()) / 2;
-        double rightcorrect = (encoderAvgR * 360) / (2 * pi * radius);
+        double encoder_avgL = (lf.get_position() + lb.get_position()) / 2;
+        double encoder_avgR = (rf.get_position() +  rb.get_position()) / 2;
+        double right_correct = (encoder_avgR * 360) / (2 * pi * radius);
 
-        if(trueTarget > 180){
-            trueTarget = trueTarget - 360;
+        if(true_target > 180){
+            true_target = true_target - 360;
         }
 
         double position = imu.get_heading(); //this is where the units are set to be degrees W
@@ -477,19 +414,20 @@ void driveArcR(double theta, double radius, int timeout, int speed, bool test){
             position = position - 360;
         }
 
-        if(((trueTarget + rightcorrect)< 0) && (position > 0)){
-            if((position - (trueTarget + rightcorrect)) >= 180){
-                rightcorrect = rightcorrect + 360;
+        if(((true_target + right_correct)< 0) && (position > 0)){
+            if((position - (true_target + right_correct)) >= 180){
+                right_correct += 360;
                 position = imu.get_heading();
             } 
-        } else if (((trueTarget + rightcorrect) > 0) && (position < 0)){
-            if(((trueTarget + rightcorrect) - position) >= 180){
+        } else if (((true_target + right_correct) > 0) && (position < 0)){
+            if(((true_target + right_correct) - position) >= 180){
             position = imu.get_heading();
             }
         } 
     
-        setConstants({0.1, 0, 0});
-        int voltageL = calc(ltarget, encoderAvgL, STRAIGHT_INTEGRAL_KI, STRAIGHT_MAX_INTEGRAL);
+        set_constants({0.1, 0, 0});
+        
+        int voltageL = calc(ltarget, encoder_avgL, STRAIGHT_INTEGRAL_KI, STRAIGHT_MAX_INTEGRAL);
 
         if(voltageL > 127 * double(speed)/100.0){
             voltageL = 127 * double(speed)/100.0;
@@ -498,7 +436,7 @@ void driveArcR(double theta, double radius, int timeout, int speed, bool test){
         }
 
 
-        int voltageR = calc2(rtarget, encoderAvgR, STRAIGHT_INTEGRAL_KI, STRAIGHT_MAX_INTEGRAL);
+        int voltageR = calc2(rtarget, encoder_avgR, STRAIGHT_INTEGRAL_KI, STRAIGHT_MAX_INTEGRAL);
 
         if(voltageR > 127 * double(speed)/100.0){
             voltageR = 127 * double(speed)/100.0;
@@ -509,18 +447,18 @@ void driveArcR(double theta, double radius, int timeout, int speed, bool test){
         
   
         if (test) {
-                  setConstants({6, 0, 0}); // arc consts
+                  set_constants({6, 0, 0}); // arc consts
         }
         else {
-            setConstants({6, 0, 0}); // arc consts
+            set_constants({6, 0, 0}); // arc consts
         }
-        int fix = calc3((trueTarget + rightcorrect), position, ARC_HEADING_INTEGRAL_KI, ARC_HEADING_MAX_INTEGRAL);
-        totalError += error3;
+        int fix = calc3((true_target + right_correct), position, ARC_HEADING_INTEGRAL_KI, ARC_HEADING_MAX_INTEGRAL);
+        total_error += error3;
     
-        chassisMove((voltageL + fix), (voltageR - fix));
-        if ((abs(ltarget - encoderAvgL) <= 4) && (abs(rtarget - encoderAvgR) <= 4)) count++;
+        chassis_move((voltageL + fix), (voltageR - fix));
+        if ((abs(ltarget - encoder_avgL) <= 4) && (abs(rtarget - encoder_avgR) <= 4)) count++;
         if (count >= 20 || time2 > timeout){
-            trueTarget += theta;
+            true_target += theta;
             break;
         } 
 
@@ -529,7 +467,7 @@ void driveArcR(double theta, double radius, int timeout, int speed, bool test){
         } else if (time2 % 100 == 0 && time2 % 150 != 0){
             controller.print(1, 0, "fix: %f           ", float(fix));
         } else if (time2 % 150 == 0){
-            controller.print(2, 0, "truetar: %f        ", float(trueTarget));
+            controller.print(2, 0, "truetar: %f        ", float(true_target));
         } 
 
         time2 += 10;

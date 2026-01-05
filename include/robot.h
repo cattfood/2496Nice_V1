@@ -19,21 +19,16 @@ extern pros::Motor bint;
 extern pros::Motor mint;
 extern pros::Motor tint;
 
-extern pros::ADIDigitalOut intp;
-extern pros::ADIDigitalOut matchp;
-extern pros::ADIDigitalOut ramp;
-extern pros::ADIDigitalOut indexer;
+extern pros::ADIDigitalOut und;
 extern pros::ADIDigitalOut desc;
-extern pros::ADIDigitalOut colors;
-
+extern pros::ADIDigitalOut mpist;
+extern pros::ADIDigitalOut matchp;
 
 extern pros::Optical opsens;
 extern pros::Optical hfill;
 
 extern pros::Imu imu;
 
-extern void stall_pro(pros::Motor m, bool rev);
-extern void color_sort(int hue);
-bool basket_full(int hue);
+
 
 #endif
