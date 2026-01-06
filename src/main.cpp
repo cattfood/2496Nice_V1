@@ -159,8 +159,8 @@ void opcontrol() {
 
 		}
 		else if(controller.get_digital(E_CONTROLLER_DIGITAL_L2)) {
-			tint.move(-127);
-			bint.move(-127);
+			tint.move(127);
+			bint.move(127);
 			und.set_value(false);
 			mpist.set_value(false);
 
