@@ -187,8 +187,8 @@ void forward_move(float target, float timeout, float endsp, float dist, bool hea
 
   
     reset_encoders();
-      // while (t1.time() <= timeout){
-      while (true){
+       while (t1.time() <= timeout){
+      //while (true){
         encoder_avg = (lf.get_position() + rf.get_position()) / 2;
         float base_voltage = calc(target, encoder_avg, 200, 20);
 
@@ -203,7 +203,7 @@ double poserror = get_heading_error(true_target, position, 1); // wrapped to [-1
 
 
 // If using simple proportional heading correction:
-double kH = 2.5; // tune this
+double kH = 2; // tune this
 double correction = kH * poserror;
 
 // Apply voltage limits
@@ -216,17 +216,14 @@ chassis_move(voltage + correction, voltage - correction);
 controller.print(0, 0, "ERROR: %f           ", float(error));
     
         if (abs(error) <= 10) set_constants(constants2);
-       // if (count >=2) {
-      //      controller.print(1, 0, "f", "hello!");
-     //       break;
-     //   }
-     /*
+       
+     
         if (abs(error) < 1) {
             count++;
         }
-        */
-        if(count > 5) {
-           // break;
+        
+        if(count > 20) {
+            break;
         }
             
         pros::delay(10);
@@ -251,8 +248,8 @@ void turnp(float target, float timeout, pidConstants constants, pidConstants con
     controller.clear();
     Timer t1;
 
-   // while (t1.time() < timeout) {
-   while (true) {
+    while (t1.time() < timeout) {
+    
         double position = imu.get_heading(); // 0–360
         double heading_error = target - position;
 
@@ -267,16 +264,17 @@ void turnp(float target, float timeout, pidConstants constants, pidConstants con
         chassis_move(voltage, -voltage);
 
         if (fabs(heading_error) < 2) set_constants(constants2);
-        if (fabs(heading_error) < 1) count++;
+        if (fabs(heading_error) < 0.5) count++;
         else count = 0;
 
-       // if (count >= 16) break;
+        if (count >= 7) break;
 
         pros::delay(10);
         controller.print(0, 0, "Err: %.2f", heading_error);
     }
     chassis_move(0, 0);
 } 
+
  
 void drive_arcL(double theta, double radius, int timeout, int speed){
      //set_constants({10, 0, 0}); // straights
@@ -379,6 +377,7 @@ void drive_arcL(double theta, double radius, int timeout, int speed){
 }
 
 void driveArcR(double theta, double radius, int timeout, int speed, bool test){
+
     set_constants({0.1, 0, 0}); // straights
 
     Timer t1;
@@ -476,3 +475,4 @@ void driveArcR(double theta, double radius, int timeout, int speed, bool test){
     }
     
 }
+    

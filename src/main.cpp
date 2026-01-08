@@ -25,14 +25,78 @@ void autonomous() {
 	//forward_move(600, 100000000, 1,1);
 	//forward_move(2000, 100000000, 1,1, true, {0.15, 0, 0},  {2.5, 0, 0});
 	//turnp(180, 10000000, {1, 0, 6.8}, {19.9, 0, 0});
-	//turnp(150, 10000000, {1, 0, 6.7}, {19.9, 0, 0});
+	//turnp(150, 10000000, {1, 0, 6.75}, {19.9, 0, 0});
 	//turnp(135, 10000000, {1, 0, 6.22}, {19.9, 0, 0});
-	//turnp(120, 10000000, {1, 0, 5.8}, {19.9, 0, 0});
-	//turnp(60, 10000000, {1, 0, 1.1}, {19.9, 0, 0});
-	//turnp(45, 10000000, {1.12, 0, 0}, {19.9, 0, 0});
+	//turnp(120, 10000000, {1, 0, 5.85}, {19.9, 0, 0});
+	//turnp(90, 1000000);
+	//turnp(60, 10000000, {1, 0, 2.05}, {19.9, 0, 0});
+	//turnp(45, 10000000, {1.05, 0, 0}, {19.9, 0, 0});
+	//turnp(15, 10000000, {2.5, 0, 0}, {19.9, 0, 0});
 	//drive_arcL(90, 600, 3000, 100);
-	//turnp(-90, 400);+
+	//turnp(-90, 400);
 	//drive_arcL(-90, 600, 3000, 100);
+	//turnp(-90, 20);
+	//forward_move(1000, 100000000, 1,1, true, {0.13, 0, 0},  {2.5, 0, 0});
+	//turnp(-175, 20000);
+	//turnp(-180, 20);
+	//forward_move(800, 2000, 1, 1);
+
+	//------------------------------
+	turnp(0, 10);
+	forward_move(1350, 3000, 1, 1);
+	turnp(-90, 2000);
+	matchp.set_value(true);
+	pros::delay(800);
+	bint.move(-127);
+	tint.move(127);
+	mpist.set_value(true);
+	und.set_value(false);
+	forward_move(700, 1000, 1, 1);
+	turnp(-93, 10);
+	forward_move(-400, 800, 1, 600);
+	//turnp(-90, 300);
+	forward_move(-900, 1000, 0.6, 600);
+	matchp.set_value(false);
+	//forward_move(-900, 3000, 1,1);
+	tint.move(-127);
+	mpist.set_value(true);
+	forward_move(-1000, 1000, 0.6,1000);
+	//turnp(-90, 400);
+	pros::delay(1000);
+	tint.move(127);
+	mpist.set_value(true);
+	turnp(-90, 10);
+	forward_move(900, 1500, 1,1);
+	turnp(-225, 3000, {1, 0, 7.75}, {19.9, 0, 0});
+	forward_move(1300, 1500, 0.8, 800);
+	turnp(-45, 3000, {1, 0, 8.5}, {19.9, 0, 0});
+	bint.move(127);
+	tint.move(0);
+	pros::delay(350);
+	bint.move(0);
+	forward_move(-1030, 2000, 1, 400);
+	mpist.set_value(false);
+	bint.move_velocity(-450);
+	tint.move(127);
+	pros::delay(3000);
+	forward_move(900, 2000, 1, 1);
+	turnp(180, 1000, {1, 0, 7}, {19.9, 0, 0});
+	bint.move(-127);
+			tint.move(127);
+			mpist.set_value(!false);
+			und.set_value(false);
+	forward_move(1500, 1400, 1,800);
+	forward_move(700, 1400, 0.6,700);
+	turnp(45, 1000, {1, 0, 7.75}, {19.9, 0, 0});
+	forward_move(800, 1400, 1,700);
+	tint.move(127);
+			bint.move(127);
+			und.set_value(false);
+			mpist.set_value(!true);
+	
+	pros::delay(1000);
+
+
 }
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -90,7 +154,7 @@ void opcontrol() {
 	
 
 	while (true) {
-
+/*
 		int lavg = (lf.get_actual_velocity() + lm.get_actual_velocity() + lb.get_actual_velocity()) / 3;
 
 		if (lavg > 0) {
@@ -112,14 +176,19 @@ void opcontrol() {
 		}
 
 
-	
+	*/
 		
 		int y = controller.get_analog(ANALOG_LEFT_Y);
-		int power = (y*y*y) / 16129;
+		int power = y;
 	    int x = controller.get_analog(ANALOG_RIGHT_X);
-		int turn = (x*x*x) / 16129;
+		//int turn = (x * abs(x)) / (sqrt(abs(x)) * sqrt(400));
+		//int turn = (cbrt(127 * x * x) * x) / abs(x);
+		int turn = (sqrt(127*abs(x)) * abs(x)) / x;
+		//int turn = cbrt((127*sqrt(abs(x))) * (127*sqrt(abs(x)))) * abs(x) / x;
 		int left = power + turn;
 		int right = power - turn;
+
+		controller.print(2, 0, "analog right x: %d         ", x);
 		/*
 		 r1 intake 
 		 r2 top score  
@@ -142,27 +211,27 @@ void opcontrol() {
 		if(controller.get_digital(E_CONTROLLER_DIGITAL_R1)) {
 			bint.move(-127);
 			tint.move(127);
-			mpist.set_value(true);
+			mpist.set_value(!false);
 			und.set_value(false);
 		}
 		else if(controller.get_digital(E_CONTROLLER_DIGITAL_R2)) {
 			bint.move(-127);
 			tint.move(-127);
-			mpist.set_value(true);
+			mpist.set_value(!false);
 			und.set_value(false);
 		}
 		else if(controller.get_digital(E_CONTROLLER_DIGITAL_L1)) {
 			tint.move(127);
 			bint.move(-127);
 			und.set_value(false);
-			mpist.set_value(false);
+			mpist.set_value(!true);
 
 		}
 		else if(controller.get_digital(E_CONTROLLER_DIGITAL_L2)) {
 			tint.move(127);
 			bint.move(127);
 			und.set_value(false);
-			mpist.set_value(false);
+			mpist.set_value(!true);
 
 		}
 		else if(controller.get_digital_new_press(E_CONTROLLER_DIGITAL_LEFT)) {
