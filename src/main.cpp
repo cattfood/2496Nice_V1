@@ -41,56 +41,60 @@ void autonomous() {
 	//turnp(-180, 20);
 	//forward_move(800, 2000, 1, 1);
 
-	//------------------------------
+	//------------------------------ awp
+	/*
 	turnp(0, 10);
-	forward_move(1350, 3000, 1, 1);
-	turnp(-90, 2000);
+	forward_move(1350, 1300, 1, 1);
+	turnp(-90, 1000);
 	matchp.set_value(true);
-	pros::delay(1000);
+	pros::delay(200);
 	bint.move(-127);
 	tint.move(127);
 	mpist.set_value(true);
 	und.set_value(false);
 	forward_move(700, 1000, 1, 1);
 	turnp(-93, 10);
-	forward_move(-400, 800, 1, 600);
+	forward_move(-400, 400, 1, 600);
 	//turnp(-90, 300);
-	forward_move(-750, 1000, 0.6, 600);
+	forward_move(-900, 1000, 1, 600);
 	matchp.set_value(false);
 	//forward_move(-900, 3000, 1,1);
 	tint.move(-127);
 	mpist.set_value(true);
-	chassis_move(-10, -10); // -50, -50
+	chassis_move(-30, -30); // -50, -50
 	//forward_move(-1000, 1000, 0.6,1000);
 	//turnp(-90, 400);
-	pros::delay(3000);
+	pros::delay(1500);
 	tint.move(127);
 	mpist.set_value(true);
-	turnp(-90, 10);
-	forward_move(900, 1500, 1,1);
-	turnp(-225, 3000, {1, 0, 7.76}, {19.9, 0, 0});
-	forward_move(1300, 1500, 0.8, 800);
-	turnp(-45, 3000, {1, 0, 8.6}, {19.9, 0, 0});
+	turnp(-90, 100);
+	forward_move(1000, 1000, 1,1);
+	turnp(-225, 1500, {1, 0, 7.6}, {19.9, 0, 0});
+	forward_move(1400, 1400, 1, 800);
+	turnp(-40, 1500, {1, 0, 8.67}, {19.9, 0, 0});
 	bint.move(127);
 	tint.move(0);
-	pros::delay(100);
+	pros::delay(75);
 	bint.move(0);
-	forward_move(-1000, 2000, 1, 400);
+	forward_move(-1200, 1200, 1, 400);
 	mpist.set_value(false);
 	bint.move_velocity(-450);
 	tint.move_velocity(550);
-	pros::delay(3000);
-	forward_move(1000, 2000, 1, 1);
+	pros::delay(800);
+	forward_move(920, 1000, 1, 1);
 	mpist.set_value(true);
-	turnp(180, 1000, {1, 0, 7.5}, {19.9, 0, 0});
+	turnp(-171, 900, {1, 0, 7.4}, {19.9, 0, 0});
+pros::delay(120);
 	bint.move(-127);
-			tint.move(127);
-	forward_move(1500, 1400, 1,800);
-	forward_move(700, 1400, 0.5,700);
-	turnp(220, 1000, {1, 0, 0}, {19.9, 0, 0});
-	forward_move(1400, 1500, 1,700, true,{0.16, 0, 0},  {2.5, 0, 0});
-	turnp(-90, 1000,{1, 0, 5.85}, {19.9, 0, 0});
-	forward_move(-600, 800, 1, 600);
+	tint.move(127);
+	//forward_move(1500, 1000, 1,800, true, {0.15, 0, 0},  {2.5, 0, 0});
+	//700 0.5 
+	forward_move(2000, 1400, 0.5,800);
+
+	turnp(220, 800, {1.1, 0, 0}, {19.9, 0, 0});
+	forward_move(1500, 1800, 1,700);
+	turnp(-90, 1000,{1, 0, 0}, {19.9, 0, 0});
+	forward_move(-700, 800, 1, 600);
 	matchp.set_value(false);
 	tint.move(-127);
 	mpist.set_value(true);
@@ -102,6 +106,7 @@ void autonomous() {
 			//mpist.set_value(!true);
 	
 	pros::delay(4000);
+	*/
 
 }
 /**

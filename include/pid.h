@@ -19,7 +19,6 @@ extern void chassis_move(int left, int right);
 extern void drive_arcL(double theta, double radius, int timeout, int speed);
 extern void drive_arcR(double theta, double radius, int timeout, int speed, bool test);
 extern void chassisStop();
-
-
+extern double true_target;
 #endif
 

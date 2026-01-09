@@ -203,7 +203,7 @@ double poserror = get_heading_error(true_target, position, 1); // wrapped to [-1
 
 
 // If using simple proportional heading correction:
-double kH = 2; // tune this
+double kH = 4.5; // tune this
 double correction = kH * poserror;
 
 // Apply voltage limits
