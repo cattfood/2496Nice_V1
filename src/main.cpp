@@ -46,7 +46,7 @@ void autonomous() {
 	forward_move(1350, 3000, 1, 1);
 	turnp(-90, 2000);
 	matchp.set_value(true);
-	pros::delay(800);
+	pros::delay(1000);
 	bint.move(-127);
 	tint.move(127);
 	mpist.set_value(true);
@@ -55,47 +55,53 @@ void autonomous() {
 	turnp(-93, 10);
 	forward_move(-400, 800, 1, 600);
 	//turnp(-90, 300);
-	forward_move(-900, 1000, 0.6, 600);
+	forward_move(-750, 1000, 0.6, 600);
 	matchp.set_value(false);
 	//forward_move(-900, 3000, 1,1);
 	tint.move(-127);
 	mpist.set_value(true);
-	forward_move(-1000, 1000, 0.6,1000);
+	chassis_move(-10, -10); // -50, -50
+	//forward_move(-1000, 1000, 0.6,1000);
 	//turnp(-90, 400);
-	pros::delay(1000);
+	pros::delay(3000);
 	tint.move(127);
 	mpist.set_value(true);
 	turnp(-90, 10);
 	forward_move(900, 1500, 1,1);
-	turnp(-225, 3000, {1, 0, 7.75}, {19.9, 0, 0});
+	turnp(-225, 3000, {1, 0, 7.76}, {19.9, 0, 0});
 	forward_move(1300, 1500, 0.8, 800);
-	turnp(-45, 3000, {1, 0, 8.5}, {19.9, 0, 0});
+	turnp(-45, 3000, {1, 0, 8.6}, {19.9, 0, 0});
 	bint.move(127);
 	tint.move(0);
-	pros::delay(350);
+	pros::delay(100);
 	bint.move(0);
-	forward_move(-1030, 2000, 1, 400);
+	forward_move(-1000, 2000, 1, 400);
 	mpist.set_value(false);
 	bint.move_velocity(-450);
-	tint.move(127);
+	tint.move_velocity(550);
 	pros::delay(3000);
-	forward_move(900, 2000, 1, 1);
-	turnp(180, 1000, {1, 0, 7}, {19.9, 0, 0});
+	forward_move(1000, 2000, 1, 1);
+	mpist.set_value(true);
+	turnp(180, 1000, {1, 0, 7.5}, {19.9, 0, 0});
 	bint.move(-127);
 			tint.move(127);
-			mpist.set_value(!false);
-			und.set_value(false);
 	forward_move(1500, 1400, 1,800);
-	forward_move(700, 1400, 0.6,700);
-	turnp(45, 1000, {1, 0, 7.75}, {19.9, 0, 0});
-	forward_move(800, 1400, 1,700);
-	tint.move(127);
-			bint.move(127);
-			und.set_value(false);
-			mpist.set_value(!true);
-	
-	pros::delay(1000);
+	forward_move(700, 1400, 0.5,700);
+	turnp(220, 1000, {1, 0, 0}, {19.9, 0, 0});
+	forward_move(1400, 1500, 1,700, true,{0.16, 0, 0},  {2.5, 0, 0});
+	turnp(-90, 1000,{1, 0, 5.85}, {19.9, 0, 0});
+	forward_move(-600, 800, 1, 600);
+	matchp.set_value(false);
+	tint.move(-127);
+	mpist.set_value(true);
+	chassis_move(-50, -50);
+	pros::delay(3000);
 
+
+			//und.set_value(true);
+			//mpist.set_value(!true);
+	
+	pros::delay(4000);
 
 }
 /**
@@ -154,6 +160,11 @@ void opcontrol() {
 	
 
 	while (true) {
+		double chassis_temp  = (lf.get_temperature() + lm.get_temperature() + lb.get_temperature() + rf.get_temperature() + rm.get_temperature() + rb.get_temperature()) / 6;
+		double int_temp = (bint.get_temperature() + tint.get_temperature()) / 2;
+		//controller.print(0,0, "%f", turn);
+		controller.print(1,0, "%f", chassis_temp);
+		controller.print(2,0, "%f", int_temp);
 /*
 		int lavg = (lf.get_actual_velocity() + lm.get_actual_velocity() + lb.get_actual_velocity()) / 3;
 
@@ -188,7 +199,7 @@ void opcontrol() {
 		int left = power + turn;
 		int right = power - turn;
 
-		controller.print(2, 0, "analog right x: %d         ", x);
+	//	controller.print(2, 0, "analog right x: %d         ", x);
 		/*
 		 r1 intake 
 		 r2 top score  
@@ -230,7 +241,7 @@ void opcontrol() {
 		else if(controller.get_digital(E_CONTROLLER_DIGITAL_L2)) {
 			tint.move(127);
 			bint.move(127);
-			und.set_value(false);
+			//und.set_value(false);
 			mpist.set_value(!true);
 
 		}
