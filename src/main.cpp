@@ -22,6 +22,8 @@ bool rampt;
 
 
 void autonomous() { 
+	/*
+	//elims
 	desc.set_value(true);
 	forward_move(600, 600, 1,1);
 	tint.move(127);
@@ -53,6 +55,7 @@ void autonomous() {
 	pros::delay(1000);
 	matchp.set_value(false);
 	chassis_move(-200,-200);
+*/
 
 	//forward_move(600, 100000000, 1,1);
 	//forward_move(2000, 100000000, 1,1, true, {0.15, 0, 0},  {2.5, 0, 0});
@@ -139,6 +142,44 @@ pros::delay(120);
 	
 	pros::delay(4000);
 	*/
+	//skills
+	desc.set_value(true);
+	turnp(0, 100);
+	forward_move(1750, 2300, 1, 1, true, {0.15, 0, 0},  {2.5, 0, 0});
+	turnp(90, 600);//, {1, 0, 6.25} ,{19.9, 0, 0});
+	matchp.set_value(true);
+	pros::delay(400);
+	bint.move(-127);
+	tint.move(127);
+	mpist.set_value(true);
+	forward_move(1500, 2000, 0.5, 1500);
+	chassis_move(200, 200);
+	pros::delay(2000);
+	forward_move(-600, 1000, 1,1);
+	matchp.set_value(false);
+	turnp(-150, 1000);
+	forward_move(700, 1000, 1,1);
+	turnp(-90, 1000);
+	forward_move(2750, 5000, 1,1);
+	turnp(-45, 1000);
+	forward_move(850, 3800, 1,1);
+	turnp(-95, 1000);
+	forward_move(-1000, 3000, 1,1);
+	bint.move(-127);
+	tint.move(-127);
+	chassis_move(-400, -400);
+	pros::delay(2500);
+	matchp.set_value(true);
+	forward_move(1500, 2000, 0.5, 1500);
+	chassis_move(200, 200);
+	pros::delay(2000);
+	forward_move(-1000, 3000, 1,1);
+	bint.move(-127);
+	tint.move(-127);
+	chassis_move(-400, -400);
+	pros::delay(2500);
+
+
 
 }
 /**
