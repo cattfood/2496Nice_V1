@@ -21,7 +21,7 @@ pros::Motor rf(16, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
 pros::Motor rm(17, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES); 
 pros::Motor rb(15, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES); 
 
-pros::Motor bint(19, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES); 
+pros::Motor bint(6, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES); 
 //pros::Motor mint(13, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
 pros::Motor tint(18, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES); //need port
 

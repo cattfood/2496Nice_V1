@@ -22,6 +22,40 @@ bool rampt;
 
 
 void autonomous() { 
+	desc.set_value(true);
+	forward_move(600, 600, 1,1);
+	turnp(-51, 600);
+	tint.move(127);
+	bint.move(-127);
+	forward_move(2000, 1500, 0.3,1700);
+	pros::delay(250);
+	forward_move(-675, 600, 1,1);
+	pros::delay(250);
+	turnp(-147, 600);
+	forward_move(1400, 1300, 0.5,1);
+	turnp(180, 400, {1.05, 0, 0}, {19.9, 0, 0});
+	tint.move(-127);
+	bint.move(-127);
+	forward_move(-1600, 1600, 0.3,200);
+	matchp.set_value(true);
+	pros::delay(1000);
+	turnp(181, 200);
+	forward_move(1250, 800, 0.7, 1400);
+	chassis_move(120, 120);
+	pros::delay(600);
+	chassis_move(0,0);
+	forward_move(-1600, 1700, 0.3,600);
+	tint.move(127);
+	bint.move(-127);
+	pros::delay(500);
+	matchp.set_value(false);
+	desc.set_value(false);
+	forward_move(600, 300, 0.5,250);
+	turnp(225, 400);
+	forward_move(-600, 800, 0.5,250);
+	turnp(180, 300);
+	forward_move(-850, 2000, 0.5,250);
+
 	//forward_move(600, 100000000, 1,1);
 	//forward_move(2000, 100000000, 1,1, true, {0.15, 0, 0},  {2.5, 0, 0});
 	//turnp(180, 10000000, {1, 0, 6.8}, {19.9, 0, 0});
