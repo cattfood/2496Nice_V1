@@ -36,6 +36,19 @@ float ARC_HEADING_KD = 0;
 double ARC_HEADING_INTEGRAL_KI = 200;
 double ARC_HEADING_MAX_INTEGRAL = 20;
 
+float variable_kd(float x) {
+    return 0.000000000001732739*pow(x,7)  - 0.000000001263293*pow(x,6) + 0.0000003789243*pow(x, 5) + -0.00006034489*pow(x,4) + 0.00548546*pow(x,3) + -0.2836335*pow(x,2) + 7.764479 * x - 68.31536;
+}
+
+float good_vkd(float x) {
+    if (0 > variable_kd(x)) {
+        return 0;
+    }
+    else {
+        return variable_kd(x);
+    }
+}
+
 void set_constants(pidConstants constants) {
     t_consts = constants;
 }
@@ -47,7 +60,7 @@ double get_true_error(double target, double input) {
         error -= 360;
     }
 
-    while (error < 180) {
+    while (error < -180) {
         error+=360;
     }
 
@@ -235,18 +248,99 @@ controller.print(0, 0, "ERROR: %f           ", float(error));
     chassis_move(0,0);
 }
 
+void forward_movem(float target, float timeout, float endsp, float dist, bool headc, pidConstants constants, pidConstants constants2) {
+    error = 0;
+    prev_error = 0;
+    integral = 0;
+    derivative = 0;
+    set_constants(constants);
+   // double position = imu.get_heading(); // degrees
+    controller.clear();
+
+    Timer t1;
+    float voltage;
+    float encoder_avg;
+    int count = 0;
+
+  
+    reset_encoders();
+      // while (t1.time() <= timeout){
+      while (true){
+        encoder_avg = (lf.get_position() + rf.get_position()) / 2;
+        float base_voltage = calc(target, encoder_avg, 200, 20);
+
+    // Scale output based on distance left (slows near target)
+    float slowdown = std::min(endsp, static_cast<float>(fabs(error) / dist));  
+      // slowdown = std::max(slowdown, 0.4f);
+    // 10 = distance over which teo slowS down, tune this
+    voltage = base_voltage * slowdown;
+
+    double position = imu.get_heading(); // degrees
+double poserror = get_heading_error(true_target, position, 1); // wrapped to [-180,180] //replace position with true target
+
+
+// If using simple proportional heading correction:
+double kH = 4.5; // tune this
+double correction = kH * poserror;
+
+// Apply voltage limits
+if (voltage > 127) voltage = 127;
+if (voltage < -127) voltage = -127;
+
+// Drive with heading correction
+chassis_move(voltage + correction, voltage - correction);
+
+controller.print(0, 0, "ERROR: %f           ", float(error));
+    
+        if (abs(error) <= 10) set_constants(constants2);
+        if(abs(error) <= 200) matchp.set_value(true);
+       
+     
+        if (abs(error) < 1) {
+            count++;
+        }
+        
+        if(count > 20) {
+           // break;
+        }
+            
+        pros::delay(10);
+
+        
+        controller.print(0, 0, "%.2f", target - encoder_avg);
+    }
+        
+    chassis_move(0,0);
+}
 void turnp(float target, float timeout, pidConstants constants, pidConstants constants2, double feedforward ) {
     error = 0;
     prev_error = 0;
     integral = 0;
     derivative = 0;
     power = 0;
-    set_constants(constants);
+    double position1 = imu.get_heading();
+    pidConstants turnpid = {2.5, 0, good_vkd(abs(get_true_error(target, position1)))};
+  // pidConstants turnpid = {2.5, 0, 0};
+  // pidConstants turnpid = {2.5, 0, 0.05}; // 15
+  // pidConstants turnpid = {2.5, 0, 17}; // 30
+  //pidConstants turnpid = {2.5, 0, 19}; // 45
+ // pidConstants turnpid = {2.5, 0, 20}; // 60
+ //pidConstants turnpid = {2.5, 0, 21}; // 75
+  //pidConstants turnpid = {2.5, 0, 21.5}; // 90
+ // pidConstants turnpid = {2.5, 0, 22.3}; // 110
+  //pidConstants turnpid = {2.5, 0, 22.6}; // 125
+//pidConstants turnpid = {2.5, 0, 23.8}; // 150 // i tuned up to here
+ //pidConstants turnpid = {2.5, 0, 23.4}; // 165
+  //pidConstants turnpid = {2.5, 0, 24.2}; // 180
+ //controller.print(0, 0, "%f", get_true_error(target, position1));
+   set_constants(turnpid);
+
     true_target = target;
 
     int count = 0;
     controller.clear();
     Timer t1;
+   // while (true){
 
     while (t1.time() < timeout) {
     
@@ -267,10 +361,66 @@ void turnp(float target, float timeout, pidConstants constants, pidConstants con
         if (fabs(heading_error) < 0.5) count++;
         else count = 0;
 
-        if (count >= 7) break;
+        if (count >= 7) break;  
 
         pros::delay(10);
         controller.print(0, 0, "Err: %.2f", heading_error);
+      // controller.print(0, 0, "Err: %.2f", variable_kd(target));
+    }
+    chassis_move(0, 0);
+} 
+
+void turnpl(float target, float timeout, pidConstants constants, pidConstants constants2, double feedforward ) {
+    error = 0;
+    prev_error = 0;
+    integral = 0;
+    derivative = 0;
+    power = 0;
+    pidConstants turnpid = {2.5, 0, variable_kd(target)};
+   //pidConstants turnpid = {2.5, 0, 0}; // 15
+  // pidConstants turnpid = {2.5, 0, 16}; // 30
+  //pidConstants turnpid = {2.5, 0, 17}; // 45
+  //pidConstants turnpid = {2.5, 0, 17.8}; // 60
+  //pidConstants turnpid = {2.5, 0, 18.5}; // 75
+  //pidConstants turnpid = {2.5, 0, 20}; // 90
+  //pidConstants turnpid = {2.5, 0, 20.7}; // 110
+  //pidConstants turnpid = {2.5, 0, 22}; // 125
+ // pidConstants turnpid = {2.5, 0, 23}; // 150
+ //pidConstants turnpid = {2.5, 0, 24}; // 165
+ // pidConstants turnpid = {2.5, 0, 24.8}; // 180
+   set_constants(turnpid);
+  
+    true_target = target;
+
+    int count = 0;
+    controller.clear();
+    Timer t1;
+   // while (true){
+
+    while (t1.time() < timeout) {
+    
+        double position = imu.get_heading(); // 0–360
+        double heading_error = target - position;
+
+        if (heading_error > 180) heading_error -= 360;
+        if (heading_error < -180) heading_error += 360;
+
+
+        double voltage = calc(0, -heading_error, 5, 100); 
+        voltage *= feedforward;
+
+        voltage = std::clamp(voltage, -127.0, 127.0);
+        chassis_move(0, -voltage);
+
+        if (fabs(heading_error) < 2) set_constants(constants2);
+        if (fabs(heading_error) < 0.5) count++;
+        else count = 0;
+
+        if (count >= 7) break;  
+
+        pros::delay(10);
+        controller.print(0, 0, "Err: %.2f", heading_error);
+      // controller.print(0, 0, "Err: %.2f", variable_kd(target));
     }
     chassis_move(0, 0);
 } 
@@ -296,7 +446,7 @@ void drive_arcL(double theta, double radius, int timeout, int speed){
     
     //int timeout = 5000;
     ltarget = double((theta / 360) * 2 * pi * radius); 
-    rtarget = double((theta / 360) * 2 * pi * (radius + 520));
+    rtarget = double((theta / 360) * 2 * pi * (radius + 500));
 
     while (true){
         double encoderAvgL = (lf.get_position() + lb.get_position()) / 2;
@@ -324,7 +474,7 @@ void drive_arcL(double theta, double radius, int timeout, int speed){
             }
         } 
     
-        set_constants({0.1, 0, 0});
+        set_constants({0.5, 0, 0});
         int voltageL = calc(ltarget, encoderAvgL, 200, 20);
 
         
@@ -350,7 +500,7 @@ void drive_arcL(double theta, double radius, int timeout, int speed){
         
   
 
-        set_constants({6, 0, 0}); // arc consts
+        set_constants({5, 0, 0}); // arc consts
         int fix = calc3((true_target + leftcorrect), position, ARC_HEADING_INTEGRAL_KI, ARC_HEADING_MAX_INTEGRAL);
         totalError += error3;
     
@@ -358,7 +508,7 @@ void drive_arcL(double theta, double radius, int timeout, int speed){
         if ((abs(ltarget - encoderAvgL) <= 4) && (abs(rtarget - encoderAvgR) <= 4)) count++;
         if (count >= 20 || time2 > timeout){
             true_target -= theta;
-            break;
+           // break;
         } 
         
         if (time2 % 50 == 0 && time2 % 100 != 0 && time2 % 150 != 0){
@@ -378,7 +528,7 @@ void drive_arcL(double theta, double radius, int timeout, int speed){
 
 void driveArcR(double theta, double radius, int timeout, int speed, bool test){
 
-    set_constants({0.1, 0, 0}); // straights
+    //set_constants({0.1, 0, 0}); // straights
 
     Timer t1;
     

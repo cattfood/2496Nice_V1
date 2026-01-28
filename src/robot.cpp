@@ -25,7 +25,7 @@ pros::Motor bint(6, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES);
 //pros::Motor mint(13, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
 pros::Motor tint(18, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES); //need port
 
-pros::ADIDigitalOut und('A', false);
+pros::ADIDigitalOut und('F', false);
 pros::ADIDigitalOut desc('B', false);
 pros::ADIDigitalOut mpist('C', true);
 pros::ADIDigitalOut matchp('H', false);
