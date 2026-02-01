@@ -20,6 +20,47 @@ bool rampt;
 
 
 void autonomous() { 
+	/*
+forward_move(1900, 2000, 1,1);
+turnp(90, 1000);
+bint.move(-127);
+tint.move(127);
+matchp.set_value(true);
+mpist.set_value(true);
+pros::delay(1000);
+chassis_move(50, 50);
+pros::delay(2500);
+forward_move(-400, 800, 1, 600);
+matchp.set_value(false);
+turnp(-45, 2000);
+forward_move(750, 1000, 1,1);
+turnp(-89, 1000);
+forward_move(3300, 4000, 1,1, true, {0.45, 0, 8.5});
+turnp(-135, 1000);
+forward_move(750, 1000, 1,1);
+turnp(-90, 1000);
+forward_move(-600, 700, 1,1);
+chassis_move(-30, -30);
+tint.move(-127);
+pros::delay(3000);
+bint.move(-127);
+tint.move(127);
+matchp.set_value(true);
+mpist.set_value(true);
+pros::delay(1000);
+chassis_move(50, 50);
+pros::delay(2500);
+forward_move(-1200, 800, 1, 600);
+tint.move(-127);
+chassis_move(-30, -30);
+pros::delay(3000);
+*/
+turnp(-90, 0);
+forward_move(800, 1000, 1, 1);
+turnp(-135, 1000);
+forward_move(400, 1000, 1, 1);
+drive_arcL(90,1200, 1200, 100);
+matchp.set_value(true);
 //sigawp lalalalalala
 /*
 forward_move(1480, 1500, 1,1);
@@ -58,7 +99,7 @@ mpist.set_value(true);
 forward_move(1200, 1000, 1,1);
 */
 //turnp(180, 100000);
-forward_move(600, 100000000, 1,1);
+//forward_move(600, 100000000, 1,1);
 
 
 
@@ -422,8 +463,8 @@ void opcontrol() {
 		
 		double chassis_temp  = (lf.get_temperature() + lm.get_temperature() + lb.get_temperature() + rf.get_temperature() + rm.get_temperature() + rb.get_temperature()) / 6;
 		double int_temp = (bint.get_temperature() + tint.get_temperature()) / 2;
-		controller.print(1,0, "%i", x);
-		controller.print(1,0, "%f", chassis_temp);
+		//controller.print(1,0, "%i", x);
+	  controller.print(1,0, "%f", chassis_temp);
 		controller.print(2,0, "%f", int_temp);
 /*
 		int lavg = (lf.get_actual_velocity() + lm.get_actual_velocity() + lb.get_actual_velocity()) / 3;

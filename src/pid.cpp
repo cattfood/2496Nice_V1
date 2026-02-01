@@ -508,7 +508,7 @@ void drive_arcL(double theta, double radius, int timeout, int speed){
         if ((abs(ltarget - encoderAvgL) <= 4) && (abs(rtarget - encoderAvgR) <= 4)) count++;
         if (count >= 20 || time2 > timeout){
             true_target -= theta;
-           // break;
+            break;
         } 
         
         if (time2 % 50 == 0 && time2 % 100 != 0 && time2 % 150 != 0){
