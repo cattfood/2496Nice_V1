@@ -20,7 +20,7 @@ bool rampt;
 
 
 void autonomous() { 
-	/*
+	
 forward_move(1900, 2000, 1,1);
 turnp(90, 1000);
 bint.move(-127);
@@ -54,13 +54,15 @@ forward_move(-1200, 800, 1, 600);
 tint.move(-127);
 chassis_move(-30, -30);
 pros::delay(3000);
-*/
+
+/*
 turnp(-90, 0);
 forward_move(800, 1000, 1, 1);
 turnp(-135, 1000);
 forward_move(400, 1000, 1, 1);
 drive_arcL(90,1200, 1200, 100);
 matchp.set_value(true);
+*/
 //sigawp lalalalalala
 /*
 forward_move(1480, 1500, 1,1);
@@ -526,7 +528,7 @@ void opcontrol() {
 		}
 		else if(controller.get_digital(E_CONTROLLER_DIGITAL_L1)) {
 			tint.move_velocity(450);
-			bint.move(-127);
+			bint.move_velocity(-450);
 			//und.set_value(false);
 			mpist.set_value(!true);
 
