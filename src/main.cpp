@@ -19,10 +19,31 @@ bool rampt;
 
 
 
-void autonomous() { 
+void autonomous() {
+	
+turnp(25, 1000);
+bint.move(-127);
+tint.move(127);
+mpist.set_value(true);
+forward_move(1700, 2200, 0.2, 2000);
+turnp(70, 500);
+forward_move(600, 1000, 0.4, 400);
+forward_move(-600, 1000);
+
+
 /*
-forward_move(1850, 2000, 1,1);
-forward_move(1850, 2000, 1,1);
+turnp(135, 1000);
+forward_move(1300, 1500);
+turnp(180, 1000);
+matchp.set_value(true);
+pros::delay(1000);
+forward_move(400, 600);
+chassis_move(50,50);
+pros::delay(400);
+forward_move(300, 500);
+*/
+	/* //skills
+	forward_move(1850, 2000, 1,1);
 turnp(90, 1000);
 bint.move(-127);
 tint.move(127);
@@ -30,29 +51,21 @@ matchp.set_value(true);
 mpist.set_value(true);
 pros::delay(1000);
 chassis_move(30, 30);
-chassis_move(30, 30);
 pros::delay(2500);
-turnp(90, 1000);
 turnp(90, 1000);
 forward_move(-400, 800, 1, 600);
 matchp.set_value(false);
 turnp(-45, 2000);
 forward_move(775, 2000, 1,1);
-forward_move(775, 2000, 1,1);
 turnp(-89, 1000);
-forward_move(3300, 4000, 1,1, true, {0.45, 0, 8.5});
+forward_move(3300, 4000, 0.8,400, true, {0.45, 0, 8});
 turnp(-135, 1000);
-forward_move(730, 2000, 1,1);
-turnp(-90, 2000);
-forward_move(-700, 1000, 1,1);
-chassis_move(-50, -50);
-forward_move(730, 2000, 1,1);
+forward_move(705, 2000, 1,1);
 turnp(-90, 2000);
 forward_move(-700, 1000, 1,1);
 chassis_move(-50, -50);
 tint.move(-127);
 pros::delay(3000);
-turnp(-92, 1000);
 turnp(-92, 1000);
 bint.move(-127);
 tint.move(127);
@@ -62,13 +75,13 @@ pros::delay(1000);
 forward_move(700, 1500, 1, 600);
 chassis_move(30, 30);
 pros::delay(2500);
-turnp(-87, 2000);
+turnp(-92, 2000);
 forward_move(-1200, 2000, 1, 600);
 tint.move(-127);
 chassis_move(-50, -50);
 matchp.set_value(false);
 pros::delay(3000);
-*/
+//
 turnp(-90, 1000);
 drive_arcL(88,840, 3000, 100);
 turnp(-175, 2000);
@@ -86,70 +99,6 @@ pros::delay(900);
 turnp(145, 1000);
 forward_move(1510, 3000, 1,1);
 matchp.set_value(true);
-turnp(-90, 2000);
-bint.move(-127);
-tint.move(127);
-pros::delay(1000);
-chassis_move(30, 30);
-forward_move(700, 1500, 1, 600);
-chassis_move(30, 30);
-pros::delay(2500);
-
-turnp(-90, 1000);
-forward_move(-400, 800, 1, 600);
-matchp.set_value(false);
-turnp(135, 2000);
-forward_move(775, 2000, 1,1);
-turnp(91, 1000);
-forward_move(3300, 4000, 1,1, true, {0.45, 0, 8.5});
-turnp(45, 1000);
-forward_move(730, 2000, 1,1);
-turnp(90, 2000);
-forward_move(-700, 1000, 1,1);
-chassis_move(-50, -50);
-turnp(-87, 2000);
-forward_move(-1200, 2000, 1, 600);
-tint.move(-127);
-chassis_move(-50, -50);
-matchp.set_value(false);
-pros::delay(3000);
-turnp(88, 1000);
-bint.move(-127);
-tint.move(127);
-
-turnp(-90, 1000);
-drive_arcL(88,840, 3000, 100);
-turnp(-175, 2000);
-forward_move(600, 2000, 1,1);
-matchp.set_value(true);
-pros::delay(1000);
-forward_move(1375, 4000, 1,0.5);
-matchp.set_value(false);
-forward_move(150, 1500, 1,0.5);
-forward_move(-150, 1500, 1,0.5);
-bint.move(-127);
-tint.move(-127);
-chassis_move(50, 50);
-pros::delay(900);
-turnp(145, 1000);
-forward_move(1510, 3000, 1,1);
-matchp.set_value(true);
-mpist.set_value(true);
-pros::delay(1000);
-forward_move(700, 1500, 1, 600);
-chassis_move(30, 30);
-pros::delay(2500);
-turnp(93, 2000);
-forward_move(-1200, 2000, 1, 600);
-tint.move(-127);
-chassis_move(-50, -50);
-matchp.set_value(false);
-pros::delay(3000);
-
-//sigawp lalalalalala
-/*
-forward_move(1480, 1500, 1,1);
-turnp(90, 1000);
 turnp(-90, 2000);
 bint.move(-127);
 tint.move(127);
@@ -186,6 +135,7 @@ tint.move(-127);
 chassis_move(-50, -50);
 matchp.set_value(false);
 pros::delay(3000);
+
 */
 }
 /**
@@ -320,13 +270,11 @@ void opcontrol() {
 		}
 		else if(controller.get_digital(E_CONTROLLER_DIGITAL_L1)) {
 			tint.move_velocity(450);
-			bint.move_velocity(-450);
+			bint.move_velocity(-300);
 			//und.set_value(false);
 			mpist.set_value(!true);
 
-		}
-		else if(controller.get_digital(E_CONTROLLER_DIGITAL_L2)) {
-			tint.move(127);
+			
 			bint.move(127);
 			//und.set_value(false);
 			mpist.set_value(!true);
