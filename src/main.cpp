@@ -21,27 +21,81 @@ bool rampt;
 
 void autonomous() {
 
-forward_move(1775, 1750, 1,1);
-turnp(-90, 600);
+//sawp 
+forward_move(1790, 1670, 1,1);
+matchp.set_value(true);
+turnp(90, 500);
+bint.move(-127);
+tint.move(127);
+chassis_move(65,65);
+pros::delay(825);
+turnp(90, 200);
+forward_move(-1200, 800, 1,1);
+bint.move(-127);
+tint.move(-127);
+matchp.set_value(false);
+chassis_move(-40,-40);
+pros::delay(1200);
+
+turnp(190, 700);
+bint.move(-127);
+tint.move(127);
+forward_move(775, 775, 0.3,500);
+turnp(179, 300);
+forward_move(1530, 1275, 0.5,1200);
+forward_move(700, 750, 0.3,500);
+bint.move(-50);
+tint.move(50);
+turnp(135, 400);
+forward_move(-920, 850, 1,1);
+mpist.set_value(false);
+bint.move(127);
+tint.move(127);
+pros::delay(150);
+bint.move(-85);
+tint.move(127);
+pros::delay(600);
+mpist.set_value(true);
+turnp(138, 300);
+forward_move(2450, 1775, 0.5, 700);
+/*
+matchp.set_value(true);
+turnp(90, 400);
+bint.move(-127);
+tint.move(127);
+chassis_move(65,65);
+pros::delay(620);
+*/
+turnp(90, 500);
+chassis_move(-70,-70);
+pros::delay(100);
+bint.move(-127);
+tint.move(-127);
+pros::delay(3000);
+
+//left side elims 2/6
+/*
+forward_move(1750, 1650, 1,1);
+turnp(-90, 475);
 bint.move(-127);
 tint.move(127);
 matchp.set_value(true);
-pros::delay(400);
-chassis_move(40,40);
+pros::delay(390);
+chassis_move(55,55);
 pros::delay(770);
-turnp(-92, 700);
+turnp(-92, 600);
 forward_move(-1200, 1050, 1,1);
 bint.move(-127);
 tint.move(-127);
 matchp.set_value(false);
 chassis_move(-40,-40);
-pros::delay(1400);
+pros::delay(1300);
 turnp(170, 850);
 bint.move(-127);
 tint.move(127);
-forward_move(1030, 1300, 0.1,500);
-turnp(315, 650);
-forward_move(-760, 620, 1,1);
+forward_move(1030, 1400, 0.1,500);
+turnp(312, 700);
+forward_move(-780, 810, 1,1);
 mpist.set_value(false);
 bint.move(127);
 tint.move(127);
@@ -49,10 +103,70 @@ pros::delay(150);
 bint.move(-70);
 tint.move(127);
 pros::delay(1800);
-forward_move(1825, 1750, 1,1);
+turnp(312, 200);
+mpist.set_value(true);
+bint.move(-127);
+tint.move(127);
+forward_move(1920, 1850, 1,1);
 turnp(-90, 450);
-forward_move(-1200, 1100, 0.8,700);
+lf.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+lm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+lb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+lf.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+lm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+lb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+forward_move(-1100, 1100, 1,1);
+*/
 
+//right side elims 2/6
+/*
+forward_move(1750, 1850, 1,1);
+turnp(90, 675);
+bint.move(-127);
+tint.move(127);
+matchp.set_value(true);
+pros::delay(390);
+chassis_move(55,55);
+pros::delay(720);
+turnp(92, 700);
+forward_move(-1200, 1050, 1,1);
+bint.move(-127);
+tint.move(-127);
+matchp.set_value(false);
+chassis_move(-40,-40);
+pros::delay(500);
+*/
+
+/*
+turnp(170, 850);
+bint.move(-127);
+tint.move(127);
+forward_move(1030, 1400, 0.1,500);
+turnp(312, 700);
+forward_move(-780, 810, 1,1);
+mpist.set_value(false);
+bint.move(127);
+tint.move(127);
+pros::delay(150);
+bint.move(-70);
+tint.move(127);
+pros::delay(1800);
+turnp(312, 200);
+mpist.set_value(true);
+bint.move(-127);
+tint.move(127);
+forward_move(1920, 1850, 1,1);
+turnp(-90, 450);
+lf.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+lm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+lb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+lf.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+lm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+lb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
+forward_move(-1100, 1100, 1,1);
+
+*/
 /*
 turnp(25, 1000);
 bint.move(-127);
