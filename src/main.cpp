@@ -22,7 +22,7 @@ bool rampt;
 void autonomous() {
 	/*
 desc.set_value(false);
-//sawp 
+//sawp 2/6
 forward_move(1790, 1270, 1,1);
 matchp.set_value(true);
 turnp(90, 500);
@@ -183,7 +183,9 @@ chassis_move(50,50);
 pros::delay(400);
 forward_move(300, 500);
 */
-	//skills
+
+//skills 2/6
+/*
 mpist.set_value(true);
 desc.set_value(true);
 forward_move(1850, 1300, 1,1);
@@ -242,7 +244,7 @@ pros::delay(2000);
 turnp(-90, 200);
 forward_move(-400, 500, 1, 600);
 matchp.set_value(false);
-turnp(-45+180, 500);
+turnp(-45+180, 600);
 forward_move(775, 750, 1,1);
 turnp(95, 800);
 forward_move(3300, 2750, 0.8,400);
@@ -251,7 +253,7 @@ forward_move(3300, 2750, 0.8,400);
 //asdfasdfasdfsdfsfsff
 
 turnp(-135+180, 500);
-forward_move(730, 650, 1,1);
+forward_move(750, 650, 1,1);
 
 turnp(-90+180, 500);
 forward_move(-750, 500, 1,1);
@@ -301,6 +303,40 @@ matchp.set_value(true);
 pros::delay(200);
 forward_move(1500, 2000);
 matchp.set_value(false);
+*/
+
+//right elims 2/6
+turnp(18, 500);
+bint.move(-127);
+tint.move(127);
+forward_move(1300, 1100, 0.2, 600);
+turnp(130, 600);
+forward_move(1500, 1500);
+turnp(180, 500);
+matchp.set_value(true);
+pros::delay(200);
+chassis_move(55,55);
+pros::delay(900);
+turnp(180, 500);
+forward_move(-1200, 1100, 1,1);
+bint.move(-127);
+tint.move(-127);
+matchp.set_value(false);
+chassis_move(-40,-40);
+pros::delay(2300);
+turnp(180, 300);
+forward_move(800, 800, 1,1);
+turnp(-45, 600);
+forward_move(740, 800, 1,1);
+turnp(0, 600);
+lf.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+lm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+lb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+lf.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+lm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+lb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+forward_move(1100, 1100, 1,1);
+
 
 
 
