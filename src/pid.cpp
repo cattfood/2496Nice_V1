@@ -184,7 +184,8 @@ void chassis_move(int left, int right) {
     rb.move(right);
 }
 
-void forward_move(float target, float timeout, float endsp, float dist, bool headc, pidConstants constants, pidConstants constants2) {
+void forward_move(float target, float timeout, float endsp, float dist, bool headc, pidConstants constants, pidConstants constants2, bool slowd) {
+    int voltmax = 127;
     error = 0;
     prev_error = 0;
     integral = 0;
@@ -220,13 +221,16 @@ double kH = 4.5; // tune this
 double correction = kH * poserror;
 
 // Apply voltage limits
-if (voltage > 127) voltage = 127;
-if (voltage < -127) voltage = -127;
+if (voltage > voltmax) voltage = voltmax;
+if (voltage < -voltmax) voltage = -voltmax;
 
 // Drive with heading correction
 chassis_move(voltage + correction, voltage - correction);
 
 controller.print(0, 0, "ERROR: %f           ", float(error));
+if (abs(error) <= 200 && slowd) {
+    //voltmax = abs(voltmax - 3); //
+}
     
         if (abs(error) <= 10) set_constants(constants2);
        
@@ -474,7 +478,7 @@ void drive_arcL(double theta, double radius, int timeout, int speed){
             }
         } 
     
-        set_constants({0.5, 0, 0});
+        set_constants({1, 0, 0});
         int voltageL = calc(ltarget, encoderAvgL, 200, 20);
 
         
@@ -500,7 +504,7 @@ void drive_arcL(double theta, double radius, int timeout, int speed){
         
   
 
-        set_constants({5, 0, 0}); // arc consts
+        set_constants({1, 0, 0}); // arc consts
         int fix = calc3((true_target + leftcorrect), position, ARC_HEADING_INTEGRAL_KI, ARC_HEADING_MAX_INTEGRAL);
         totalError += error3;
     

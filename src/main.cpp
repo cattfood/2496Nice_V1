@@ -20,15 +20,16 @@ bool rampt;
 
 
 void autonomous() {
-
+	/*
+desc.set_value(false);
 //sawp 
-forward_move(1790, 1670, 1,1);
+forward_move(1790, 1270, 1,1);
 matchp.set_value(true);
 turnp(90, 500);
 bint.move(-127);
 tint.move(127);
-chassis_move(65,65);
-pros::delay(825);
+chassis_move(55,55);
+pros::delay(950);
 turnp(90, 200);
 forward_move(-1200, 800, 1,1);
 bint.move(-127);
@@ -40,39 +41,32 @@ pros::delay(1200);
 turnp(190, 700);
 bint.move(-127);
 tint.move(127);
-forward_move(775, 775, 0.3,500);
+forward_move(775, 685);
 turnp(179, 300);
-forward_move(1530, 1275, 0.5,1200);
-forward_move(700, 750, 0.3,500);
+forward_move(1530, 1175);
+forward_move(700, 700);
 bint.move(-50);
 tint.move(50);
 turnp(135, 400);
-forward_move(-920, 850, 1,1);
+forward_move(-920, 850);
 mpist.set_value(false);
 bint.move(127);
 tint.move(127);
-pros::delay(150);
+pros::delay(100);
 bint.move(-85);
 tint.move(127);
 pros::delay(600);
 mpist.set_value(true);
 turnp(138, 300);
-forward_move(2450, 1775, 0.5, 700);
-/*
-matchp.set_value(true);
-turnp(90, 400);
-bint.move(-127);
-tint.move(127);
-chassis_move(65,65);
-pros::delay(620);
-*/
+forward_move(2350, 1875);
 turnp(90, 500);
-chassis_move(-70,-70);
+forward_move(-600, 300);
+chassis_move(-40,-40);
 pros::delay(100);
 bint.move(-127);
 tint.move(-127);
 pros::delay(3000);
-
+*/
 //left side elims 2/6
 /*
 forward_move(1750, 1650, 1,1);
@@ -189,101 +183,133 @@ chassis_move(50,50);
 pros::delay(400);
 forward_move(300, 500);
 */
-	/* //skills
-	forward_move(1850, 2000, 1,1);
-turnp(90, 1000);
+	//skills
+mpist.set_value(true);
+desc.set_value(true);
+forward_move(1850, 1300, 1,1);
+turnp(90, 600);
 bint.move(-127);
 tint.move(127);
 matchp.set_value(true);
-mpist.set_value(true);
-pros::delay(1000);
-chassis_move(30, 30);
-pros::delay(2500);
-turnp(90, 1000);
-forward_move(-400, 800, 1, 600);
-matchp.set_value(false);
-turnp(-45, 2000);
-forward_move(775, 2000, 1,1);
-turnp(-89, 1000);
-forward_move(3300, 4000, 0.8,400, true, {0.45, 0, 8});
-turnp(-135, 1000);
-forward_move(705, 2000, 1,1);
-turnp(-90, 2000);
-forward_move(-700, 1000, 1,1);
-chassis_move(-50, -50);
-tint.move(-127);
-pros::delay(3000);
-turnp(-92, 1000);
-bint.move(-127);
-tint.move(127);
-matchp.set_value(true);
-mpist.set_value(true);
-pros::delay(1000);
-forward_move(700, 1500, 1, 600);
-chassis_move(30, 30);
-pros::delay(2500);
-turnp(-92, 2000);
-forward_move(-1200, 2000, 1, 600);
-tint.move(-127);
-chassis_move(-50, -50);
-matchp.set_value(false);
-pros::delay(3000);
-//
-turnp(-90, 1000);
-drive_arcL(88,840, 3000, 100);
-turnp(-175, 2000);
-forward_move(600, 2000, 1,1);
-matchp.set_value(true);
-pros::delay(1000);
-forward_move(1375, 4000, 1,0.5);
-matchp.set_value(false);
-forward_move(150, 1500, 1,0.5);
-forward_move(-150, 1500, 1,0.5);
-bint.move(-127);
-tint.move(-127);
+pros::delay(200);
 chassis_move(50, 50);
-pros::delay(900);
-turnp(145, 1000);
-forward_move(1510, 3000, 1,1);
-matchp.set_value(true);
-turnp(-90, 2000);
-bint.move(-127);
-tint.move(127);
-pros::delay(1000);
-chassis_move(30, 30);
-pros::delay(2500);
-
-turnp(-90, 1000);
-forward_move(-400, 800, 1, 600);
+pros::delay(2000);
+turnp(90, 200);
+forward_move(-400, 500, 1, 600);
 matchp.set_value(false);
-turnp(135, 2000);
-forward_move(775, 2000, 1,1);
-turnp(91, 1000);
-forward_move(3300, 4000, 1,1, true, {0.45, 0, 8.5});
-turnp(45, 1000);
-forward_move(730, 2000, 1,1);
-turnp(90, 2000);
-forward_move(-700, 1000, 1,1);
+turnp(-45, 700);
+forward_move(775, 700, 1,1);
+turnp(-89, 700);
+forward_move(3300, 1750, 0.8,400);
+
+turnp(-135, 500);
+forward_move(720, 700, 1,1);
+
+turnp(-90, 600);
+forward_move(-750, 500, 1,1);
 chassis_move(-50, -50);
 tint.move(-127);
-pros::delay(3000);
-turnp(88, 1000);
+pros::delay(2000);
+turnp(-92, 500);
 bint.move(-127);
 tint.move(127);
 matchp.set_value(true);
 mpist.set_value(true);
 pros::delay(1000);
-forward_move(700, 1500, 1, 600);
-chassis_move(30, 30);
-pros::delay(2500);
-turnp(93, 2000);
-forward_move(-1200, 2000, 1, 600);
+forward_move(700, 500, 1, 600);
+chassis_move(50, 50);
+pros::delay(2000);
+turnp(-92, 300);
+forward_move(-1300, 1100, 1, 600);
 tint.move(-127);
 chassis_move(-50, -50);
 matchp.set_value(false);
-pros::delay(3000);
+pros::delay(2000);
+//
+turnp(-90, 200);
+forward_move(400, 350);
+turnp(180, 500);
+forward_move(4200, 2500, 1,1, true, {0.2, 0, 4.5}, {0.9, 0, 4});
+//gggg
+turnp(-90, 500);
+bint.move(-127);
+tint.move(127);
+matchp.set_value(true);
+mpist.set_value(true);
+pros::delay(200);
+chassis_move(50, 50);
+pros::delay(2000);
+turnp(-90, 200);
+forward_move(-400, 500, 1, 600);
+matchp.set_value(false);
+turnp(-45+180, 500);
+forward_move(775, 750, 1,1);
+turnp(95, 800);
+forward_move(3300, 2750, 0.8,400);
 
-*/
+
+//asdfasdfasdfsdfsfsff
+
+turnp(-135+180, 500);
+forward_move(730, 650, 1,1);
+
+turnp(-90+180, 500);
+forward_move(-750, 500, 1,1);
+chassis_move(-50, -50);
+tint.move(-127);
+pros::delay(2500);
+turnp(90, 800);
+bint.move(-127);
+tint.move(127);
+matchp.set_value(true);
+mpist.set_value(true);
+pros::delay(1000);
+forward_move(700, 400, 1, 600);
+chassis_move(50, 50);
+pros::delay(2500);
+forward_move(-1300, 1000, 1, 600);
+tint.move(-127);
+chassis_move(-50, -50);
+matchp.set_value(false);
+pros::delay(2500);
+
+turnp(-10, 1500);
+bint.move(-127);
+tint.move(127);
+forward_move(775, 1085);
+turnp(1.5, 300);
+forward_move(1530, 1175);
+forward_move(700, 700);
+forward_move(-1850, 1800);
+turnp(-225, 1000);
+forward_move(-850, 800);
+mpist.set_value(false);
+bint.move(127);
+tint.move(127);
+pros::delay(100);
+bint.move(-85);
+tint.move(127);
+pros::delay(3000);
+mpist.set_value(true);
+turnp(105, 600);
+forward_move(2575, 1500);
+bint.move(-127);
+tint.move(127);
+turnp(20, 700);
+forward_move(600, 500);
+matchp.set_value(true);
+pros::delay(200);
+forward_move(1500, 2000);
+matchp.set_value(false);
+
+
+
+
+
+
+
+
+
 }
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -419,13 +445,14 @@ void opcontrol() {
 			tint.move_velocity(450);
 			bint.move_velocity(-300);
 			//und.set_value(false);
-			mpist.set_value(!true);
+			mpist.set_value(false);
 
-			
+		}
+		else if(controller.get_digital(E_CONTROLLER_DIGITAL_L2)) {
+			tint.move(127);
 			bint.move(127);
 			//und.set_value(false);
-			mpist.set_value(!true);
-
+			mpist.set_value(false);
 		}
 		else if(controller.get_digital_new_press(E_CONTROLLER_DIGITAL_LEFT)) {
 			undtoggle = !undtoggle;
