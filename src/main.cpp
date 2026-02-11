@@ -75,18 +75,35 @@ forward_move(1530, 1175);
 forward_move(710, 750);
 bint.move(-50);
 tint.move(50);
-turnp(135, 500);
-forward_move(-960, 950); //
+turnp(138, 600);
+forward_move(1350, 1775); ///
+
+turnp(90, 200);
+forward_move(-1200, 800);
+bint.move(-127);
+tint.move(-127);
+matchp.set_value(false);
+chassis_move(-45,-45);
+pros::delay(1200);
+
+matchp.set_value(true);
+turnp(90, 500);
+bint.move(-127);
+tint.move(127);
+forward_move(700, 400);
+chassis_move(55,55);
+pros::delay(950);
+forward_move(-830, 800);
+turnp(135, 600);
+forward_move(-2240, 1800);
+bint.move(-127);
+tint.move(-127);
 mpist.set_value(false);
-bint.move(127);
-tint.move(127);
-pros::delay(100);
-bint.move(-85);
-tint.move(127);
-pros::delay(600);
-mpist.set_value(true);
-turnp(138, 300);
-forward_move(2335, 1775);
+pros::delay(800);
+forward_move(1000, 1200);
+
+
+/*
 turnp(90, 500);
 forward_move(-600, 300);
 chassis_move(-45,-45);
@@ -94,7 +111,7 @@ pros::delay(100);
 bint.move(-127);
 tint.move(-127);
 pros::delay(3000);
-
+*/
 } 
 else if(atn == 2) {
 //left side elims 2/6
