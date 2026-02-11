@@ -29,6 +29,7 @@ pros::ADIDigitalOut und('F', false);
 pros::ADIDigitalOut desc('B', false);
 pros::ADIDigitalOut mpist('C', true);
 pros::ADIDigitalOut matchp('H', false);
+ pros::ADIDigitalIn lim ('D');
 
 
 pros::Imu imu(8);

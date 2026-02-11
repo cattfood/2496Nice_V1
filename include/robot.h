@@ -26,6 +26,7 @@ extern pros::ADIDigitalOut matchp;
 
 extern pros::Optical opsens;
 extern pros::Optical hfill;
+extern pros::ADIDigitalIn lim;
 
 extern pros::Imu imu;
 

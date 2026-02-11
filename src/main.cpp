@@ -16,13 +16,38 @@ bool desct;
 bool indext;
 bool rampt;
 
-LV_IMG_DECLARE(grrrr);
-   
+
+   void competition_initialize() {
+	while (true) {
+		string autstr;
+		
+      if (atn == 1) {
+        autstr = " AWP";
+        controller.print(0, 0, "Aut 1: %s", autstr);
+      }
+      else if (atn == 2) {
+        autstr = "LEFT";
+        controller.print(0, 0, "Aut 2: %s", autstr);
+      }
+      else if (atn == 3) {
+       autstr = "RIGHT";
+        controller.print(0, 0, "Aut 3: %s", autstr);
+      }
+      
+
+		if(lim.get_new_press()) {
+            atn++;
+            if(atn > 3) {
+                atn = 1;
+            }
+        }
+	}
+   }
 
 
 void autonomous() {
 
-/*
+if(atn == 1) {
 desc.set_value(false);
 //sawp 2/6
 forward_move(1790, 1270, 1,1);
@@ -69,8 +94,9 @@ pros::delay(100);
 bint.move(-127);
 tint.move(-127);
 pros::delay(3000);
-*/
 
+} 
+else if(atn == 2) {
 //left side elims 2/6
 
 forward_move(1750, 1500, 1,1);
@@ -115,78 +141,41 @@ lm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 lb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 forward_move(-1200, 1100, 1,1);
 
-
-
-/*
-forward_move(1750, 1850, 1,1);
-turnp(90, 675);
+}
+else if(atn == 3) {
+turnp(18, 500);
 bint.move(-127);
+
+
 tint.move(127);
+forward_move(1315, 1200, 0.2, 600);
+turnp(130, 600);
+forward_move(1500, 1500);
+turnp(180, 500);
 matchp.set_value(true);
-pros::delay(390);
+pros::delay(200);
 chassis_move(55,55);
-pros::delay(720);
-turnp(92, 700);
-forward_move(-1200, 1050, 1,1);
+pros::delay(750);
+turnp(180, 700);
+forward_move(-1200, 1100, 1,1);
 bint.move(-127);
 tint.move(-127);
 matchp.set_value(false);
 chassis_move(-40,-40);
-pros::delay(500);
-*/
-//right side elims 2/6
-/*
-turnp(170, 850);
-bint.move(-127);
-tint.move(127);
-forward_move(1030, 1400, 0.1,500);
-turnp(312, 700);
-forward_move(-780, 810, 1,1);
-mpist.set_value(false);
-bint.move(127);
-tint.move(127);
-pros::delay(150);
-bint.move(-70);
-tint.move(127);
-pros::delay(1800);
-turnp(312, 200);
-mpist.set_value(true);
-bint.move(-127);
-tint.move(127);
-forward_move(1920, 1850, 1,1);
-turnp(-90, 450);
+pros::delay(2300);
+turnp(180, 500);
+forward_move(800, 800, 1,1);
+turnp(-45, 600);
+forward_move(760, 800, 1,1);
+turnp(0, 600);
 lf.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 lm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 lb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 lf.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 lm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 lb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-
-forward_move(-1100, 1100, 1,1);
-
-
-/*
-turnp(25, 1000);
-bint.move(-127);
-tint.move(127);
-mpist.set_value(true);
-forward_move(1700, 2200, 0.2, 2000);
-turnp(70, 500);
-forward_move(600, 1000, 0.4, 400);
-forward_move(-600, 1000);
-*/
-
-/*
-turnp(135, 1000);
-forward_move(1300, 1500);
-turnp(180, 1000);
-matchp.set_value(true);
-pros::delay(1000);
-forward_move(400, 600);
-chassis_move(50,50);
-pros::delay(400);
-forward_move(300, 500);
-*/
+forward_move(1200, 1200, 1,1);
+}
 
 //skills 2/6
 /*
@@ -379,12 +368,6 @@ void disabled() {
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {
-    while(true) {
-	controller.clear();
-	}
-
-}
 /**
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
