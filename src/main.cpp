@@ -46,9 +46,127 @@ bool rampt;
 
 
 void autonomous() {
+//	atn = 4;
+
+atn = 1;
+if (atn == 0) {
+	//skills
+	mpist.set_value(true);
+desc.set_value(true);
+forward_move(1800, 1300, 1,1);
+turnp(90, 600);
+bint.move(-127); 
+tint.move(127);
+matchp.set_value(true);
+pros::delay(200);
+
+chassis_move(50, 50);
+pros::delay(2000);
+turnp(90, 200);
+forward_move(-400, 500, 1, 600);
+matchp.set_value(false);
+turnp(-45, 700);
+forward_move(775, 700, 1,1);
+turnp(-89, 700);
+forward_move(3300, 1750, 0.8,400);
+
+turnp(-135, 500);
+forward_move(770, 700, 1,1);
+
+turnp(-90, 600);
+forward_move(-750, 500, 1,1);
+chassis_move(-40, -40);
+tint.move(-127);
+pros::delay(2000);
+turnp(-92, 500);
+bint.move(-127);
+tint.move(127);
+matchp.set_value(true);
+mpist.set_value(true);
+pros::delay(1000);
+forward_move(700, 500, 1, 600);
+chassis_move(50, 50);
+pros::delay(2000);
+turnp(-92, 300);
+forward_move(-1300, 1100, 1, 600);
+tint.move(-127);
+chassis_move(-40, -40);
+matchp.set_value(false);
+pros::delay(2000);
+//
+turnp(-90, 200);
+forward_move(400, 350);
+turnp(180, 700);
+forward_move(4200, 3000, 1,1, true, {0.2, 0, 4.5}, {0.9, 0, 4});
+//gggg
+turnp(-90, 500);
+bint.move(-127);
+tint.move(127);
+matchp.set_value(true);
+mpist.set_value(true);
+pros::delay(200);
+chassis_move(50, 50);
+pros::delay(2000);
+turnp(-90, 200);
+forward_move(-400, 500, 1, 600);
+matchp.set_value(false);
+turnp(-45+180, 600);
+forward_move(775, 750, 1,1);
+turnp(95, 800);
+forward_move(3300, 2750, 0.8,400);
+
+turnp(-135+180, 500);
+forward_move(800, 750, 1,1);
+
+turnp(-90+180, 500);
+forward_move(-750, 500, 1,1);
+chassis_move(-40, -40);
+tint.move(-127);
+pros::delay(2500);
+turnp(90, 800);
+bint.move(-127);
+tint.move(127);
+matchp.set_value(true);
+mpist.set_value(true);
+pros::delay(1000);
+forward_move(700, 400, 1, 600);
+chassis_move(50, 50);
+pros::delay(2500);
+forward_move(-1300, 1000, 1, 600);
+tint.move(-127);
+chassis_move(-50, -50);
+matchp.set_value(false);
+pros::delay(2500);
+
+turnp(-10, 1500);
+bint.move(-127);
+tint.move(127);
+forward_move(775, 1085);
+turnp(1.5, 300);
+turnp(-225, 1000);
+forward_move(-850, 800);
+mpist.set_value(false);
+bint.move(127);
+tint.move(127);
+pros::delay(100);
+bint.move(-85);
+tint.move(127);
+pros::delay(3000);
+mpist.set_value(true);
+turnp(105, 600);
+forward_move(2575, 1500);
+bint.move(-127);
+tint.move(127);
+turnp(20, 700);
+forward_move(600, 500);
+matchp.set_value(true);
+pros::delay(200);
+forward_move(1500, 2000);
+matchp.set_value(false);
+
+}
 
 if(atn == 1) {
-	
 desc.set_value(false);
 //sawp 2/6
 forward_move(1760, 1150, 1,1);
@@ -209,7 +327,15 @@ lm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 lb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 forward_move(1075, 1200, 1,1);
 }
-
+else if(atn == 4) {
+	forward_move(300, 300);
+	/*
+	pros::delay(8000);
+	forward_move(200, 250);
+	turnp(90, 300);
+	forward_move(1000, 1000);
+	*/
+}
 //skills 2/6
 /*
 mpist.set_value(true);
