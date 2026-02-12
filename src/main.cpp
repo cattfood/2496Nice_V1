@@ -69,13 +69,13 @@ pros::delay(900);
 turnp(193, 450);
 bint.move(-127);
 tint.move(127);
-forward_move(775, 400);
-turnp(180, 320);
+forward_move(775, 450);
+turnp(180, 350);
 forward_move(2250, 1350);
-bint.move(-50);
-tint.move(50);
+bint.move(-127);
+tint.move(127);
 turnp(150, 400);
-forward_move(1650, 1050); ///
+forward_move(1450, 1050); ///
 
 turnp(90, 400);
 forward_move(-1050, 500);
@@ -92,13 +92,13 @@ tint.move(127);
 forward_move(950, 500);
 chassis_move(65,65);
 pros::delay(900);
-forward_move(-830, 450);
+forward_move(-750, 450);
 turnp(135, 400);
 forward_move(-2240, 1250);
 bint.move(127);
 tint.move(127);
 mpist.set_value(false);
-pros::delay(100);
+pros::delay(150);
 bint.move(-70);
 tint.move(127);
 pros::delay(1100);
