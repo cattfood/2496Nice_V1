@@ -48,9 +48,10 @@ bool rampt;
 void autonomous() {
 
 if(atn == 1) {
+	
 desc.set_value(false);
 //sawp 2/6
-forward_move(1790, 1175, 1,1);
+forward_move(1760, 1150, 1,1);
 matchp.set_value(true);
 turnp(90, 450);
 bint.move(-127);
@@ -70,38 +71,41 @@ turnp(193, 450);
 bint.move(-127);
 tint.move(127);
 forward_move(775, 450);
-turnp(180, 350);
-forward_move(2250, 1350);
+turnp(180, 300);
+forward_move(2250, 1150);
 bint.move(-127);
 tint.move(127);
 turnp(150, 400);
-forward_move(1450, 1050); ///
+forward_move(1400, 925); ///
 
 turnp(90, 400);
-forward_move(-1050, 500);
+forward_move(-500, 350);
+bint.move(127);
+tint.move(127);
+pros::delay(160);
 bint.move(-127);
 tint.move(-127);
 matchp.set_value(false);
 chassis_move(-45,-45);
-pros::delay(900);
+pros::delay(1350);
 
 matchp.set_value(true);
-turnp(88, 200);
+turnp(90, 200);
 bint.move(-127);
 tint.move(127);
-forward_move(950, 500);
-chassis_move(65,65);
-pros::delay(900);
-forward_move(-750, 450);
-turnp(135, 400);
-forward_move(-2240, 1250);
+forward_move(950, 600);
+chassis_move(70,70);
+pros::delay(800);
+forward_move(-675, 475);
+turnp(135, 450);
+forward_move(-2275, 1400);
 bint.move(127);
 tint.move(127);
 mpist.set_value(false);
-pros::delay(150);
-bint.move(-70);
+pros::delay(200);
+bint.move(-80);
 tint.move(127);
-pros::delay(1100);
+pros::delay(1250);
 forward_move(1000, 1200);
 
 
@@ -125,14 +129,14 @@ tint.move(127);
 matchp.set_value(true);
 pros::delay(200);
 chassis_move(55,55);
-pros::delay(770);
+pros::delay(740);
 turnp(-90, 600);
-forward_move(-1200, 950, 1,1);
+forward_move(-1200, 850, 1,1);
 bint.move(-127);
 tint.move(-127);
 matchp.set_value(false);
 chassis_move(-40,-40);
-pros::delay(1000);
+pros::delay(1050);
 turnp(170, 850);
 bint.move(-127);
 tint.move(127);
@@ -145,14 +149,14 @@ tint.move(127);
 pros::delay(150);
 bint.move(-70);
 tint.move(127);
-pros::delay(1500);
+pros::delay(1400);
 turnp(312, 500);
 mpist.set_value(true);
 bint.move(-127);
 tint.move(127);
 turnp(-40, 300);
-forward_move(1800, 1700, 1,1);
-turnp(-90, 450);
+forward_move(1750, 1500, 1,1);
+turnp(-91, 450);
 lf.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 lm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 lb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
