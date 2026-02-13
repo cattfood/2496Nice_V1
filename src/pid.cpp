@@ -216,9 +216,8 @@ void forward_move(float target, float timeout, float endsp, float dist, bool hea
 double poserror = get_heading_error(true_target, position, 1); // wrapped to [-180,180] //replace position with true target
 
 
-// If using simple proportional heading correction:
-double kH = 4.5; // tune this
-double correction = kH * poserror;
+double hkP = 4.5; // tune this
+double correction = hkP * poserror;
 
 // Apply voltage limits
 if (voltage > voltmax) voltage = voltmax;

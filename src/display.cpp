@@ -8,24 +8,9 @@
 using namespace std;
 using namespace pros;
 
-int atn = 1;
+int atn = 3;
 int color = 1;
 
-void auto_selector() {
-      if(controller.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)){
-        atn++;
-      }
-      if(controller.get_digital_new_press(E_CONTROLLER_DIGITAL_LEFT)){
-        atn--;
-      }
-      if(atn > 4){
-        atn = 1;
-      }
-      if(atn < 1){
-        atn = 4;
-      }
-    
-}
 
 void color_select() {
   if(controller.get_digital_new_press(E_CONTROLLER_DIGITAL_X)) {
@@ -54,25 +39,26 @@ void color_display() {
 }
 
 void auto_display() {
-    string text;
-    switch (atn) {
-        case 1:
-            text = "NONE";
-            controller.print(0, 0, "Aut 0: %s", text);
-            break;
-        case 2:
-            text = "AWP";
-            controller.print(0, 0, "Aut 1: %s", text);
-            break;
-        case 3:
-            text = "elims";
-            controller.print(0, 0, "Aut 2: %s", text);
-            break;
-        case 4:
-            text = "low";
-            controller.print(0, 0, "Aut 3: %s", text);
-            break;
+    string autstr;
+		
+      if (atn == 1) {
+        autstr = " AWP";
+        controller.print(0, 0, "Aut 1: %s", autstr);
+      }
+      else if (atn == 2) {
+        autstr = "LEFT";
+        controller.print(0, 0, "Aut 2: %s", autstr);
+      }
+      else if (atn == 3) {
+       autstr = "RIGHT";
+        controller.print(0, 0, "Aut 3: %s", autstr);
+      }
+      
 
-
-    }
+		if(lim.get_new_press()) {
+            atn++;
+            if(atn > 3) {
+                atn = 1;
+            }
+        }
 }
