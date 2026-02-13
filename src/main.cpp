@@ -50,7 +50,7 @@ turnp(-89, 700);
 forward_move(3300, 1750, 0.8,400);
 
 turnp(-135, 500);
-forward_move(740, 700, 1,1);
+forward_move(790, 700, 1,1);
 
 turnp(-90, 600);
 forward_move(-750, 500, 1,1);
@@ -75,7 +75,7 @@ pros::delay(2000);
 //
 turnp(-90, 200);
 forward_move(400, 350);
-turnp(180, 700);
+turnp(181, 700);
 forward_move(4200, 3000, 1,1, true, {0.2, 0, 4.5}, {0.9, 0, 4});
 //gggg
 turnp(-90, 500);
@@ -95,7 +95,7 @@ turnp(95, 800);
 forward_move(3300, 2750, 0.8,400);
 
 turnp(-135+180, 500);
-forward_move(800, 750, 1,1);
+forward_move(850, 750, 1,1);
 
 turnp(-90+180, 500);
 forward_move(-750, 500, 1,1);
