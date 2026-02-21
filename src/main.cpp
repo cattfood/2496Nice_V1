@@ -603,17 +603,16 @@ void opcontrol() {
 			//und.set_value(false);
 		}
 		else if(controller.get_digital(E_CONTROLLER_DIGITAL_L1)) {
-			tint.move_velocity(450);
-			bint.move_velocity(-350);
+			tint.move_velocity(600);
+			bint.move_velocity(-600);
 			//und.set_value(false);
 			mpist.set_value(false);
 
 		}
 		else if(controller.get_digital(E_CONTROLLER_DIGITAL_L2)) {
 			tint.move(127);
-			bint.move_velocity(300);
+			bint.move_velocity(600);
 			//und.set_value(false);
-			mpist.set_value(false);
 		}
 		else if(controller.get_digital_new_press(E_CONTROLLER_DIGITAL_LEFT)) {
 			undtoggle = !undtoggle;
