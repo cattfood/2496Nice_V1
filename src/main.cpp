@@ -25,7 +25,7 @@ bool rampt;
 
 
 void autonomous() {
-	atn = 0;
+
 
 //atn = 1;
 if (atn == 0) {
