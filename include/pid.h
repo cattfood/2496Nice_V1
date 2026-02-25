@@ -22,6 +22,6 @@ extern void drive_arcR(double theta, double radius, int timeout, int speed, bool
 extern void chassisStop();
 extern void turnpl(float target, float timeout, pidConstants constants = {1, 0, 6.11}, pidConstants constants2 = {19.9, 0, 0}, double feedforward = 1);//, pidConstants constants2 = {0, 0, 0}, pidConstants consstants3 ={0, 0, 0});
 extern double true_target;
-extern void forward_movem(float target, float timeout, float endsp, float dist, bool headc = true, pidConstants constants = {0.45, 0, 4.16}, pidConstants constants2 = {2.5, 0, 0}); //change constants here !!! //0.6, 0, 6.75 // 4.6, 0, 0 10
+extern void forward_movem(float target, float timeout, float endsp = 1, float dist = 1, bool headc = true, pidConstants constants = {0.3, 0, 4.5}, pidConstants constants2 = {0.1, 0, 4}, bool slowd = true, int pist_down = 200); //change constants here !!! //0.6, 0, 6.75 // 4.6, 0, 0 10
 #endif
 

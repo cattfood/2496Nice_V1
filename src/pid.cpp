@@ -216,7 +216,7 @@ void forward_move(float target, float timeout, float endsp, float dist, bool hea
 double poserror = get_heading_error(true_target, position, 1); // wrapped to [-180,180] //replace position with true target
 
 
-double hkP = 4.5; // tune this
+double hkP = 3; // tune this
 double correction = hkP * poserror;
 
 // Apply voltage limits
@@ -251,7 +251,8 @@ if (abs(error) <= 200 && slowd) {
     chassis_move(0,0);
 }
 
-void forward_movem(float target, float timeout, float endsp, float dist, bool headc, pidConstants constants, pidConstants constants2) {
+void forward_movem(float target, float timeout, float endsp, float dist, bool headc, pidConstants constants, pidConstants constants2, bool slowd, int pist_down) {
+      int voltmax = 127;
     error = 0;
     prev_error = 0;
     integral = 0;
@@ -267,8 +268,8 @@ void forward_movem(float target, float timeout, float endsp, float dist, bool he
 
   
     reset_encoders();
-      // while (t1.time() <= timeout){
-      while (true){
+       while (t1.time() <= timeout){
+      //while (true){
         encoder_avg = (lf.get_position() + rf.get_position()) / 2;
         float base_voltage = calc(target, encoder_avg, 200, 20);
 
@@ -282,21 +283,22 @@ void forward_movem(float target, float timeout, float endsp, float dist, bool he
 double poserror = get_heading_error(true_target, position, 1); // wrapped to [-180,180] //replace position with true target
 
 
-// If using simple proportional heading correction:
-double kH = 4.5; // tune this
-double correction = kH * poserror;
+double hkP = 3; // tune this
+double correction = hkP * poserror;
 
 // Apply voltage limits
-if (voltage > 127) voltage = 127;
-if (voltage < -127) voltage = -127;
+if (voltage > voltmax) voltage = voltmax;
+if (voltage < -voltmax) voltage = -voltmax;
 
 // Drive with heading correction
 chassis_move(voltage + correction, voltage - correction);
 
 controller.print(0, 0, "ERROR: %f           ", float(error));
+if (abs(error) <= 200 && slowd) {
+    //voltmax = abs(voltmax - 3); //
+}
     
         if (abs(error) <= 10) set_constants(constants2);
-        if(abs(error) <= 200) matchp.set_value(true);
        
      
         if (abs(error) < 1) {
@@ -304,7 +306,7 @@ controller.print(0, 0, "ERROR: %f           ", float(error));
         }
         
         if(count > 20) {
-           // break;
+            break;
         }
             
         pros::delay(10);
@@ -312,8 +314,11 @@ controller.print(0, 0, "ERROR: %f           ", float(error));
         
         controller.print(0, 0, "%.2f", target - encoder_avg);
     }
-        
+    if (abs(error) <= pist_down) {
+        mpist.set_value(false);
+    }
     chassis_move(0,0);
+ 
 }
 void turnp(float target, float timeout, pidConstants constants, pidConstants constants2, double feedforward ) {
     error = 0;
