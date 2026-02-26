@@ -25,6 +25,7 @@ bool rampt;
 
 
 void autonomous() {
+	atn = 0;
 
 //atn = 1;
 if (atn == 0) {
@@ -49,7 +50,7 @@ turnp(-89, 700);
 forward_move(3300, 1750, 0.8,400);
 
 turnp(-135, 500);
-forward_move(740, 700, 1,1);
+forward_move(790, 700, 1,1);
 
 turnp(-90, 600);
 forward_move(-750, 500, 1,1);
@@ -74,7 +75,7 @@ pros::delay(2000);
 //
 turnp(-90, 200);
 forward_move(400, 350);
-turnp(180, 700);
+turnp(181, 700);
 forward_move(4200, 3000, 1,1, true, {0.2, 0, 4.5}, {0.9, 0, 4});
 //gggg
 turnp(-90, 500);
@@ -94,7 +95,7 @@ turnp(95, 800);
 forward_move(3300, 2750, 0.8,400);
 
 turnp(-135+180, 500);
-forward_move(800, 750, 1,1);
+forward_move(850, 750, 1,1);
 
 turnp(-90+180, 500);
 forward_move(-750, 500, 1,1);
@@ -218,28 +219,34 @@ pros::delay(3000);
 else if(atn == 2) {
 //left side elims 2/6
 
-forward_move(1780, 1500, 1,1);
+forward_move(1770, 1300, 1,1);
 turnp(-90, 475);
 bint.move(-127);
 tint.move(127);
 matchp.set_value(true);
 pros::delay(200);
 chassis_move(60,60);
-pros::delay(695);
+pros::delay(720);
 turnp(-90, 600);
-forward_move(-1200, 800, 1,1);
+forward_move(-1200, 850, 1,1);
 matchp.set_value(false);
 chassis_move(-40,-40);
+bint.move(127);
+tint.move(127);
+pros::delay(150);
 bint.move(-127);
 tint.move(-127);
 pros::delay(1475);
 turnp(170, 850);
 bint.move(-127);
 tint.move(127);
-forward_move(860, 1400, 0.3,500);
-turnp(-45, 650);
-forward_movem(-750, 875, 1,1, 200);
+forward_move(880, 1400, 0.2,500);
+turnp(-45, 600);
+forward_move(-950, 875, 1,1);
 mpist.set_value(false);
+bint.move(127);
+tint.move(127);
+pros::delay(150);
 bint.move(-90);
 tint.move(127);
 pros::delay(1400);
@@ -248,8 +255,8 @@ mpist.set_value(true);
 bint.move(-127);
 tint.move(127);
 turnp(-40, 300);
-forward_move(1570, 1550, 1,1);
-turnp(-92, 450);
+forward_move(1690, 1500, 1,1);
+turnp(-91, 450);
 lf.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 lm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 lb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
@@ -596,17 +603,16 @@ void opcontrol() {
 			//und.set_value(false);
 		}
 		else if(controller.get_digital(E_CONTROLLER_DIGITAL_L1)) {
-			tint.move_velocity(450);
-			bint.move_velocity(-350);
+			tint.move(127);
+			bint.move(-127);
 			//und.set_value(false);
 			mpist.set_value(false);
 
 		}
 		else if(controller.get_digital(E_CONTROLLER_DIGITAL_L2)) {
 			tint.move(127);
-			bint.move_velocity(300);
+			bint.move(127);
 			//und.set_value(false);
-			mpist.set_value(false);
 		}
 		else if(controller.get_digital_new_press(E_CONTROLLER_DIGITAL_LEFT)) {
 			undtoggle = !undtoggle;
