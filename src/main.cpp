@@ -25,7 +25,7 @@ bool rampt;
 
 
 void autonomous() {
-	atn = 0;
+
 
 //atn = 1;
 if (atn == 0) {
@@ -267,32 +267,27 @@ forward_move(-1200, 1100, 0.5,1100);
 
 }
 else if(atn == 3) {
+//right side
 turnp(18, 500);
 bint.move(-127);
-
-
 tint.move(127);
-forward_move(1315, 1200, 0.2, 600);
+forward_move(1325, 1200, 0.2, 400, true, {0.3, 0, 4.5},{0.1, 0, 4}, true, 3);
 turnp(130, 500);
-forward_move(1500, 1300);
-turnp(180, 500);
+forward_move(1450, 1300);
+turnp(179, 700);
 matchp.set_value(true);
 pros::delay(200);
 chassis_move(50,50);
 pros::delay(900);
-turnp(179, 700);
-forward_move(-1190, 1150, 1,1);
+turnp(175, 1);
+//forward_move(-700, 600, 0.2,400, true);
+//turnp(174, 10);
+forward_move(-1290, 1150, 1,1, true, {0.3, 0, 4.5}, {0.1, 0, 4}, true, 4);
 matchp.set_value(false);
 chassis_move(-50,-50);
-bint.move(127);
-tint.move(127);
-pros::delay(150);
 bint.move(-127);
 tint.move(-127);
-pros::delay(1150);
-bint.move(-127);
-tint.move(-127);
-pros::delay(1150);
+pros::delay(1850);
 turnp(180, 500);
 forward_move(800, 800, 1,1);
 turnp(-45, 600);
@@ -304,17 +299,13 @@ lb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 lf.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 lm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 lb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-forward_move(975, 1200, 0.2,1110);
+forward_move(1000, 1200, 0.2,1110);
 turnp(-20, 500);
 }
 else if(atn == 4) {
-	forward_move(300, 300);
-	/*
-	pros::delay(8000);
-	forward_move(200, 250);
-	turnp(90, 300);
-	forward_move(1000, 1000);
-	*/
+	//turnp(45, 1000);
+	//forward_move(-1190, 1150, 1,1, true, {0.3, 0, 4.5}, {0.1, 0, 4}, true, 4);
+	drive_arcL(90, 500, 800, 100);
 }
 //skills 2/6
 /*
@@ -604,7 +595,7 @@ void opcontrol() {
 		}
 		else if(controller.get_digital(E_CONTROLLER_DIGITAL_L1)) {
 			tint.move(127);
-			bint.move(-127);
+			bint.move(-100);
 			//und.set_value(false);
 			mpist.set_value(false);
 

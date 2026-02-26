@@ -8,7 +8,7 @@
 using namespace std;
 using namespace pros;
 
-int atn = 2;
+int atn = 4;
 int color = 1;
 
 

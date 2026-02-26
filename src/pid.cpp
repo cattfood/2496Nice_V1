@@ -184,7 +184,7 @@ void chassis_move(int left, int right) {
     rb.move(right);
 }
 
-void forward_move(float target, float timeout, float endsp, float dist, bool headc, pidConstants constants, pidConstants constants2, bool slowd) {
+void forward_move(float target, float timeout, float endsp, float dist, bool headc, pidConstants constants, pidConstants constants2, bool slowd, double headingc) {
     int voltmax = 127;
     error = 0;
     prev_error = 0;
@@ -201,7 +201,7 @@ void forward_move(float target, float timeout, float endsp, float dist, bool hea
 
   
     reset_encoders();
-       while (t1.time() <= timeout){
+      while (t1.time() <= timeout){
       //while (true){
         encoder_avg = (lf.get_position() + rf.get_position()) / 2;
         float base_voltage = calc(target, encoder_avg, 200, 20);
@@ -216,7 +216,7 @@ void forward_move(float target, float timeout, float endsp, float dist, bool hea
 double poserror = get_heading_error(true_target, position, 1); // wrapped to [-180,180] //replace position with true target
 
 
-double hkP = 3; // tune this
+double hkP = headingc; // tune this
 double correction = hkP * poserror;
 
 // Apply voltage limits
@@ -231,17 +231,18 @@ if (abs(error) <= 200 && slowd) {
     //voltmax = abs(voltmax - 3); //
 }
     
-        if (abs(error) <= 10) set_constants(constants2);
+        if (abs(error) <= 20) set_constants(constants2);
        
      
         if (abs(error) < 1) {
             count++;
         }
         
+        
         if(count > 20) {
             break;
         }
-            
+           
         pros::delay(10);
 
         
@@ -320,7 +321,7 @@ if (abs(error) <= 200 && slowd) {
     chassis_move(0,0);
  
 }
-void turnp(float target, float timeout, pidConstants constants, pidConstants constants2, double feedforward ) {
+void turnp(float target, float timeout, pidConstants constants, pidConstants constants2, double feedforward) {
     error = 0;
     prev_error = 0;
     integral = 0;
@@ -350,7 +351,7 @@ void turnp(float target, float timeout, pidConstants constants, pidConstants con
     Timer t1;
    // while (true){
 
-    while (t1.time() < timeout) {
+   while (t1.time() < timeout) {
     
         double position = imu.get_heading(); // 0–360
         double heading_error = target - position;
@@ -456,9 +457,9 @@ void drive_arcL(double theta, double radius, int timeout, int speed){
     
     //int timeout = 5000;
     ltarget = double((theta / 360) * 2 * pi * radius); 
-    rtarget = double((theta / 360) * 2 * pi * (radius + 500));
+    rtarget = double((theta / 360) * 2 * pi * (radius + 400)); //500
 
-    while (true){
+    while (t1.time() < timeout){
         double encoderAvgL = (lf.get_position() + lb.get_position()) / 2;
         double encoderAvgR = (rf.get_position() +  rb.get_position()) / 2;
         double leftcorrect = -(encoderAvgL * 360) / (2 * pi * radius);
@@ -510,7 +511,7 @@ void drive_arcL(double theta, double radius, int timeout, int speed){
         
   
 
-        set_constants({1, 0, 0}); // arc consts
+        set_constants({6.5, 0, 0}); // arc consts
         int fix = calc3((true_target + leftcorrect), position, ARC_HEADING_INTEGRAL_KI, ARC_HEADING_MAX_INTEGRAL);
         totalError += error3;
     
@@ -533,7 +534,8 @@ void drive_arcL(double theta, double radius, int timeout, int speed){
         pros::delay(10);
 
     }
-    
+
+    chassis_move(0, 0);
 }
 
 void driveArcR(double theta, double radius, int timeout, int speed, bool test){
