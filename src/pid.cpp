@@ -362,7 +362,8 @@ void turnp(float target, float timeout, pidConstants constants, pidConstants con
         double voltage = calc(0, -heading_error, 5, 100); 
         voltage *= feedforward;
 
-        voltage = std::clamp(voltage, -127.0, 127.0);
+        if(voltage > 127) voltage = 127;
+        if (voltage < -127) voltage = -127;
         chassis_move(voltage, -voltage);
 
         if (fabs(heading_error) < 2) set_constants(constants2);
@@ -417,7 +418,8 @@ void turnpl(float target, float timeout, pidConstants constants, pidConstants co
         double voltage = calc(0, -heading_error, 5, 100); 
         voltage *= feedforward;
 
-        voltage = std::clamp(voltage, -127.0, 127.0);
+        if(voltage > 127) voltage = 127;
+        if (voltage < -127) voltage = -127;
         chassis_move(0, -voltage);
 
         if (fabs(heading_error) < 2) set_constants(constants2);
