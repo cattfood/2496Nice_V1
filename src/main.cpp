@@ -320,7 +320,7 @@ tint.move(0);
 }
 else if(atn == 4) {
 //right rush
-forward_move(1710, 1400, 1,1);
+forward_move(1720, 1450, 1,1);
 turnp(93, 500);
 bint.move(-127);
 tint.move(127);
@@ -336,8 +336,8 @@ bint.move(-127);
 tint.move(-127);
 pros::delay(875);
 turnp(135, 425);
-forward_move(400, 400);
-turnp(-90, 700);
+forward_move(450, 400);
+turnp(-89, 700);
 lf.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 lm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 lb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
@@ -347,6 +347,7 @@ rb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 bint.move(0);
 tint.move(0);
 forward_move(1275, 10000, 0.6,400);
+turnp(-90, 700);
 }
 
 else if(atn == 5) {
