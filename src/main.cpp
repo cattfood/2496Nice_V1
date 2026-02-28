@@ -273,6 +273,7 @@ rm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 rb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 forward_move(-1050, 900, 0.6,1100);
 turnp(-10, 700);
+//forward_move_hold(100);
 
 }
 else if(atn == 3) {
@@ -375,6 +376,7 @@ rb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 bint.move(0);
 tint.move(0);
 forward_move(-1175, 1000000, 0.6,400);
+forward_move_hold(20);
 }
 
 else if(atn == 6) {
@@ -698,7 +700,7 @@ void opcontrol() {
 
 
 		if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_A)) {
-			autonomous();
+			//autonomous();
 		}
 
 	lf.move(left);
