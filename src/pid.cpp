@@ -184,7 +184,7 @@ void chassis_move(int left, int right) {
     rb.move(right);
 }
 
-void forward_move(float target, float timeout, float endsp, float dist, bool headc, pidConstants constants, pidConstants constants2, bool slowd, double headingc) {
+void forward_move(float target, float timeout, float endsp, float dist, bool headc, pidConstants constants, pidConstants constants2, bool slowd, double headingc, bool exitcond) {
     int voltmax = 127;
     error = 0;
     prev_error = 0;
@@ -239,7 +239,7 @@ if (abs(error) <= 200 && slowd) {
         }
         
         
-        if(count > 20) {
+        if(count > 20 && exitcond) {
             break;
         }
            
@@ -636,5 +636,10 @@ void driveArcR(double theta, double radius, int timeout, int speed, bool test){
 
     }
     
+}
+
+void forward_move_hold(float target, float timeout, float endsp, float dist, bool headc, pidConstants constants, pidConstants constants2, bool slowd, double headingc) {
+    forward_move(target, timeout, endsp, dist, headc, constants, constants2, slowd, headingc, false);
+
 }
     
