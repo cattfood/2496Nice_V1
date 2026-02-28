@@ -376,9 +376,18 @@ bint.move(0);
 tint.move(0);
 forward_move(-1175, 1000000, 0.6,400);
 }
+
 else if(atn == 6) {
-	turnp(155, 1000);
+//sawp clutch
+forward_move(200, 1400, 1,1);
+
 }
+
+else if(atn == 7) {
+//sawp clutch
+
+}
+
 //skills 2/6
 /*
 mpist.set_value(true);
