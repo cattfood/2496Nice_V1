@@ -149,7 +149,7 @@ turnp(115, 400);
 forward_move(2575, 1300);
 mpist.set_value(true);
 bint.move(-127);
-tint.move(127);
+tint.move(-127);
 turnp(19, 600);
 forward_move(700, 600);
 matchp.set_value(true);
