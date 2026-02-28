@@ -317,14 +317,14 @@ tint.move(0);
 }
 else if(atn == 4) {
 //right rush
-forward_move(1780, 1400, 1,1);
-turnp(90, 500);
+forward_move(1710, 1400, 1,1);
+turnp(93, 500);
 bint.move(-127);
 tint.move(127);
 matchp.set_value(true);
 pros::delay(200);
-chassis_move(70,70);
-pros::delay(540);
+chassis_move(55,55);
+pros::delay(575);
 turnp(90, 600);
 forward_move(-1200, 850, 1,1);
 matchp.set_value(false);
@@ -341,10 +341,9 @@ lb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 rf.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 rm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 rb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-forward_move(1200, 1050, 0.6,400);
-turnp(-120, 700);
 bint.move(0);
 tint.move(0);
+forward_move(1275, 10000, 0.6,400);
 }
 
 else if(atn == 5) {
@@ -367,16 +366,15 @@ pros::delay(900);
 turnp(-150, 425);
 forward_move(530, 400);
 turnp(-95, 400);
-forward_move(-1100, 925, 0.6,400);
 lf.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 lm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 lb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 rf.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 rm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 rb.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-turnp(-50, 700);
 bint.move(0);
 tint.move(0);
+forward_move(-1175, 1000000, 0.6,400);
 }
 else if(atn == 6) {
 	turnp(155, 1000);
