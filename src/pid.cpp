@@ -37,12 +37,15 @@ double ARC_HEADING_INTEGRAL_KI = 200;
 double ARC_HEADING_MAX_INTEGRAL = 20;
 
 float variable_kd(float x) {
-    return 0.000000000001732739*pow(x,7)  - 0.000000001263293*pow(x,6) + 0.0000003789243*pow(x, 5) + -0.00006034489*pow(x,4) + 0.00548546*pow(x,3) + -0.2836335*pow(x,2) + 7.764479 * x - 68.31536;
+    return 0.00000000000296871*pow(x,7)  - 0.00000000200948*pow(x,6) + 0.000000560188*pow(x, 5) + -0.0000830591*pow(x,4) + 0.00705001*pow(x,3) + -0.34187*pow(x,2) + 8.82533 * x -75.3958;
 }
 
 float good_vkd(float x) {
     if (0 > variable_kd(x)) {
         return 0;
+    }
+    else if(145 <x < 160) {
+        return 27;
     }
     else {
         return variable_kd(x);
